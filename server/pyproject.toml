@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools==80.10.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "contextshield-server"
+version = "0.1.0"
+description = "Typed ContextShield agent orchestrator"
+requires-python = ">=3.11,<3.15"
+dependencies = [
+  "fastapi==0.141.1",
+  "pydantic==2.13.5",
+  "pydantic-settings==2.12.0",
+  "uvicorn[standard]==0.52.4",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx2==2.12.0",
+  "pytest==9.1.1",
+  "pytest-cov==7.0.0",
+  "ruff==0.16.5",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers --disable-warnings"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "S"]
+ignore = ["S101"]

@@ -1,0 +1,28 @@
+services:
+  agent-server:
+    build:
+      context: ./server
+    environment:
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 8000
+      MODEL_BACKEND: ${MODEL_BACKEND:-mock}
+      MODEL_PATH: ${MODEL_PATH:-/models/qwen3-vl-4b-instruct-q4_k_m.gguf}
+      LLAMA_SERVER_URL: ${LLAMA_SERVER_URL:-http://host.docker.internal:8080}
+      LLAMA_MODEL_NAME: ${LLAMA_MODEL_NAME:-qwen3-vl-4b-instruct}
+      DATABASE_PATH: /app/data/contextshield.sqlite3
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost}
+    ports:
+      - "8000:8000"
+    volumes:
+      - contextshield-data:/app/data
+      - ./models:/models:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  contextshield-data:

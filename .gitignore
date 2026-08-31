@@ -1,0 +1,36 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# JavaScript
+node_modules/
+.wxt/
+extension/.output/
+release/
+coverage/
+playwright-report/
+test-results/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Runtime data and model weights
+data/
+models/**/*.onnx
+models/**/*.gguf
+extension/models/**/*.onnx
+server/models/**/*.gguf
+benchmarks/results/
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/

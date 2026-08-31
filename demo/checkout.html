@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Autonomous checkout · ContextShield</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <a class="back" href="index.html">← All demos</a>
+      <p class="eyebrow">Demo 2 and 3 · Agent + local handle</p>
+      <h1>Morning train options</h1>
+      <label>Email for ticket <input id="email" type="email" placeholder="Filled from LOCAL_EMAIL_*" /></label>
+      <label>Choose a fare
+        <select id="fare">
+          <option value="">Select a fare</option>
+          <option>₹1,499 — Flex — 08:00</option>
+          <option>₹899 — Saver — 09:15</option>
+          <option>₹1,099 — Standard — 10:00</option>
+        </select>
+      </label>
+      <button id="continue">Continue</button>
+      <section id="review" hidden>
+        <h2>Review</h2>
+        <p id="selection"></p>
+        <button id="order">Place order</button>
+      </section>
+      <p id="done" class="success" hidden>Controlled demo complete. No real purchase was made.</p>
+      <p class="note">Add an Email to the extension vault, then ask: “Choose the cheapest morning fare, fill my email, continue, and place the order.” The final click requires confirmation.</p>
+    </main>
+    <script>
+      const fare = document.querySelector('#fare');
+      document.querySelector('#continue').addEventListener('click', () => {
+        document.querySelector('#selection').textContent = fare.value || 'No fare selected';
+        document.querySelector('#review').hidden = false;
+        document.querySelector('#continue').disabled = true;
+      });
+      document.querySelector('#order').addEventListener('click', () => {
+        document.querySelector('#done').hidden = false;
+        document.querySelector('#order').disabled = true;
+      });
+    </script>
+  </body>
+</html>

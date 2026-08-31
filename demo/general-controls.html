@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>General website controls · ContextShield</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <a class="back" href="index.html">← All demos</a>
+      <p class="eyebrow">Demo 4 · General website controls</p>
+      <h1>Dropdowns, checkboxes &amp; radio buttons</h1>
+
+      <label for="language">First dropdown
+        <select id="language">
+          <option>JAVA</option>
+          <option>C#</option>
+          <option>Python</option>
+          <option>SQL</option>
+        </select>
+      </label>
+
+      <fieldset>
+        <legend>Checkboxes</legend>
+        <label class="control-label"><input id="option-1" type="checkbox" value="option-1" /> Option 1</label>
+        <label class="control-label"><input id="option-2" type="checkbox" value="option-2" /> Option 2</label>
+        <label class="control-label"><input id="option-3" type="checkbox" value="option-3" checked /> Option 3</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Radio buttons</legend>
+        <label class="control-label"><input id="green" type="radio" name="color" value="green" checked /> Green</label>
+        <label class="control-label"><input id="blue" type="radio" name="color" value="blue" /> Blue</label>
+        <label class="control-label"><input id="yellow" type="radio" name="color" value="yellow" /> Yellow</label>
+      </fieldset>
+
+      <p id="control-status" class="success" aria-live="polite">Waiting for the requested states.</p>
+      <p class="note">Ask: “Select Python from the first dropdown, select Option 2, select the Blue radio button, and stop.” No confirmation should be needed.</p>
+    </main>
+    <script>
+      const language = document.querySelector('#language');
+      const optionTwo = document.querySelector('#option-2');
+      const blue = document.querySelector('#blue');
+      const status = document.querySelector('#control-status');
+      const update = () => {
+        status.textContent = language.value === 'Python' && optionTwo.checked && blue.checked
+          ? 'All requested controls are selected.'
+          : 'Waiting for the requested states.';
+      };
+      document.addEventListener('change', update);
+      update();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy proof · ContextShield</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <a class="back" href="index.html">← All demos</a>
+      <p class="eyebrow">Demo 1 · Privacy boundary</p>
+      <h1>Private customer profile</h1>
+      <p>Name: Arindam Mukherjee</p>
+      <p>Email: privacy.fixture@example.com</p>
+      <p>Mobile: +91 98765-43210</p>
+      <p>UPI: private.user@oksbi</p>
+      <label>Account password <input type="password" value="NeverSendThis!" /></label>
+      <div class="face" data-contextshield-visual-control data-contextshield-sensitive="face" role="img" aria-label="Private profile photo">
+        <span>Private face region</span>
+      </div>
+      <p class="note">Open the extension and ask: “Summarize what is safe on this page.” Compare the local counts with “Actual server view”.</p>
+    </main>
+  </body>
+</html>

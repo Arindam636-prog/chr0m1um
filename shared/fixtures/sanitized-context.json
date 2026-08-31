@@ -1,0 +1,36 @@
+{
+  "task": "Choose the cheapest morning option",
+  "origin": "https://example.com",
+  "snapshot_id": "snap_fixture_1",
+  "elements": [
+    {
+      "id": "el_12",
+      "role": "button",
+      "text": "Continue",
+      "label": "Continue",
+      "input_type": null,
+      "value_handle": null,
+      "enabled": true,
+      "selected": null,
+      "value_present": false,
+      "options": []
+    },
+    {
+      "id": "el_21",
+      "role": "textbox",
+      "text": null,
+      "label": "Email",
+      "input_type": "email",
+      "value_handle": "LOCAL_EMAIL_1",
+      "enabled": true,
+      "selected": null,
+      "value_present": false,
+      "options": []
+    }
+  ],
+  "safe_visual_crops": [],
+  "privacy_summary": {
+    "EMAIL": 1,
+    "PASSWORD": 1
+  }
+}

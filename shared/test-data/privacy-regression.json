@@ -1,0 +1,21 @@
+{
+  "description": "Synthetic secrets for outbound payload regression tests",
+  "records": [
+    {
+      "kind": "EMAIL",
+      "synthetic_value": "privacy.fixture@example.invalid",
+      "safe_replacement": "LOCAL_EMAIL_1"
+    },
+    {
+      "kind": "OTP",
+      "synthetic_value": "842731",
+      "safe_replacement": "<OTP>"
+    },
+    {
+      "kind": "PASSWORD",
+      "synthetic_value": "Synthetic-Password-Not-Real-42!",
+      "safe_replacement": null
+    }
+  ]
+}
+
