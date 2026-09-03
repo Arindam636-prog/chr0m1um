@@ -18,9 +18,14 @@ Response `200`:
 {
   "status": "ok",
   "service": "contextshield-agent",
-  "model_backend": "mock"
+  "model_backend": "mock",
+  "planner_ready": true,
+  "privacy_boundary": "sanitized-context-only"
 }
 ```
+
+`planner_ready` verifies the configured planner, not only the FastAPI process.
+In Qwen mode it is false when the local llama.cpp endpoint cannot be reached.
 
 ## `POST /v1/agent/start`
 

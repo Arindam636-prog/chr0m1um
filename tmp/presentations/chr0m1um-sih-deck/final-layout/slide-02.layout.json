@@ -1,0 +1,1991 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/pye4jf",
+    "id": "pye4jf",
+    "slide": 2,
+    "layoutId": "383f65c8-23e2-4f29-a07a-a41d13e772f4",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "ece4b3d2-9be0-4a5e-9b9c-ab93427a955b",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "Arial",
+      "Arial Narrow"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "383f65c8-23e2-4f29-a07a-a41d13e772f4",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "ece4b3d2-9be0-4a5e-9b9c-ab93427a955b",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "ece4b3d2-9be0-4a5e-9b9c-ab93427a955b",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/5w7uhc3i",
+      "id": "1",
+      "bbox": [
+        24,
+        14,
+        44,
+        44
+      ],
+      "alt": "ContextShield mark",
+      "contentType": "image/svg+xml",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "dea65557-773a-4e32-950e-c7a5ae79b099",
+        "contentType": "image/svg+xml",
+        "byteLength": 411
+      }
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/329wjqhw",
+      "id": "2",
+      "bbox": [
+        73,
+        13,
+        95,
+        43
+      ],
+      "geometry": "rect",
+      "text": "CONTEXT\nSHIELD",
+      "textPreview": "CONTEXT | SHIELD",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "Arial Narrow",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "CONTEXT"
+          },
+          {
+            "index": 2,
+            "text": "SHIELD"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "CONTEXT",
+          "lineSpacingPercent": 88000,
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "Arial Narrow",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left",
+            "lineSpacing": 0.88
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "CONTEXT",
+              "fontSize": 13,
+              "typeface": "Arial Narrow",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.88
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "SHIELD",
+          "lineSpacingPercent": 88000,
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "Arial Narrow",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left",
+            "lineSpacing": 0.88
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "SHIELD",
+              "fontSize": 13,
+              "typeface": "Arial Narrow",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.88
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/3u5cf2lc",
+      "id": "3",
+      "bbox": [
+        1042,
+        5,
+        214,
+        88
+      ],
+      "alt": "Smart India Hackathon 2026 mark from the supplied template",
+      "contentType": "image/png",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "deef986d-07cd-4869-8697-abe9033af9ce",
+        "contentType": "image/png",
+        "byteLength": 31011
+      }
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/107eh0zq",
+      "id": "4",
+      "bbox": [
+        205,
+        17,
+        830,
+        54
+      ],
+      "geometry": "rect",
+      "text": "CONTEXT SHIELD",
+      "textPreview": "CONTEXT SHIELD",
+      "resolvedFontSize": 39,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 39,
+        "typeface": "Arial Narrow",
+        "color": "#050505",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 2,
+          "bottom": 0,
+          "left": 2
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "CONTEXT SHIELD"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "CONTEXT SHIELD",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 39,
+            "typeface": "Arial Narrow",
+            "color": "#050505",
+            "bold": true,
+            "alignment": "center",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "CONTEXT SHIELD",
+              "fontSize": 39,
+              "typeface": "Arial Narrow",
+              "color": "#050505",
+              "bold": true,
+              "alignment": "center",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gzydovil",
+      "id": "5",
+      "bbox": [
+        0,
+        667,
+        1280,
+        53
+      ],
+      "geometry": "rect",
+      "fillColor": "#087ABD",
+      "lineColor": "#087ABD",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fypwfqh0",
+      "id": "6",
+      "bbox": [
+        442,
+        670,
+        396,
+        44
+      ],
+      "geometry": "rect",
+      "text": "@chr0m1um",
+      "textPreview": "@chr0m1um",
+      "resolvedFontSize": 31,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 31,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "@chr0m1um"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "@chr0m1um",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 31,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "@chr0m1um",
+              "fontSize": 31,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/exgvml0f",
+      "id": "7",
+      "bbox": [
+        1219,
+        669,
+        42,
+        45
+      ],
+      "geometry": "rect",
+      "text": "2",
+      "textPreview": "2",
+      "resolvedFontSize": 27,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 27,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "2"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "2",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "2",
+              "fontSize": 27,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lwbetkza",
+      "id": "8",
+      "bbox": [
+        410,
+        68,
+        460,
+        22
+      ],
+      "geometry": "rect",
+      "text": "(Privacy-Preserving Context Firewall)",
+      "textPreview": "(Privacy-Preserving Context Firewall)",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 15,
+        "typeface": "Arial",
+        "color": "#64748B",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "(Privacy-Preserving Context Firewall)"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "(Privacy-Preserving Context Firewall)",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "Arial",
+            "color": "#64748B",
+            "bold": true,
+            "alignment": "center",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "(Privacy-Preserving Context Firewall)",
+              "fontSize": 15,
+              "typeface": "Arial",
+              "color": "#64748B",
+              "bold": true,
+              "alignment": "center",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/to3u9s3a",
+      "id": "9",
+      "bbox": [
+        959,
+        75,
+        20,
+        20
+      ],
+      "alt": "StarFourIcon icon",
+      "contentType": "image/svg+xml",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "363aeddb-df7b-4cf0-b8b1-20e95d674606",
+        "contentType": "image/svg+xml",
+        "byteLength": 671
+      }
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/69k3q5wf",
+      "id": "10",
+      "bbox": [
+        981,
+        74,
+        90,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Innovation",
+      "textPreview": "Innovation",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 14,
+        "typeface": "Arial",
+        "color": "#334155",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 2,
+          "right": 4,
+          "bottom": 2,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Innovation"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Innovation",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "Arial",
+            "color": "#334155",
+            "bold": true,
+            "alignment": "left",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Innovation",
+              "fontSize": 14,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rutkzad0",
+      "id": "11",
+      "bbox": [
+        38,
+        102,
+        88,
+        24
+      ],
+      "geometry": "roundRect",
+      "text": "PROBLEM",
+      "textPreview": "PROBLEM",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 12,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 1,
+          "right": 4,
+          "bottom": 1,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "PROBLEM"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "PROBLEM",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "PROBLEM",
+              "fontSize": 12,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#E4574F",
+      "lineColor": "#E4574F",
+      "lineWidth": 1
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sv2lsfel",
+      "id": "12",
+      "bbox": [
+        38,
+        121,
+        690,
+        126
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF0EE",
+      "lineColor": "#F2A7A1",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/twb210vq",
+      "id": "13",
+      "bbox": [
+        50,
+        131,
+        667,
+        108
+      ],
+      "geometry": "rect",
+      "text": "Too much context: Cloud agents may receive raw pixels, DOM text, cookies and identity the task never needs.\nBlanket redaction: Safer, but it strips labels and structure required to act correctly.\nUngated actions: Plausible server commands can still target stale or wrong controls.",
+      "textPreview": "Too much context: Cloud agents may receive raw pixels, DOM text, cookies and identity the task never needs. | Blanket redaction: Safer, b...",
+      "resolvedFontSize": 15.8,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15.8,
+        "typeface": "Arial",
+        "color": "#334155",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 4,
+          "right": 6,
+          "bottom": 4,
+          "left": 6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Too much context: Cloud agents may receive raw pixels, DOM text, cookies and identity"
+          },
+          {
+            "index": 2,
+            "text": "the task never needs."
+          },
+          {
+            "index": 3,
+            "text": "• Blanket redaction: Safer, but it strips labels and structure required to act correctly."
+          },
+          {
+            "index": 4,
+            "text": "• Ungated actions: Plausible server commands can still target stale or wrong controls."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Too much context: Cloud agents may receive raw pixels, DOM text, cookies and identity the task never needs.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Too much context: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "Cloud agents may receive raw pixels, DOM text, cookies and identity the task never needs.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Blanket redaction: Safer, but it strips labels and structure required to act correctly.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Blanket redaction: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "Safer, but it strips labels and structure required to act correctly.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "text": "Ungated actions: Plausible server commands can still target stale or wrong controls.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ungated actions: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "Plausible server commands can still target stale or wrong controls.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/i503mlw3",
+      "id": "14",
+      "bbox": [
+        38,
+        258,
+        145,
+        24
+      ],
+      "geometry": "roundRect",
+      "text": "PROPOSED SOLUTION",
+      "textPreview": "PROPOSED SOLUTION",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 12,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 1,
+          "right": 4,
+          "bottom": 1,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "PROPOSED SOLUTION"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "PROPOSED SOLUTION",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "PROPOSED SOLUTION",
+              "fontSize": 12,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#087ABD",
+      "lineColor": "#087ABD",
+      "lineWidth": 1
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/j69kvqdo",
+      "id": "15",
+      "bbox": [
+        38,
+        277,
+        690,
+        157
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EAF5FB",
+      "lineColor": "#9CC9E3",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/k7ilove9",
+      "id": "16",
+      "bbox": [
+        50,
+        286,
+        667,
+        140
+      ],
+      "geometry": "rect",
+      "text": "Read locally: DOM, ARIA and visible pixels are interpreted inside the browser.\nDetect and redact: YOLOX, PP-OCR and Rampart find faces, visual text and contextual PII before any request.\nReason safely: Only SanitizedContext and LOCAL_* handles reach Qwen3-VL.\nAct locally: Typed actions are grounded, gated, executed and verified on-device.",
+      "textPreview": "Read locally: DOM, ARIA and visible pixels are interpreted inside the browser. | Detect and redact: YOLOX, PP-OCR and Rampart find faces,...",
+      "resolvedFontSize": 15.8,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15.8,
+        "typeface": "Arial",
+        "color": "#334155",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 4,
+          "right": 6,
+          "bottom": 4,
+          "left": 6
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Read locally: DOM, ARIA and visible pixels are interpreted inside the browser."
+          },
+          {
+            "index": 2,
+            "text": "• Detect and redact: YOLOX, PP-OCR and Rampart find faces, visual text and contextual PII"
+          },
+          {
+            "index": 3,
+            "text": "before any request."
+          },
+          {
+            "index": 4,
+            "text": "• Reason safely: Only SanitizedContext and LOCAL_* handles reach Qwen3-VL."
+          },
+          {
+            "index": 5,
+            "text": "• Act locally: Typed actions are grounded, gated, executed and verified on-device."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Read locally: DOM, ARIA and visible pixels are interpreted inside the browser.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Read locally: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "DOM, ARIA and visible pixels are interpreted inside the browser.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Detect and redact: YOLOX, PP-OCR and Rampart find faces, visual text and contextual PII before any request.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Detect and redact: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "YOLOX, PP-OCR and Rampart find faces, visual text and contextual PII before any request.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "text": "Reason safely: Only SanitizedContext and LOCAL_* handles reach Qwen3-VL.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Reason safely: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "Only SanitizedContext and LOCAL_* handles reach Qwen3-VL.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "text": "Act locally: Typed actions are grounded, gated, executed and verified on-device.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Act locally: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "Typed actions are grounded, gated, executed and verified on-device.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/58b2x0vu",
+      "id": "17",
+      "bbox": [
+        38,
+        447,
+        190,
+        24
+      ],
+      "geometry": "roundRect",
+      "text": "UNIQUE VALUE PROPOSITION",
+      "textPreview": "UNIQUE VALUE PROPOSITION",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 12,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 1,
+          "right": 4,
+          "bottom": 1,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "UNIQUE VALUE PROPOSITION"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "UNIQUE VALUE PROPOSITION",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "UNIQUE VALUE PROPOSITION",
+              "fontSize": 12,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#17964B",
+      "lineColor": "#17964B",
+      "lineWidth": 1
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2143ypwn",
+      "id": "18",
+      "bbox": [
+        38,
+        466,
+        690,
+        161
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EAF7EF",
+      "lineColor": "#9FD3B4",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/32dk7ud8",
+      "id": "19",
+      "bbox": [
+        50,
+        477,
+        667,
+        142
+      ],
+      "geometry": "rect",
+      "text": "Privacy before AI access: Sensitive context is removed at the source—not after it reaches the cloud.\nMinimum necessary context: Useful structure crosses the boundary; raw identity stays in a memory-only vault.\nTwo-sided safety: Context is protected outbound; actions are validated inbound.\nBrowser-native: The same privacy contract supports Chrome and Firefox builds.",
+      "textPreview": "Privacy before AI access: Sensitive context is removed at the source—not after it reaches the cloud. | Minimum necessary context: Useful ...",
+      "resolvedFontSize": 15.8,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15.8,
+        "typeface": "Arial",
+        "color": "#334155",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 4,
+          "right": 6,
+          "bottom": 4,
+          "left": 6
+        }
+      },
+      "textLayout": {
+        "lineCount": 6,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Privacy before AI access: Sensitive context is removed at the source—not after it reaches"
+          },
+          {
+            "index": 2,
+            "text": "the cloud."
+          },
+          {
+            "index": 3,
+            "text": "• Minimum necessary context: Useful structure crosses the boundary; raw identity stays in"
+          },
+          {
+            "index": 4,
+            "text": "a memory-only vault."
+          },
+          {
+            "index": 5,
+            "text": "• Two-sided safety: Context is protected outbound; actions are validated inbound."
+          },
+          {
+            "index": 6,
+            "text": "• Browser-native: The same privacy contract supports Chrome and Firefox builds."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Privacy before AI access: Sensitive context is removed at the source—not after it reaches the cloud.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Privacy before AI access: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "Sensitive context is removed at the source—not after it reaches the cloud.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Minimum necessary context: Useful structure crosses the boundary; raw identity stays in a memory-only vault.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Minimum necessary context: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "Useful structure crosses the boundary; raw identity stays in a memory-only vault.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "text": "Two-sided safety: Context is protected outbound; actions are validated inbound.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Two-sided safety: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "Context is protected outbound; actions are validated inbound.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "text": "Browser-native: The same privacy contract supports Chrome and Firefox builds.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 98000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.8,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 0.98
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Browser-native: ",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.98
+            },
+            {
+              "index": 2,
+              "text": "The same privacy contract supports Chrome and Firefox builds.",
+              "fontSize": 15.8,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 0.98
+            }
+          ]
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/z650zmtk",
+      "id": "20",
+      "bbox": [
+        752,
+        111,
+        488,
+        495
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F7FBF8",
+      "lineColor": "#98BCAA",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/y5wzqhcz",
+      "id": "21",
+      "bbox": [
+        774,
+        126,
+        315,
+        28
+      ],
+      "geometry": "rect",
+      "text": "WHAT THE JUDGE CAN SEE",
+      "textPreview": "WHAT THE JUDGE CAN SEE",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Arial",
+        "color": "#17964B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 2,
+          "right": 4,
+          "bottom": 2,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "WHAT THE JUDGE CAN SEE"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "WHAT THE JUDGE CAN SEE",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "Arial",
+            "color": "#17964B",
+            "bold": true,
+            "alignment": "left",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "WHAT THE JUDGE CAN SEE",
+              "fontSize": 15,
+              "typeface": "Arial",
+              "color": "#17964B",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/l8ni1wbq",
+      "id": "22",
+      "bbox": [
+        772,
+        157,
+        448,
+        276
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#111827",
+      "lineColor": "#111827",
+      "lineWidth": 1
+    },
+    {
+      "order": 23,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/zmlgr6tk",
+      "id": "23",
+      "bbox": [
+        779,
+        164,
+        434,
+        262
+      ],
+      "geometry": "roundRect",
+      "alt": "ContextShield privacy proof page",
+      "contentType": "image/png",
+      "imageCrop": {
+        "left": 0,
+        "top": 0.08,
+        "right": 0,
+        "bottom": 0.1
+      },
+      "imageFit": "cover",
+      "imageMask": {
+        "geometry": "roundRect",
+        "adjustmentList": [
+          {
+            "name": "adj",
+            "formula": "val 3053"
+          }
+        ]
+      },
+      "asset": {
+        "assetId": "c0c2fd2d-b14f-4f83-b8cf-a90dfa54be38",
+        "contentType": "image/png",
+        "byteLength": 166726
+      }
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nap03mtg",
+      "id": "24",
+      "bbox": [
+        781,
+        450,
+        36,
+        36
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#EAF7EF",
+      "lineWidth": 0
+    },
+    {
+      "order": 25,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/dk3ypwbe",
+      "id": "25",
+      "bbox": [
+        787,
+        456,
+        24,
+        24
+      ],
+      "alt": "EyeSlashIcon icon",
+      "contentType": "image/svg+xml",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "71f9b975-047f-47f6-a72e-ac5c10a1d94c",
+        "contentType": "image/svg+xml",
+        "byteLength": 1170
+      }
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9c7i5wbm",
+      "id": "26",
+      "bbox": [
+        824,
+        452,
+        360,
+        28
+      ],
+      "geometry": "rect",
+      "text": "Raw page state stays local",
+      "textPreview": "Raw page state stays local",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 17,
+        "typeface": "Arial",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 2,
+          "right": 4,
+          "bottom": 2,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Raw page state stays local"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Raw page state stays local",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Raw page state stays local",
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8byhwru1",
+      "id": "27",
+      "bbox": [
+        781,
+        493,
+        36,
+        36
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#EAF5FB",
+      "lineWidth": 0
+    },
+    {
+      "order": 28,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/wfyhsvud",
+      "id": "28",
+      "bbox": [
+        787,
+        499,
+        24,
+        24
+      ],
+      "alt": "ShieldCheckIcon icon",
+      "contentType": "image/svg+xml",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "bae76c9c-b565-4cc7-9d01-ad8f5d3d657d",
+        "contentType": "image/svg+xml",
+        "byteLength": 674
+      }
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/adgzy1c7",
+      "id": "29",
+      "bbox": [
+        824,
+        495,
+        360,
+        28
+      ],
+      "geometry": "rect",
+      "text": "Server receives sanitized structure",
+      "textPreview": "Server receives sanitized structure",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 17,
+        "typeface": "Arial",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 2,
+          "right": 4,
+          "bottom": 2,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Server receives sanitized structure"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Server receives sanitized structure",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Server receives sanitized structure",
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 30,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s3ihoba5",
+      "id": "30",
+      "bbox": [
+        781,
+        536,
+        36,
+        36
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#FFF6E5",
+      "lineWidth": 0
+    },
+    {
+      "order": 31,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/690jypwf",
+      "id": "31",
+      "bbox": [
+        787,
+        542,
+        24,
+        24
+      ],
+      "alt": "CursorClickIcon icon",
+      "contentType": "image/svg+xml",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "d0a44680-1937-41ae-b347-d003a08850fc",
+        "contentType": "image/svg+xml",
+        "byteLength": 1068
+      }
+    },
+    {
+      "order": 32,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6h0zm1sf",
+      "id": "32",
+      "bbox": [
+        824,
+        538,
+        360,
+        28
+      ],
+      "geometry": "rect",
+      "text": "Browser keeps the final say",
+      "textPreview": "Browser keeps the final say",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 17,
+        "typeface": "Arial",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 2,
+          "right": 4,
+          "bottom": 2,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Browser keeps the final say"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Browser keeps the final say",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Browser keeps the final say",
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 33,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/729gf690",
+      "id": "33",
+      "bbox": [
+        893,
+        574,
+        205,
+        26
+      ],
+      "geometry": "roundRect",
+      "text": "OPEN PRIVACY PROOF",
+      "textPreview": "OPEN PRIVACY PROOF",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Arial",
+        "color": "tx1",
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 2,
+          "right": 5,
+          "bottom": 2,
+          "left": 5
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "OPEN PRIVACY PROOF"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "OPEN PRIVACY PROOF",
+          "resolvedTextStyle": {
+            "typeface": "Arial",
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "OPEN PRIVACY PROOF",
+              "fontSize": 14.67,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#17964B",
+      "lineColor": "#17964B",
+      "lineWidth": 1
+    }
+  ],
+  "composeRuns": []
+}

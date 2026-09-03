@@ -306,6 +306,11 @@ async function runAgent(task: string, generation: number): Promise<void> {
 
     let sessionId: string | null = null;
     let previousActionMarker: ActionProgressMarker | null = null;
+    let completedLocalClicks = 0;
+    const requestedLocalClicks = Math.max(
+      1,
+      task.match(/\b(?:click|press)\b/gi)?.length ?? 0,
+    );
     const visualCache = new Map<string, VisualAnalysisResult>();
     const clarifications: string[] = [];
     for (let step = 1; step <= MAX_STEPS && generation === runGeneration; step += 1) {
@@ -503,9 +508,14 @@ async function runAgent(task: string, generation: number): Promise<void> {
       }
       if (localAction) {
         timeline('Local verification accepted', 'No raw page state left this device');
+        if (action.type === 'CLICK') completedLocalClicks += 1;
         if (
           action.type === 'SCROLL' ||
-          (action.type === 'CLICK' && action.reason.includes('exact named button'))
+          (
+            action.type === 'CLICK' &&
+            action.reason.includes('exact named button') &&
+            completedLocalClicks >= requestedLocalClicks
+          )
         ) {
           state.resultSummary = 'The requested local browser action completed successfully.';
           state.running = false;

@@ -1,0 +1,21 @@
+Source references
+- 1788414469282.pdf: six-slide SIH 2025 winning deck used for narrative density and information hierarchy.
+- demo SIH.pdf: six-slide ContextShield deck used as the visual template.
+
+Preserved visual contract
+- 16:9 white canvas.
+- Large condensed uppercase black slide title centred across the top.
+- ContextShield mark at upper left and official SIH 2026 mark at upper right.
+- Bright blue full-width footer with @chr0m1um centred and page number at right.
+- Rounded, lightly tinted information zones with blue/green accents.
+
+Source limitation
+- No editable source PPTX was supplied or found. The PDF therefore cannot preserve its original PowerPoint master hierarchy.
+- The visible template is reconstructed as editable PowerPoint objects; the title slide is retained as a high-resolution reference image to preserve its exact supplied appearance.
+
+Narrative upgrade
+- Preserve the SIH six-slide structure.
+- Match the winning deck's level of detail while keeping claims scoped to measured evidence.
+- Make architecture, benchmarks, risks, differentiation and project resources immediately judge-readable.
+- Add working hyperlinks to the local demo, repository, setup guide, judge runbook, evidence and public test sites.
+

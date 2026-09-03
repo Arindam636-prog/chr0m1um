@@ -183,4 +183,51 @@ describe('DOM action broker', () => {
     });
     expect(blocked.error).toBe('CONFIRMATION_REQUIRED');
   });
+
+  it('clicks the visible label for a visually hidden radio control', async () => {
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.id = 'hidden-radio';
+    input.style.opacity = '0';
+    const label = document.createElement('label');
+    label.htmlFor = input.id;
+    label.textContent = 'Male';
+    document.body.append(input, label);
+    const snapshot = makeSnapshot(input);
+    input.getBoundingClientRect = () => ({
+      x: 0,
+      y: 0,
+      width: 1,
+      height: 1,
+      top: 0,
+      right: 1,
+      bottom: 1,
+      left: 0,
+      toJSON: () => ({}),
+    });
+    label.getBoundingClientRect = rect;
+    let current = snapshot;
+    input.addEventListener('change', () => {
+      current = { ...snapshot, fingerprint: 'fp_radio_checked' };
+    });
+    const broker = new DomActionBroker(() => snapshot, () => current, 0);
+    const result = await broker.execute(
+      {
+        type: 'CLICK',
+        action_id: 'act_hidden_radio',
+        snapshot_id: 'snap_1',
+        element_id: 'el_1',
+        reason: 'Select Male',
+      },
+      {
+        snapshotId: 'snap_1',
+        origin: window.location.origin,
+        fingerprint: 'fp_1',
+        confirmedActionIds: new Set(),
+      },
+    );
+
+    expect(result.success).toBe(true);
+    expect(input.checked).toBe(true);
+  });
 });

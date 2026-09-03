@@ -21,17 +21,28 @@ once:
 2. Remove older ContextShield development builds.
 3. Enable **Developer mode**, click **Load unpacked**, and select
    `release/ContextShield-Chrome`.
-4. Confirm that the popup footer says **v1.2.0**.
-5. Open <http://127.0.0.1:4173> and choose **Checkout Demo**.
+4. Confirm that the popup footer says **v1.3.0**.
+5. Open <http://127.0.0.1:4173> and select **Run the 6-minute proof**.
 6. Click the ContextShield extension icon.
 7. Add an Email to the memory-only local vault.
 8. Enter `Choose the cheapest morning fare, fill my email, continue, and place the order.`
 9. Click **Start agent**, then **Allow once** when it asks before Place order.
 
-Normal `./START.sh` runs do not rebuild or modify the installed extension. Reload
-it only after intentionally creating a new release with `npm run release`.
+Normal `./START.sh` runs rebuild the React judge website but do not rebuild or
+modify the installed extension. Reload the extension only after intentionally
+creating a new release with `npm run release`.
 
 ### Public-site proof
+
+For the most complete public proof, open
+<https://www.selenium.dev/selenium/web/web-form.html> and enter:
+
+`Fill the Text input with ContextShield public test, select Two from the Dropdown, check the Default checkbox, and do not submit.`
+
+ContextShield should fill the generic text field through a local `LOCAL_TEXT_1`
+handle, select Two, check the Default checkbox, leave the page unsubmitted, and
+finish. This exact task and final state are covered by the opt-in external
+regression test.
 
 Open <https://the-internet.herokuapp.com/checkboxes> and enter:
 
@@ -41,15 +52,9 @@ ContextShield should check the first box, clear the second box, and finish in
 well under the two-minute safety deadline. This exact URL and final state are
 covered by the release regression suite.
 
-For the reported React-form proof, open
-<https://demoqa.com/automation-practice-form> and enter:
-
-`Fill the form with test information: first name Context, last name Shield, email fixture@example.invalid, gender Male, mobile 9000000001, and address Fixture Kolkata. Do not submit it.`
-
-ContextShield should fill exactly those five text fields, select Male, leave all
-hobbies unchanged, and finish without clicking Submit. Values written directly
-in a structured task are converted to memory-only `LOCAL_*` handles before the
-safe page description reaches the backend.
+The control room at <http://127.0.0.1:4173> contains two more public fixtures,
+copy-ready prompts and the complete judge route. Third-party pages can change,
+so always run the controlled route first.
 
 Chrome shows an all-sites permission because ContextShield must work on arbitrary
 HTTP/HTTPS pages and retain access after navigation. It does not register an
@@ -88,8 +93,9 @@ Normal websites are supported. Chrome-protected pages (`chrome://`, the Chrome
 Web Store), closed Shadow DOM, browser-owned PDF UI, and inaccessible
 cross-origin frames cannot be controlled by browser extensions.
 
-The exact tests and measured scope of this release are recorded in
-[docs/SIH-ACCEPTANCE-v1.2.0.md](docs/SIH-ACCEPTANCE-v1.2.0.md). This is a broad
+The latest completed measured baseline is recorded in
+[docs/SIH-ACCEPTANCE-v1.2.0.md](docs/SIH-ACCEPTANCE-v1.2.0.md). The v1.3.0
+release adds the judge control room and public-form compatibility improvements. This is a broad
 prototype, not a truthful guarantee that every control on every future website
 will be automatable.
 

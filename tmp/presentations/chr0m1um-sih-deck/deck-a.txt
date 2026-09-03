@@ -1,0 +1,120 @@
+SMART INDIA HACKATHON 2025
+Problem Statement ID : 25070
+Problem Statement Title : Secure Data Wiping for Trustworthy IT Asset Recycling
+Theme : Miscellaneous
+PS Category : Software
+Team ID : 53476
+Team Name : Niet - SafeSecure
+@ N i e t - S a f e S e c u r e 1
+
+===== PAGE =====
+
+E C O W I P E
+- Innovation
+(Secure Wiping for Every Device)
+ARCHITECTURE
+PROBLEM EXISTING
+Data Security Fear : What if someone sees my photos or bank details?
+No Dead Device Solution : My phone is dead, how do I erase my data?
+Complex & Costly Tools : Existing tools are too technical and expensive.
+PROPOSED SOLUTION
+Cross-Platform One-Click Wipe : Works on Windows, Linux & Android, even in hidden areas (HPA/DCO, SSD sectors).
+Tamper-Proof Digital Certificate : Generates signed wipe proof (PDF/JSON) with QR for instant online verification.
+Device Passport : Auto-captures CPU, RAM & serial info for authenticity and resale trust.
+Three-Mode Breakthrough : Online, Offline & Direct E-Waste modes cover every scenario - working + dead devices.
+UVP (UNIQUE VALUE PROPOSITION)
+World’s First App-Generated USB Bootable : Make your own wipe tool at home. USB drive. No cost. No experts required.
+Device Passport + Proof of Wipe : Every device gets a digital passport with CPU/RAM/serial details + a tamper-proof
+certificate for resale trust.
+Cross-Platform & Offline : Runs anywhere unlike expensive complex tools.
+Simple, Secure & Rewarding : Easy-to-use solution that safely wipes data while giving users Eco points for disposal.
+@ N i e t - S a f e S e c u r e 2
+
+===== PAGE =====
+
+T E C H N I C A L A P P R O A C H
+🚀
+Start Here Device Working OR Dead? Can’t Boot Device
+Dead/Crash Working + Internet Device
+Estimates: 3-5 minutes
+App auto-downloads bootable image + flashes to USB.
+Certificate Generation
+TECH STACK
+@ N i e t - S a f e S e c u r e 3
+
+===== PAGE =====
+
+F E A S I B I L I T Y A N D V I A B I L I T Y
+F E AS I B I L IT Y : V I A B I L I T Y :
+Technical : Market : ₹50,000 Cr of idle IT assets; 78% of users hesitant to recycle;
+Proven Tech Stack - Rust, Tauri, PostgreSQL + supporting tools -
+opens huge opportunity for refurbished devices.
+secure, cross-platform, and extendable.
+Data Compliance: NIST SP 800-88 – ensures all deleted data is
+Policy & Revenue : Fits Digital India, Swachh Bharat, Circular
+↗
+unrecoverable. LINK
+Economy; revenue from government, enterprise, and certification
+services.
+Innovation : Bootable USB Generation - World's First App-Generated
+Bootable Technology - Technically Validated.
+Investment & ROI : Minimal setup cost; Break-even within 18 months;
+Operational : Can be set up quickly and runs smoothly even without 25x ROI projected over 5 years.
+internet, on most devices people already have.
+Scalability & Retention : Runs smoothly on the devices people already
+Economic : Uses existing devices, no need to buy new hardware or pay
+have, and the eco-points system motivates users to keep using it.
+for extra tools.
+T E C H N IC A L C H A L L E N G E S : B US I N E SS / US E R C H A L L E N G E S :
+Risk : Some devices might not automatically recognize the USB or fail Risk : People are often afraid to recycle their old devices because
+to boot from it. they worry about losing data, or they just hold onto them.
+Mitigation : We’ll test the USB on a wide range of devices to make Mitigation : We’ll encourage responsible recycling with a points-
+sure it works for most people. If it doesn’t, users can still complete the based reward system. Government support will also help users feel
+process easily through a E-mode option. safe and confident when disposing of their devices.
+@ N i e t - S a f e S e c u r e 4
+
+===== PAGE =====
+
+I M P A C T S & B E N E F I T S
+The Economic & Job Creation Impact : Hundreds of millions of old laptops and phones are sitting idle.
+By securely selling/recycling these devices, we can recover ₹50,000 crore in value and generate over
+25,000+ direct jobs in e-waste sector within 3 years.
+Study phrases not words
+Environmental & Sustainability Gains : 5 lakh tonnes of e-waste through nationwide goes to landfills
+every year. Proper recycling of devices gives an electronic device a second life, reduces pollution to our
+land and air and conserves CO₂ and metals.
+Social & Governance Transformation : People worry about data theft when recycling devices. Verified
+wipe certificates and rewards make it safe and encouraging. The project also opens jobs for women and
+rural areas and supports Digital India & Swachh Bharat.
+H O W E C O W I P E W O R K S
+MODE 1: ONLINE (Working Device) MODE 2: OFFLINE (Dead Device) MODE 3: E-WASTE (Completely Dead)
+For : Device boots normally with internet For : Device won't boot but hardware functional For : Device totally dead or physically damaged
+Process : Install app → Login → One-click wipe Process : App creates USB → Boot dead Process : App routes to government center →
+→ Certificate ready device → Confirm wipe → Certificate ready Professional destruction → Certificate issued
+Time : 5-10 minutes Time : 10-20 minutes Time : 1-3 days
+Success Rate : 95+% Success Rate : 80-90% Success Rate : 100%
+Best For : Normal device disposal, working Best For : OS crashed, display broken, system Best For : Motherboard dead, physical damage,
+laptops/phones corrupted no power
+@ N i e t - S a f e S e c u r e 5
+
+===== PAGE =====
+
+R E S E A R C H A N D R E F E R E N C E S
+NIST SP 800-88 Rev.1 is the foundational U.S. government standard that provides guidance for secure data erasure. At the same
+time, we also considered the NIST SP 800-88 Rev.2 (Draft, 2025) – the updated version.
+Full Details : NIST SP 800-88 Rev.1 / NIST SP 800-88 Rev.2 (Draft)
+Studies show data wiping is tricky but essential for trust. Links : IEEE / Jetico
+Market reports highlight growing e-waste and economic opportunity for secure disposal. Links : Niti / Geneva
+SOLUTIONS ALREADY EXIST OUR SOLUTIONS STANDS OUT
+O n e - c l i c k : e a s y f o r a n y o n e
+Most are complex and expensive, made only for
+C e r t i f i c a t e : p r o o f o f s e c u r e w i p e
+companies not for general public.
+C o s t - e f f e c t i v e : a ff o r d a b l e f o r a l l
+AVAILABLE APPS : Blancco / Bitraser / Youwipe / Jetico
+S a f e & v e r i f i e d : f o l l o w s g l o b a l s t a n d a r d s
+PROJECT RESOURCES
+Demo Video : Click Here
+Prototype : https://ecowipe.figma.site/
+Business Model Canvas : Click Here
+@ N i e t - S a f e S e c u r e 6

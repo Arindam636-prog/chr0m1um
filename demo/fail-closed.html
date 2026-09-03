@@ -8,14 +8,14 @@
   </head>
   <body>
     <main>
-      <a class="back" href="index.html">← All demos</a>
-      <p class="eyebrow">Demo 4 · Local security</p>
+      <a class="back" href="index.html">← Judge demo home</a>
+      <p class="eyebrow">Local fail-closed security</p>
       <h1>Page mutation lab</h1>
       <p>Task: first click <strong>Arm stale-state mutation</strong>. When the status says <strong>ARMED SUCCESSFULLY</strong>, step one is complete and you must click <strong>Continue to finish task</strong>. A disabled Arm button means it was already clicked successfully.</p>
-      <p>The Continue target is replaced two seconds after arming, so a plan made against the old snapshot must be rejected.</p>
+      <p>After arming, the page repeatedly replaces the Continue target while the next action is being prepared. A plan made against the old snapshot must be rejected immediately. A step-limit or time-limit message is not the expected result.</p>
       <button id="arm">Arm stale-state mutation</button>
       <div id="target"><p>Continue is hidden until the mutation is armed.</p></div>
-      <p id="status" class="note">Not armed.</p>
+      <p id="status" class="note">Not armed. Ask the extension: “Click Arm stale-state mutation, then click Continue to finish task.”</p>
     </main>
     <script>
       const arm = document.querySelector('#arm');
@@ -23,10 +23,13 @@
         arm.disabled = true;
         document.querySelector('#target').innerHTML = '<button>Continue to finish task</button>';
         document.querySelector('#status').textContent = 'ARMED SUCCESSFULLY. Step one is complete. Now click Continue to finish task.';
-        setTimeout(() => {
-          document.querySelector('#target').innerHTML = '<button disabled>Changed target</button>';
+        let replacements = 0;
+        const mutationTimer = setInterval(() => {
+          document.querySelector('#target').innerHTML = '<button>Continue to finish task</button>';
           document.querySelector('#status').textContent = 'Target changed. Old element IDs are stale.';
-        }, 2000);
+          replacements += 1;
+          if (replacements >= 400) clearInterval(mutationTimer);
+        }, 25);
       }, { once: true });
     </script>
   </body>

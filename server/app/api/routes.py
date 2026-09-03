@@ -1,4 +1,7 @@
 from typing import Annotated
+from urllib.error import HTTPError, URLError
+from urllib.request import Request as UrlRequest
+from urllib.request import urlopen
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 
@@ -23,12 +26,27 @@ def get_orchestrator(request: Request) -> AgentOrchestrator:
 AgentOrchestratorDependency = Annotated[AgentOrchestrator, Depends(get_orchestrator)]
 
 
+def planner_is_ready(request: Request) -> bool:
+    settings = request.app.state.settings
+    if settings.model_backend == "mock":
+        return True
+    endpoint = settings.llama_server_url.rstrip("/") + "/v1/models"
+    probe = UrlRequest(endpoint, method="GET")  # noqa: S310 -- loopback/operator URL
+    try:
+        with urlopen(probe, timeout=0.75) as response:  # noqa: S310
+            return 200 <= response.status < 300
+    except (HTTPError, URLError, TimeoutError, OSError):
+        return False
+
+
 @router.get("/health")
-def health(request: Request) -> dict[str, str]:
+def health(request: Request) -> dict[str, str | bool]:
     return {
         "status": "ok",
         "service": "contextshield-agent",
         "model_backend": request.app.state.settings.model_backend,
+        "planner_ready": planner_is_ready(request),
+        "privacy_boundary": "sanitized-context-only",
     }
 
 

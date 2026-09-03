@@ -123,7 +123,11 @@ export async function checkAgentHealth(
     throw new Error('AGENT_SERVER_OFFLINE', { cause: error });
   }
   if (!response.ok) throw new Error('AGENT_SERVER_OFFLINE');
-  const payload = await response.json() as { model_backend?: unknown };
+  const payload = await response.json() as {
+    model_backend?: unknown;
+    planner_ready?: unknown;
+  };
+  if (payload.planner_ready === false) throw new Error('AGENT_SERVER_OFFLINE');
   return typeof payload.model_backend === 'string' ? payload.model_backend : 'local';
 }
 

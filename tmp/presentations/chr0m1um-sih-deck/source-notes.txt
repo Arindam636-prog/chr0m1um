@@ -1,0 +1,32 @@
+Slide 1
+- /Users/arindam/Downloads/demo SIH.pdf
+
+Slide 2
+- User-provided problem statement in conversation
+- /Users/arindam/Documents/SIH 2026/contextshield/README.md
+- /Users/arindam/Documents/SIH 2026/contextshield/docs/api-contract.md
+
+Slide 3
+- /Users/arindam/Documents/SIH 2026/contextshield/README.md
+- /Users/arindam/Documents/SIH 2026/contextshield/docs/api-contract.md
+- /Users/arindam/Documents/SIH 2026/contextshield/docs/full-setup.md
+
+Slide 4
+- /Users/arindam/Documents/SIH 2026/contextshield/demo/evidence.json
+- /Users/arindam/Documents/SIH 2026/contextshield/docs/SIH-RELEASE-v1.3.0.md
+- /Users/arindam/Documents/SIH 2026/contextshield/README.md
+
+Slide 5
+- /Users/arindam/Documents/SIH 2026/contextshield/demo/evidence.json
+- User-provided official evaluation metrics in conversation
+
+Slide 6
+- https://www.w3.org/TR/webgpu/
+- https://onnxruntime.ai/docs/tutorials/web/
+- https://huggingface.co/docs/transformers.js/
+- https://arxiv.org/abs/2107.08430
+- https://arxiv.org/abs/2009.09941
+- https://huggingface.co/nationaldesignstudio/rampart
+- https://github.com/QwenLM/Qwen3-VL
+- https://github.com/Arindam636-prog/chr0m1um
+- http://127.0.0.1:4173

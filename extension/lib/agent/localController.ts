@@ -96,6 +96,8 @@ function elementKinds(element: SanitizedElement): string[] {
   if (label.includes('address')) kinds.push('ADDRESS');
   if (label.includes('upi')) kinds.push('UPI_ID');
   if (label.includes('otp')) kinds.push('OTP');
+  if (label.includes('username') || label.includes('user name')) kinds.push('USERNAME');
+  if (element.input_type === 'search' || label.includes('search') || label.includes('text input')) kinds.push('TEXT');
   return kinds;
 }
 
@@ -116,6 +118,8 @@ function taskRequestsHandle(task: string, element: SanitizedElement): boolean {
     ADDRESS: /\baddress\b/i,
     UPI_ID: /\bupi\b/i,
     OTP: /\botp\b/i,
+    USERNAME: /\buser\s*name\b/i,
+    TEXT: /\b(?:text\s+input|search(?:\s+(?:query|box))?)\b/i,
   };
   return fieldWords[kind]?.test(task) ?? false;
 }
@@ -291,6 +295,8 @@ export function planLocalAction(context: SanitizedContext): AgentAction | null {
           ADDRESS: /\baddress\b/i,
           UPI_ID: /\bupi\b/i,
           OTP: /\botp\b/i,
+          USERNAME: /\buser\s*name\b/i,
+          TEXT: /\b(?:text\s+input|search(?:\s+(?:query|box))?)\b/i,
         };
         return words[kind]?.test(task) ?? false;
       }),

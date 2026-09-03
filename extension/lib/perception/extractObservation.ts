@@ -78,6 +78,17 @@ function isVisible(element: HTMLElement, rect: DOMRect): boolean {
   );
 }
 
+function labelledControlRect(element: HTMLElement): DOMRect | null {
+  if (
+    !(element instanceof HTMLInputElement) ||
+    !['checkbox', 'radio'].includes(element.type)
+  ) return null;
+  const label = element.labels?.[0];
+  if (!(label instanceof HTMLLabelElement)) return null;
+  const rect = finiteRect(label);
+  return rect && isVisible(label, rect) ? rect : null;
+}
+
 function isEnabled(element: HTMLElement): boolean {
   if (element.getAttribute('aria-disabled') === 'true') return false;
   return !(
@@ -361,8 +372,13 @@ export function extractObservation(): PerceptionSnapshot {
   for (const [domIndex, element] of queryDeep(PAGE_SELECTOR).entries()) {
     if (elements.length >= 2_000) break;
     try {
-      const rect = finiteRect(element);
-      if (!rect || !isVisible(element, rect)) continue;
+      const ownRect = finiteRect(element);
+      if (!ownRect) continue;
+      // React and Bootstrap commonly make the native radio/checkbox transparent
+      // and expose its associated label as the visible hit target. Keep the
+      // native control semantics while using that visible label's bounding box.
+      const rect = isVisible(element, ownRect) ? ownRect : labelledControlRect(element);
+      if (!rect) continue;
       const id = idFor(element);
       const value = valueFor(element);
       const valueBearing = isValueBearing(element);

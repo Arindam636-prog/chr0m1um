@@ -37,4 +37,15 @@ describe('task field handles', () => {
     );
     expect(vault.size).toBe(0);
   });
+
+  it('keeps explicitly supplied public-form text local too', () => {
+    const vault = new SecretVault();
+    const localized = localizeTaskFieldValues(
+      'Fill the Text input with ContextShield public test, select Two, and do not submit.',
+      vault,
+    );
+    expect(localized).toContain('Text input with LOCAL_TEXT_1');
+    expect(localized).not.toContain('ContextShield public test');
+    expect(vault.resolve('LOCAL_TEXT_1')).toBe('ContextShield public test');
+  });
 });

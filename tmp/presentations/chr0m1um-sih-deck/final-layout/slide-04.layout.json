@@ -1,0 +1,1745 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/kdfzpk",
+    "id": "kdfzpk",
+    "slide": 4,
+    "layoutId": "383f65c8-23e2-4f29-a07a-a41d13e772f4",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "ece4b3d2-9be0-4a5e-9b9c-ab93427a955b",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "Arial",
+      "Arial Narrow"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "383f65c8-23e2-4f29-a07a-a41d13e772f4",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "ece4b3d2-9be0-4a5e-9b9c-ab93427a955b",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "ece4b3d2-9be0-4a5e-9b9c-ab93427a955b",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/xwjaxk76",
+      "id": "1",
+      "bbox": [
+        24,
+        14,
+        44,
+        44
+      ],
+      "alt": "ContextShield mark",
+      "contentType": "image/svg+xml",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "b047438c-bc51-4b12-ab83-ded2136295cd",
+        "contentType": "image/svg+xml",
+        "byteLength": 411
+      }
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fy1ojeh8",
+      "id": "2",
+      "bbox": [
+        73,
+        13,
+        95,
+        43
+      ],
+      "geometry": "rect",
+      "text": "CONTEXT\nSHIELD",
+      "textPreview": "CONTEXT | SHIELD",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "Arial Narrow",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "CONTEXT"
+          },
+          {
+            "index": 2,
+            "text": "SHIELD"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "CONTEXT",
+          "lineSpacingPercent": 88000,
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "Arial Narrow",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left",
+            "lineSpacing": 0.88
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "CONTEXT",
+              "fontSize": 13,
+              "typeface": "Arial Narrow",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.88
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "SHIELD",
+          "lineSpacingPercent": 88000,
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "Arial Narrow",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left",
+            "lineSpacing": 0.88
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "SHIELD",
+              "fontSize": 13,
+              "typeface": "Arial Narrow",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 0.88
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/va1svup0",
+      "id": "3",
+      "bbox": [
+        1042,
+        5,
+        214,
+        88
+      ],
+      "alt": "Smart India Hackathon 2026 mark from the supplied template",
+      "contentType": "image/png",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "655ca7eb-5376-4163-8a5b-0b174a10d242",
+        "contentType": "image/png",
+        "byteLength": 31011
+      }
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/po36pozq",
+      "id": "4",
+      "bbox": [
+        205,
+        17,
+        830,
+        54
+      ],
+      "geometry": "rect",
+      "text": "FEASIBILITY AND VIABILITY",
+      "textPreview": "FEASIBILITY AND VIABILITY",
+      "resolvedFontSize": 39,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 39,
+        "typeface": "Arial Narrow",
+        "color": "#050505",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 2,
+          "bottom": 0,
+          "left": 2
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FEASIBILITY AND VIABILITY"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FEASIBILITY AND VIABILITY",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 39,
+            "typeface": "Arial Narrow",
+            "color": "#050505",
+            "bold": true,
+            "alignment": "center",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FEASIBILITY AND VIABILITY",
+              "fontSize": 39,
+              "typeface": "Arial Narrow",
+              "color": "#050505",
+              "bold": true,
+              "alignment": "center",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/onu5gji5",
+      "id": "5",
+      "bbox": [
+        0,
+        667,
+        1280,
+        53
+      ],
+      "geometry": "rect",
+      "fillColor": "#087ABD",
+      "lineColor": "#087ABD",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3mlonyhk",
+      "id": "6",
+      "bbox": [
+        442,
+        670,
+        396,
+        44
+      ],
+      "geometry": "rect",
+      "text": "@chr0m1um",
+      "textPreview": "@chr0m1um",
+      "resolvedFontSize": 31,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 31,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "@chr0m1um"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "@chr0m1um",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 31,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "@chr0m1um",
+              "fontSize": 31,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/21cnet0z",
+      "id": "7",
+      "bbox": [
+        1219,
+        669,
+        42,
+        45
+      ],
+      "geometry": "rect",
+      "text": "4",
+      "textPreview": "4",
+      "resolvedFontSize": 27,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 27,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "4"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "4",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "4",
+              "fontSize": 27,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5sjmd4z6",
+      "id": "8",
+      "bbox": [
+        40,
+        101,
+        104,
+        24
+      ],
+      "geometry": "roundRect",
+      "text": "FEASIBILITY",
+      "textPreview": "FEASIBILITY",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 12,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 1,
+          "right": 4,
+          "bottom": 1,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FEASIBILITY"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FEASIBILITY",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FEASIBILITY",
+              "fontSize": 12,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#087ABD",
+      "lineColor": "#087ABD",
+      "lineWidth": 1
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4rq54zil",
+      "id": "9",
+      "bbox": [
+        40,
+        121,
+        582,
+        257
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EAF5FB",
+      "lineColor": "#9CC9E3",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/alofahkn",
+      "id": "10",
+      "bbox": [
+        54,
+        137,
+        553,
+        228
+      ],
+      "geometry": "rect",
+      "text": "Proven browser stack: WXT, TypeScript and Manifest V3 produce loadable Chrome and Firefox builds.\nLocal AI is practical: Quantized ONNX models run through ONNX Runtime Web; visual work is targeted to visible regions.\nServer is replaceable: FastAPI speaks a strict schema and the planner uses an OpenAI-compatible endpoint for Qwen3-VL.\nOne-command operation: START.sh launches the model, API and judge site; STATUS.sh and VERIFY.sh expose failures early.\nCurrent proof: Controlled privacy, action and fail-closed demos run end to end on the team laptop.",
+      "textPreview": "Proven browser stack: WXT, TypeScript and Manifest V3 produce loadable Chrome and Firefox builds. | Local AI is practical: Quantized ONNX...",
+      "resolvedFontSize": 16.11,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16.11,
+        "typeface": "Arial",
+        "color": "#334155",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 4,
+          "right": 6,
+          "bottom": 4,
+          "left": 6
+        }
+      },
+      "textLayout": {
+        "lineCount": 10,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Proven browser stack: WXT, TypeScript and Manifest V3 produce"
+          },
+          {
+            "index": 2,
+            "text": "loadable Chrome and Firefox builds."
+          },
+          {
+            "index": 3,
+            "text": "• Local AI is practical: Quantized ONNX models run through ONNX"
+          },
+          {
+            "index": 4,
+            "text": "Runtime Web; visual work is targeted to visible regions."
+          },
+          {
+            "index": 5,
+            "text": "• Server is replaceable: FastAPI speaks a strict schema and the planner"
+          },
+          {
+            "index": 6,
+            "text": "uses an OpenAI-compatible endpoint for Qwen3-VL."
+          },
+          {
+            "index": 7,
+            "text": "• One-command operation: START.sh launches the model, API and judge"
+          },
+          {
+            "index": 8,
+            "text": "site; STATUS.sh and VERIFY.sh expose failures early."
+          },
+          {
+            "index": 9,
+            "text": "• Current proof: Controlled privacy, action and fail-closed demos run end"
+          },
+          {
+            "index": 10,
+            "text": "to end on the team laptop."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Proven browser stack: WXT, TypeScript and Manifest V3 produce loadable Chrome and Firefox builds.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Proven browser stack: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "WXT, TypeScript and Manifest V3 produce loadable Chrome and Firefox builds.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Local AI is practical: Quantized ONNX models run through ONNX Runtime Web; visual work is targeted to visible regions.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Local AI is practical: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Quantized ONNX models run through ONNX Runtime Web; visual work is targeted to visible regions.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "text": "Server is replaceable: FastAPI speaks a strict schema and the planner uses an OpenAI-compatible endpoint for Qwen3-VL.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Server is replaceable: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "FastAPI speaks a strict schema and the planner uses an OpenAI-compatible endpoint for Qwen3-VL.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "text": "One-command operation: START.sh launches the model, API and judge site; STATUS.sh and VERIFY.sh expose failures early.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "One-command operation: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "START.sh launches the model, API and judge site; STATUS.sh and VERIFY.sh expose failures early.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "text": "Current proof: Controlled privacy, action and fail-closed demos run end to end on the team laptop.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Current proof: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Controlled privacy, action and fail-closed demos run end to end on the team laptop.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vmxg3m18",
+      "id": "11",
+      "bbox": [
+        658,
+        101,
+        88,
+        24
+      ],
+      "geometry": "roundRect",
+      "text": "VIABILITY",
+      "textPreview": "VIABILITY",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 12,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 1,
+          "right": 4,
+          "bottom": 1,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "VIABILITY"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "VIABILITY",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "VIABILITY",
+              "fontSize": 12,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#17964B",
+      "lineColor": "#17964B",
+      "lineWidth": 1
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wnqxc72t",
+      "id": "12",
+      "bbox": [
+        658,
+        121,
+        582,
+        257
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EAF7EF",
+      "lineColor": "#9FD3B4",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xozy5cje",
+      "id": "13",
+      "bbox": [
+        672,
+        137,
+        553,
+        228
+      ],
+      "geometry": "rect",
+      "text": "Adoption path: Ship as a browser privacy layer that sits between existing users and cloud agent planners.\nDeployment model: Free local extension + self-hosted/community server; managed enterprise policy and audit controls.\nCost control: Small on-device models reduce server-side vision load; only sanitized structured context is transmitted.\nScalability: Add domain adapters, policy packs and independently versioned models without changing the privacy contract.\nTrust and retention: Visible redaction, confirmation gates and safe logs make delegated browser work understandable.",
+      "textPreview": "Adoption path: Ship as a browser privacy layer that sits between existing users and cloud agent planners. | Deployment model: Free local ...",
+      "resolvedFontSize": 16.11,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16.11,
+        "typeface": "Arial",
+        "color": "#334155",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 4,
+          "right": 6,
+          "bottom": 4,
+          "left": 6
+        }
+      },
+      "textLayout": {
+        "lineCount": 10,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Adoption path: Ship as a browser privacy layer that sits between existing"
+          },
+          {
+            "index": 2,
+            "text": "users and cloud agent planners."
+          },
+          {
+            "index": 3,
+            "text": "• Deployment model: Free local extension + self-hosted/community"
+          },
+          {
+            "index": 4,
+            "text": "server; managed enterprise policy and audit controls."
+          },
+          {
+            "index": 5,
+            "text": "• Cost control: Small on-device models reduce server-side vision load;"
+          },
+          {
+            "index": 6,
+            "text": "only sanitized structured context is transmitted."
+          },
+          {
+            "index": 7,
+            "text": "• Scalability: Add domain adapters, policy packs and independently"
+          },
+          {
+            "index": 8,
+            "text": "versioned models without changing the privacy contract."
+          },
+          {
+            "index": 9,
+            "text": "• Trust and retention: Visible redaction, confirmation gates and safe logs"
+          },
+          {
+            "index": 10,
+            "text": "make delegated browser work understandable."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Adoption path: Ship as a browser privacy layer that sits between existing users and cloud agent planners.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Adoption path: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Ship as a browser privacy layer that sits between existing users and cloud agent planners.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Deployment model: Free local extension + self-hosted/community server; managed enterprise policy and audit controls.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Deployment model: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Free local extension + self-hosted/community server; managed enterprise policy and audit controls.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "text": "Cost control: Small on-device models reduce server-side vision load; only sanitized structured context is transmitted.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Cost control: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Small on-device models reduce server-side vision load; only sanitized structured context is transmitted.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "text": "Scalability: Add domain adapters, policy packs and independently versioned models without changing the privacy contract.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Scalability: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Add domain adapters, policy packs and independently versioned models without changing the privacy contract.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "text": "Trust and retention: Visible redaction, confirmation gates and safe logs make delegated browser work understandable.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 16.11,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Trust and retention: ",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Visible redaction, confirmation gates and safe logs make delegated browser work understandable.",
+              "fontSize": 16.11,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ip8fehkj",
+      "id": "14",
+      "bbox": [
+        40,
+        395,
+        160,
+        24
+      ],
+      "geometry": "roundRect",
+      "text": "TECHNICAL CHALLENGES",
+      "textPreview": "TECHNICAL CHALLENGES",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 12,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 1,
+          "right": 4,
+          "bottom": 1,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "TECHNICAL CHALLENGES"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "TECHNICAL CHALLENGES",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "TECHNICAL CHALLENGES",
+              "fontSize": 12,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#E4574F",
+      "lineColor": "#E4574F",
+      "lineWidth": 1
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jqhg7m14",
+      "id": "15",
+      "bbox": [
+        40,
+        414,
+        582,
+        167
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF0EE",
+      "lineColor": "#F2A7A1",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/krqxgr2p",
+      "id": "16",
+      "bbox": [
+        54,
+        429,
+        553,
+        140
+      ],
+      "geometry": "rect",
+      "text": "Dynamic pages / stale targets: Re-observe after every action, bind actions to fingerprints and fail closed when state changes.\nCross-site variability: Use semantic DOM + ARIA first, OCR as fallback, then add measured domain adapters.\nResource pressure: Load models lazily, crop visual regions, quantize weights and keep a deterministic no-vision fallback.",
+      "textPreview": "Dynamic pages / stale targets: Re-observe after every action, bind actions to fingerprints and fail closed when state changes. | Cross-si...",
+      "resolvedFontSize": 15.51,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15.51,
+        "typeface": "Arial",
+        "color": "#334155",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 4,
+          "right": 6,
+          "bottom": 4,
+          "left": 6
+        }
+      },
+      "textLayout": {
+        "lineCount": 6,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• Dynamic pages / stale targets: Re-observe after every action, bind actions"
+          },
+          {
+            "index": 2,
+            "text": "to fingerprints and fail closed when state changes."
+          },
+          {
+            "index": 3,
+            "text": "• Cross-site variability: Use semantic DOM + ARIA first, OCR as fallback,"
+          },
+          {
+            "index": 4,
+            "text": "then add measured domain adapters."
+          },
+          {
+            "index": 5,
+            "text": "• Resource pressure: Load models lazily, crop visual regions, quantize"
+          },
+          {
+            "index": 6,
+            "text": "weights and keep a deterministic no-vision fallback."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Dynamic pages / stale targets: Re-observe after every action, bind actions to fingerprints and fail closed when state changes.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.51,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Dynamic pages / stale targets: ",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Re-observe after every action, bind actions to fingerprints and fail closed when state changes.",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "text": "Cross-site variability: Use semantic DOM + ARIA first, OCR as fallback, then add measured domain adapters.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.51,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Cross-site variability: ",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Use semantic DOM + ARIA first, OCR as fallback, then add measured domain adapters.",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "text": "Resource pressure: Load models lazily, crop visual regions, quantize weights and keep a deterministic no-vision fallback.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.51,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Resource pressure: ",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Load models lazily, crop visual regions, quantize weights and keep a deterministic no-vision fallback.",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5szy9wja",
+      "id": "17",
+      "bbox": [
+        658,
+        395,
+        190,
+        24
+      ],
+      "geometry": "roundRect",
+      "text": "BUSINESS / USER CHALLENGES",
+      "textPreview": "BUSINESS / USER CHALLENGES",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 12,
+        "typeface": "Arial Narrow",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 1,
+          "right": 4,
+          "bottom": 1,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "BUSINESS / USER CHALLENGES"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "BUSINESS / USER CHALLENGES",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "typeface": "Arial Narrow",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "BUSINESS / USER CHALLENGES",
+              "fontSize": 12,
+              "typeface": "Arial Narrow",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#F59E0B",
+      "lineColor": "#F59E0B",
+      "lineWidth": 1
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6t8fi1kv",
+      "id": "18",
+      "bbox": [
+        658,
+        414,
+        582,
+        167
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF6E5",
+      "lineColor": "#E8BA5F",
+      "lineWidth": 1.2
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7e1gb61g",
+      "id": "19",
+      "bbox": [
+        672,
+        429,
+        553,
+        140
+      ],
+      "geometry": "rect",
+      "text": "User confidence: Show exactly what was redacted, what the server saw and why confirmation is requested.\nFalse privacy claims: Publish benchmark scope and caveats; never equate controlled recall with universal website coverage.\nMaintenance: Version models, schemas and policy packs separately; regression-test real controls before release.",
+      "textPreview": "User confidence: Show exactly what was redacted, what the server saw and why confirmation is requested. | False privacy claims: Publish b...",
+      "resolvedFontSize": 15.51,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15.51,
+        "typeface": "Arial",
+        "color": "#334155",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 4,
+          "right": 6,
+          "bottom": 4,
+          "left": 6
+        }
+      },
+      "textLayout": {
+        "lineCount": 6,
+        "lines": [
+          {
+            "index": 1,
+            "text": "• User confidence: Show exactly what was redacted, what the server saw"
+          },
+          {
+            "index": 2,
+            "text": "and why confirmation is requested."
+          },
+          {
+            "index": 3,
+            "text": "• False privacy claims: Publish benchmark scope and caveats; never equate"
+          },
+          {
+            "index": 4,
+            "text": "controlled recall with universal website coverage."
+          },
+          {
+            "index": 5,
+            "text": "• Maintenance: Version models, schemas and policy packs separately;"
+          },
+          {
+            "index": 6,
+            "text": "regression-test real controls before release."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "User confidence: Show exactly what was redacted, what the server saw and why confirmation is requested.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.51,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "User confidence: ",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Show exactly what was redacted, what the server saw and why confirmation is requested.",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "text": "False privacy claims: Publish benchmark scope and caveats; never equate controlled recall with universal website coverage.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.51,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "False privacy claims: ",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Publish benchmark scope and caveats; never equate controlled recall with universal website coverage.",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "text": "Maintenance: Version models, schemas and policy packs separately; regression-test real controls before release.",
+          "bulletCharacter": "•",
+          "marginLeft": 18,
+          "indent": -10,
+          "lineSpacingPercent": 100000,
+          "spaceAfter": 5,
+          "resolvedTextStyle": {
+            "fontSize": 15.51,
+            "typeface": "Arial",
+            "color": "#334155",
+            "alignment": "left",
+            "lineSpacing": 1
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Maintenance: ",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "bold": true,
+              "alignment": "left",
+              "lineSpacing": 1
+            },
+            {
+              "index": 2,
+              "text": "Version models, schemas and policy packs separately; regression-test real controls before release.",
+              "fontSize": 15.51,
+              "typeface": "Arial",
+              "color": "#334155",
+              "alignment": "left",
+              "lineSpacing": 1
+            }
+          ]
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3i1wz6h8",
+      "id": "20",
+      "bbox": [
+        300,
+        602,
+        680,
+        30
+      ],
+      "geometry": "roundRect",
+      "text": "BUILD → MEASURE → DISCLOSE LIMITS → EXPAND COVERAGE",
+      "textPreview": "BUILD → MEASURE → DISCLOSE LIMITS → EXPAND COVERAGE",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 17,
+        "typeface": "Arial Narrow",
+        "color": "#123B5D",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 2,
+          "right": 4,
+          "bottom": 2,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "BUILD → MEASURE → DISCLOSE LIMITS → EXPAND COVERAGE"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "BUILD → MEASURE → DISCLOSE LIMITS → EXPAND COVERAGE",
+          "lineSpacingPercent": 102000,
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "typeface": "Arial Narrow",
+            "color": "#123B5D",
+            "bold": true,
+            "alignment": "center",
+            "lineSpacing": 1.02
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "BUILD → MEASURE → DISCLOSE LIMITS → EXPAND COVERAGE",
+              "fontSize": 17,
+              "typeface": "Arial Narrow",
+              "color": "#123B5D",
+              "bold": true,
+              "alignment": "center",
+              "lineSpacing": 1.02
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#F1F7FB",
+      "lineColor": "#B7D5E6",
+      "lineWidth": 1
+    }
+  ],
+  "composeRuns": []
+}

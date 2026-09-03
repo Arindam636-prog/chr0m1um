@@ -10,6 +10,7 @@ export default tseslint.config(
       '**/node_modules/**',
       '**/coverage/**',
       '**/playwright-report/**',
+      'demo/assets/judge/**',
       '**/.venv/**',
       'eslint.config.mjs',
       'scripts/compact-chrome-release.mjs',
@@ -17,6 +18,30 @@ export default tseslint.config(
   },
   eslint.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
+  {
+    ...tseslint.configs.disableTypeChecked,
+    files: ['**/*.js', '**/*.mjs'],
+  },
+  {
+    files: ['demo/**/*.js'],
+    languageOptions: {
+      globals: {
+        AbortSignal: 'readonly',
+        document: 'readonly',
+        fetch: 'readonly',
+        navigator: 'readonly',
+        window: 'readonly',
+      },
+    },
+  },
+  {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+      },
+    },
+  },
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {

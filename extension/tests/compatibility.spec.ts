@@ -95,6 +95,13 @@ const scenarios: Array<{ path: string; body: string; expected: string[] }> = [
     <script>document.body.className = "weava-highlighter-active"</script>`,
     expected: ['checkbox 1', 'checkbox 2'],
   },
+  {
+    path: '/visually-hidden-controls',
+    body: `<style>.hidden-control{position:absolute;opacity:0;width:1px;height:1px}</style>
+      <input class="hidden-control" id="hidden-radio" type="radio" name="choice" value="male">
+      <label for="hidden-radio" style="display:block;width:120px;height:32px">Expected visible radio label</label>`,
+    expected: ['Expected visible radio label'],
+  },
 ];
 
 scenarios.push(
@@ -270,6 +277,17 @@ test('detects visible interactables across representative and extension-injected
         expect(JSON.stringify(observed.local.observation.elements)).not.toContain(
           'Injected sidebar link',
         );
+      }
+      if (scenario.path === '/visually-hidden-controls') {
+        const radio = observed.local.observation.elements.find(
+          (element) => element.role === 'radio',
+        );
+        expect(radio).toMatchObject({
+          label: 'Expected visible radio label',
+          control_value: 'male',
+          selected: false,
+        });
+        expect(radio?.bbox.width).toBeGreaterThan(1);
       }
       if (scenario.path === '/injected-extension-ui') {
         const serialized = JSON.stringify(observed.local.observation.elements);

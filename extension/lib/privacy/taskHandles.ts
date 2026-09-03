@@ -7,7 +7,7 @@ interface TaskValueMatch {
   value: string;
 }
 
-const FIELD_START = '(?:first\\s+name|last\\s+name|full\\s+name|email(?:\\s+address)?|mobile(?:\\s+number)?|phone(?:\\s+number)?|current\\s+address|address|upi(?:\\s+id)?)';
+const FIELD_START = '(?:first\\s+name|last\\s+name|full\\s+name|email(?:\\s+address)?|mobile(?:\\s+number)?|phone(?:\\s+number)?|current\\s+address|address|upi(?:\\s+id)?|user\\s*name|text\\s+input|search(?:\\s+(?:query|box))?)';
 const VALUE_END = `(?=\\s*(?:,|;|$|\\.\\s+(?=[A-Z])|\\band\\s+(?=${FIELD_START}\\b)))`;
 
 const TASK_FIELDS: ReadonlyArray<{ kind: string; expression: RegExp }> = [
@@ -18,6 +18,8 @@ const TASK_FIELDS: ReadonlyArray<{ kind: string; expression: RegExp }> = [
   { kind: 'PHONE', expression: new RegExp(`\\b(?:mobile|phone)(?:\\s+number)?\\s*(?:is|=|:)?\\s*(?:"([^"]{1,200})"|'([^']{1,200})'|([^,;\\n]{1,200}?)${VALUE_END})`, 'gi') },
   { kind: 'ADDRESS', expression: new RegExp(`\\b(?:current\\s+address|address)\\s*(?:is|=|:)?\\s*(?:"([^"]{1,200})"|'([^']{1,200})'|([^,;\\n]{1,200}?)${VALUE_END})`, 'gi') },
   { kind: 'UPI_ID', expression: new RegExp(`\\bupi(?:\\s+id)?\\s*(?:is|=|:)?\\s*(?:"([^"]{1,200})"|'([^']{1,200})'|([^,;\\n]{1,200}?)${VALUE_END})`, 'gi') },
+  { kind: 'USERNAME', expression: new RegExp(`\\buser\\s*name\\s*(?:is|=|:|with)?\\s*(?:"([^"]{1,200})"|'([^']{1,200})'|([^,;\\n]{1,200}?)${VALUE_END})`, 'gi') },
+  { kind: 'TEXT', expression: new RegExp(`\\b(?:text\\s+input|search(?:\\s+(?:query|box))?)\\s*(?:is|=|:|with)?\\s*(?:"([^"]{1,200})"|'([^']{1,200})'|([^,;\\n]{1,200}?)${VALUE_END})`, 'gi') },
 ];
 
 const ACTION_ONLY_VALUE = /^(?:my\s+)?(?:and\s+)?(?:continue|submit|stop|proceed|go|click|press|select|choose|fill|enter|use)(?:\s+.*)?$/i;

@@ -1,0 +1,77 @@
+SMART INDIA HACKATHON 2026
+CONTEXT SHIELD
+• Problem Statement ID- 2026171
+• Problem Statement Title- On-Device Visual Perception for
+Light-weight Browser Agents
+• Theme-Smart Automation
+• PS Category- Software
+• Team ID-12345
+• Team Name: Chr0m1um
+@chr0m1um 1
+
+===== PAGE =====
+
+CONTEXT SHIELD
+(Privacy-Preserving Context Firewall)
+- Innovation
+▸ Excessive Context Exposure : AI agents may receive more webpage data than required.
+▸ Sensitive Data Risk : Private information can unintentionally enter the AI context.
+▸ Privacy vs Capability : Removing too much context can reduce task effectiveness.
+▸ Privacy-Aware Context Firewall : Controls what browser information reaches the AI agent.
+▸ Local Context Protection : Detects and sanitizes unnecessary sensitive information before AI access.
+▸ Minimum Necessary Context : Preserves task-relevant information while reducing exposure.
+▸ Task-Aware Privacy : Instead of blindly masking data, ContextShield considers the task before deciding what the AI
+should see.
+▸ Privacy Before AI Access : Protection happens before context reaches the AI planner.
+▸ Controlled AI Actions : AI-generated browser actions pass through a validation layer before execution.
+@chr0m1um 2
+
+===== PAGE =====
+
+T E C H N I C A L A P P R O A C H
+@chr0m1um 3
+
+===== PAGE =====
+
+F E A S I B I L I T Y A N D V I A B I L I T Y
+FEASIBILITY VIABILITY
+Technical : Proven architecture using Chrome Extension, Need : AI agents require access to real-world digital context,
+TypeScript, FastAPI and local AI components makes creating a growing need for privacy-aware access control.
+browser-level context protection technically achievable. Adoption : Can be positioned as a reusable protection layer for
+Privacy Control : Sensitive browser context can be analyzed browser-based AI agents rather than a completely new platform.
+and minimized before it reaches the AI planning layer. Scalability : The same context-control architecture can later
+Operational : Works as an additional security layer without extend beyond browser workflows to other AI-agent
+replacing the user's browser or existing AI agent workflow. environments.
+Implementation : The system can be developed Trust & Retention : Giving users control over what information
+module-by-module — context collection, privacy filtering, AI reaches AI systems can improve confidence in delegating tasks
+planning and action validation. to agents.
+@chr0m1um 4
+
+===== PAGE =====
+
+I M P A C T S & B E N E F I T S
+● The Privacy & Trust Impact : AI agents can become more trustworthy when users do not have to
+expose their complete browser context for every task. ContextShield promotes the principle of minimum
+necessary context before information reaches an AI system.
+● The Security & Responsible Automation Impact : Sensitive information is analyzed before AI
+access, while generated actions can be validated before execution. This adds protection at both sides
+of the agent workflow — what the AI sees and what the AI is allowed to do.
+● The Adoption & Ecosystem Impact : A reusable context-control layer can support individuals and
+organizations in adopting browser-based AI assistance with greater confidence, and can provide a
+foundation for privacy-aware AI-agent systems.
+MODE 1: PRIVATE CONTEXT MODE 2: TASK-AWARE CONTEXT MODE 3: CONTROLLED EXECUTION
+For : Everyday browser tasks with sensitive For : Tasks where some sensitive
+information present. information may still be required. For : AI tasks that require browser actions
+Process : Browser context → Local analysis Process : Task request → Context Process : AI plan → Structured action →
+→ Sensitive data minimized → Safe context analysis → Preserve / sanitize / exclude Validation → Controlled browser execution.
+sent to AI. based on necessity. Benefit : Reduces risk from unintended or
+Benefit : AI receives relevant information Benefit : Balances privacy with AI task unsafe AI actions.
+without unnecessary exposure. effectiveness. Best For : Automated navigation, form
+Best For : Personal browsing, forms, Best For : Complex workflows requiring interaction and multi-step tasks.
+accounts and private webpages. context-dependent decisions.
+@chr0m1um 5
+
+===== PAGE =====
+
+R E S E A R C H A N D R E F E R E N C E S
+@chr0m1um 6

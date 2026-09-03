@@ -168,7 +168,7 @@ test('completes the real checkout with Rampart and the local Qwen backend', asyn
 
     await expect(popup.locator('.success-result')).toContainText('Task complete');
     await expect(target.locator('#email')).toHaveValue('private@example.com');
-    await expect(target.locator('#fare')).toHaveValue('₹899 — Saver — 09:15');
+    await expect(target.locator('#fare')).toHaveValue('₹899 · Saver · 09:15');
     await expect(target.locator('#done')).toBeVisible();
     await expect(popup.getByText('Rampart ONNX contextual PII model ready')).toBeVisible();
     await expect(popup.getByText('Server returned a structured action').first()).toBeVisible();
@@ -287,7 +287,7 @@ test('stops the real mutation demo on the first stale action', async () => {
     const popup = await context.newPage();
     await popup.goto(`chrome-extension://${extensionId}/popup.html`);
     await popup.getByLabel('What should the agent do?').fill(
-      'Complete the task shown on this page.',
+      'Click Arm stale-state mutation, then click Continue to finish task.',
     );
 
     const target = await context.newPage();
@@ -630,6 +630,57 @@ test('completes the reported Herokuapp ordinal checkbox task with real Qwen', as
     expect(reply.state.serverPreview).toContain('"label": "checkbox 1"');
     expect(reply.state.serverPreview).toContain('"label": "checkbox 2"');
     expect(reply.state.resultSummary).not.toMatch(/cannot|no actionable|failed/i);
+  } finally {
+    await context.close();
+  }
+});
+
+test('completes the Selenium official generic web form without submitting', async () => {
+  test.skip(
+    process.env.CONTEXTSHIELD_E2E_EXTERNAL !== '1',
+    'Opt-in external regression depends on selenium.dev availability',
+  );
+  test.setTimeout(300_000);
+  const context = await chromium.launchPersistentContext('', {
+    channel: 'chromium',
+    headless: true,
+    args: [
+      `--disable-extensions-except=${extensionPath}`,
+      `--load-extension=${extensionPath}`,
+    ],
+  });
+  captureContextShieldErrors(context);
+  try {
+    let [serviceWorker] = context.serviceWorkers();
+    serviceWorker ??= await context.waitForEvent('serviceworker');
+    const extensionId = new URL(serviceWorker.url()).hostname;
+    const popup = await context.newPage();
+    await popup.goto(`chrome-extension://${extensionId}/popup.html`);
+    await popup.getByLabel('What should the agent do?').fill(
+      'Fill the Text input with ContextShield public test, select Two from the Dropdown, check the Default checkbox, and do not submit.',
+    );
+    const target = await context.newPage();
+    await target.goto('https://www.selenium.dev/selenium/web/web-form.html');
+    await target.bringToFront();
+    await popup.getByRole('button', { name: 'Start agent' }).evaluate(
+      (button: HTMLButtonElement) => button.click(),
+    );
+
+    await expect.poll(async () => {
+      const reply: AgentCommandResponse = await popup.evaluate(() =>
+        browser.runtime.sendMessage({ type: 'GET_AGENT_STATE' }),
+      );
+      if (reply.state.pendingConfirmation) {
+        throw new Error(`Unexpected user gate: ${reply.state.pendingConfirmation.prompt}`);
+      }
+      if (reply.state.phase === 'FAILED') throw new Error(reply.state.error ?? 'Agent failed');
+      return reply.state.phase;
+    }, { timeout: 280_000 }).toBe('COMPLETE');
+
+    await expect(target.getByLabel('Text input')).toHaveValue('ContextShield public test');
+    await expect(target.getByLabel('Dropdown (select)')).toHaveValue('2');
+    await expect(target.getByLabel('Default checkbox')).toBeChecked();
+    await expect(target).toHaveURL('https://www.selenium.dev/selenium/web/web-form.html');
   } finally {
     await context.close();
   }

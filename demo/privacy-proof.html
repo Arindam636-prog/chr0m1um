@@ -6,20 +6,28 @@
     <title>Privacy proof · ContextShield</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body class="privacy-demo">
     <main>
-      <a class="back" href="index.html">← All demos</a>
-      <p class="eyebrow">Demo 1 · Privacy boundary</p>
+      <a class="back" href="index.html">← Judge demo home</a>
+      <p class="eyebrow">Privacy boundary</p>
       <h1>Private customer profile</h1>
-      <p>Name: Arindam Mukherjee</p>
-      <p>Email: privacy.fixture@example.com</p>
-      <p>Mobile: +91 98765-43210</p>
-      <p>UPI: private.user@oksbi</p>
-      <label>Account password <input type="password" value="NeverSendThis!" /></label>
-      <div class="face" data-contextshield-visual-control data-contextshield-sensitive="face" role="img" aria-label="Private profile photo">
-        <span>Private face region</span>
+      <div class="privacy-fixture-grid">
+        <div>
+          <p>This page deliberately combines private DOM text, a password field and a real pixel image. All values are synthetic.</p>
+          <div class="fixture-data">
+            <p>Name: Context Shield</p>
+            <p>Email: privacy.fixture@example.com</p>
+            <p>Mobile: +91 98765-43210</p>
+            <p>UPI: private.user@oksbi</p>
+          </div>
+          <label>Account password <input type="password" value="NeverSendThis!" /></label>
+        </div>
+        <figure class="portrait-fixture" data-contextshield-visual-control>
+          <img src="assets/fictional-profile.png" alt="Fictional customer portrait for local face detection" width="720" height="658" />
+          <figcaption>Fictional image generated for this local face-detection fixture.</figcaption>
+        </figure>
       </div>
-      <p class="note">Open the extension and ask: “Summarize what is safe on this page.” Compare the local counts with “Actual server view”.</p>
+      <p class="note">Open the extension and ask: “Summarize what is safe on this page without exposing personal or sensitive information.” Compare local detections with “Actual server view”. The email, mobile, UPI, password and face pixels must not appear there.</p>
     </main>
   </body>
 </html>

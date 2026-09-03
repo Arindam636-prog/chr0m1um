@@ -32,7 +32,10 @@ function inferHandleKind(inputType: string | null, label: string | null): string
   if (normalizedLabel.includes('first name')) return 'GIVEN_NAME';
   if (normalizedLabel.includes('last name')) return 'SURNAME';
   if (normalizedLabel.includes('address')) return 'ADDRESS';
+  if (normalizedLabel.includes('username') || normalizedLabel.includes('user name')) return 'USERNAME';
   if (normalizedLabel.includes('name')) return 'PERSON_NAME';
+  if (inputType === 'search' || normalizedLabel.includes('search')) return 'TEXT';
+  if (inputType === 'text' && normalizedLabel.includes('text input')) return 'TEXT';
   return undefined;
 }
 

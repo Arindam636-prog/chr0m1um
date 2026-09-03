@@ -93,6 +93,7 @@ function executeClick(element: HTMLElement): void {
     element instanceof HTMLButtonElement ||
     element instanceof HTMLAnchorElement ||
     element instanceof HTMLInputElement ||
+    element instanceof HTMLLabelElement ||
     element.tagName === 'SUMMARY' ||
     [
       'button',
@@ -109,6 +110,18 @@ function executeClick(element: HTMLElement): void {
   if (!clickable) throw new Error('Element is not an allowed click target');
   element.focus();
   element.click();
+}
+
+function visibleClickTarget(element: HTMLElement): HTMLElement {
+  if (
+    element instanceof HTMLInputElement &&
+    ['checkbox', 'radio'].includes(element.type) &&
+    !visible(element)
+  ) {
+    const label = element.labels?.[0];
+    if (label instanceof HTMLLabelElement && visible(label)) return label;
+  }
+  return element;
 }
 
 function executeType(element: HTMLElement, value: string): void {
@@ -200,15 +213,16 @@ export class DomActionBroker implements ActionBroker {
     if (!element || !element.isConnected) {
       return result(action.action_id, false, false, true, 'ELEMENT_NOT_FOUND');
     }
-    if (!visible(element) || !enabled(element)) {
+    const executionTarget = action.type === 'CLICK' ? visibleClickTarget(element) : element;
+    if (!visible(executionTarget) || !enabled(element) || !enabled(executionTarget)) {
       return result(action.action_id, false, false, true, 'ACTION_FAILED');
     }
-    if (isHighRisk(action, element) && !context.confirmedActionIds.has(action.action_id)) {
+    if (isHighRisk(action, executionTarget) && !context.confirmedActionIds.has(action.action_id)) {
       return result(action.action_id, false, false, false, 'CONFIRMATION_REQUIRED');
     }
 
     try {
-      if (action.type === 'CLICK') executeClick(element);
+      if (action.type === 'CLICK') executeClick(executionTarget);
       if (action.type === 'TYPE_HANDLE') {
         if (context.resolvedValue === undefined) throw new Error('Local handle did not resolve');
         executeType(element, context.resolvedValue);

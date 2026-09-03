@@ -138,9 +138,16 @@ echo " Starting ContextShield"
 echo "========================================"
 echo
 
-if [[ ! -d node_modules || ! -x .venv/bin/uvicorn ]]; then
+if [[ ! -d node_modules || ! -x .venv/bin/uvicorn || ! -d node_modules/@tailwindcss/vite || ! -d node_modules/motion ]]; then
   echo "First run detected. Installing the required packages..."
   ./scripts/setup.sh
+fi
+
+echo "Building the judge website..."
+npm run build:judge >/dev/null
+
+if [[ -f benchmarks/results/latest.json ]]; then
+  node scripts/sync-demo-evidence.mjs >/dev/null
 fi
 
 prepare_service_runtime
@@ -296,12 +303,14 @@ echo " ContextShield is running"
 echo "========================================"
 echo
 echo "1. Install release/ContextShield-Chrome once from chrome://extensions."
-echo "   If it is already installed, do not reload it on every start."
-echo "2. Open: http://127.0.0.1:4173"
-echo "3. Choose Checkout Demo and add your Email to the extension vault."
-echo "4. In ContextShield, type:"
-echo "   Choose the cheapest morning fare, fill my email, continue, and place the order."
-echo "5. Click Start agent, then click Allow once when it asks before Place order."
+echo "   After this v1.3.0 update, reload the unpacked extension once."
+echo "2. The judge control room opens at: http://127.0.0.1:4173"
+if [[ "$planner_mode" == "llama" ]]; then
+  echo "3. Confirm that it shows Agent API Online and Qwen3-VL ready."
+else
+  echo "3. Confirm that it shows Agent API Online and Predictable mock planner."
+fi
+echo "4. Start with Privacy proof and follow the six-minute route on the page."
 echo
 if [[ "$planner_mode" == "llama" ]]; then
   echo "Planner: real local Qwen3-VL"

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-31T07:27:33.360Z",
+  "source": "benchmarks/results/latest.json",
+  "metrics": {
+    "visual": {
+      "value": "167 / 167",
+      "scope": "Expected interactables found across 60 controlled browser screens. This is semantic DOM, ARIA and OCR recall, not pixel box accuracy."
+    },
+    "pii": {
+      "value": "100% / 100%",
+      "scope": "295 labelled synthetic cases. Precision is shown first, recall second."
+    },
+    "redaction": {
+      "value": "100 / 100",
+      "scope": "Controlled supplied-box pixel masks verified, with detected text entities removed from sanitized context."
+    },
+    "latency": {
+      "value": "3.67 s",
+      "scope": "Median across 3 of 3 completed controlled live-product tasks."
+    },
+    "resources": {
+      "value": "99.6 MB release",
+      "scope": "1.26 GB peak aggregate Chromium test profile. Extension-only RAM is not yet isolated."
+    }
+  },
+  "caveat": "Controlled results validate the prototype. A human-reviewed face and document dataset, pixel-level UI grounding benchmark, extension-only resource measurement and larger independent task suite remain required before production claims."
+}

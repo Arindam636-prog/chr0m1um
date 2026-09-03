@@ -5,6 +5,8 @@ def test_health(client):
         "status": "ok",
         "service": "contextshield-agent",
         "model_backend": "mock",
+        "planner_ready": True,
+        "privacy_boundary": "sanitized-context-only",
     }
 
 

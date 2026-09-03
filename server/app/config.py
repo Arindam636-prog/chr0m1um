@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     model_timeout_seconds: float = Field(default=120.0, gt=0, le=600)
     database_path: str = "./data/contextshield.sqlite3"
     log_level: str = "INFO"
-    cors_origins: str = "http://localhost"
+    cors_origins: str = "http://localhost,http://127.0.0.1:4173,http://localhost:4173"
     cors_origin_regex: str = r"^(chrome-extension|moz-extension)://[a-z0-9-]+$"
 
     @property

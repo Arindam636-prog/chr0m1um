@@ -12,14 +12,16 @@ Build/load the extension as described in the README, then open
 
 ## Demo 1 — privacy proof
 
-Open `privacy-proof.html` and ask “Summarize what is safe on this page.” Show:
+Open `privacy-proof.html` and ask “Summarize what is safe on this page without
+exposing personal or sensitive information.” Show:
 
-1. the raw synthetic name, email, phone, UPI ID, password and marked face on the page;
+1. the raw synthetic name, email, phone, UPI ID, password and fictional portrait on the page;
 2. locally detected categories in the popup;
 3. the actual `SanitizedContext` under **Actual server view**;
 4. the `/v1/agent/start` request in DevTools, with all source values absent.
 
-The face region is dropped. It is not represented by a reversible CSS overlay.
+The image is a generated fictional test fixture. Its face pixels are detected
+and dropped locally, not covered with a reversible CSS overlay.
 
 ## Demo 2 — autonomous agent
 
@@ -44,8 +46,9 @@ every API payload and asserts the source email is absent.
 
 Available demonstrations:
 
-- open `fail-closed.html` and ask `Complete the task shown on this page.`; the
-  page reveals a target and replaces it while the local planner is working. The
+- open `fail-closed.html` and ask `Click Arm stale-state mutation, then click
+  Continue to finish task.`; the page reveals a target and repeatedly replaces
+  it while the next action is prepared. The
   first stale action is rejected and the run ends immediately with `Page changed
   after planning; the stale action was blocked.`;
 - deny the **Place order** confirmation; the action is not executed;
@@ -65,5 +68,15 @@ Open `general-controls.html` and ask:
 The planner receives the dropdown's current selection, ordered exact options,
 checkbox/radio state, and locally sanitized semantic values. It should execute
 `SELECT`, `CLICK`, `CLICK`, then `FINISH` without asking the user for an element
-ID. This flow is automated against both the local fixture and WebDriver
-University's public control page.
+ID. This flow is automated against the local fixture.
+
+## Public fixture
+
+Open Selenium's official form at
+`https://www.selenium.dev/selenium/web/web-form.html` and ask:
+
+> Fill the Text input with ContextShield public test, select Two from the Dropdown, check the Default checkbox, and do not submit.
+
+The final value, selected option, checked state and unchanged URL are covered by
+the opt-in external browser regression. The generic text value is represented by
+a local handle before the server boundary.

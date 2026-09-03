@@ -50,6 +50,8 @@ const SECRET_TYPES = [
   ['UPI_ID', 'UPI ID'],
   ['PASSWORD', 'Password'],
   ['OTP', 'OTP'],
+  ['USERNAME', 'Username'],
+  ['TEXT', 'Generic text'],
 ] as const;
 
 async function send(message: ExtensionRequest): Promise<AgentCommandResponse> {

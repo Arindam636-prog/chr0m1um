@@ -1,6 +1,6 @@
 {
   "name": "contextshield",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": true,
   "description": "Privacy-preserving autonomous browser agent for SIH 2026",
   "engines": {
@@ -8,6 +8,7 @@
   },
   "workspaces": [
     "extension",
+    "judge-site",
     "shared"
   ],
   "scripts": {
@@ -15,13 +16,16 @@
     "dev": "npm run dev --workspace @contextshield/extension",
     "build": "npm run build --workspace @contextshield/extension",
     "build:firefox": "npm run build:firefox --workspace @contextshield/extension",
+    "build:judge": "npm run build --workspace @contextshield/judge-site",
+    "dev:judge": "npm run dev --workspace @contextshield/judge-site",
     "lint": "eslint . && npm run typecheck",
-    "typecheck": "npm run typecheck --workspace @contextshield/shared && npm run typecheck --workspace @contextshield/extension",
+    "typecheck": "npm run typecheck --workspace @contextshield/shared && npm run typecheck --workspace @contextshield/extension && npm run typecheck --workspace @contextshield/judge-site",
     "test": "npm run test --workspace @contextshield/shared && npm run test --workspace @contextshield/extension",
     "test:e2e": "CONTEXTSHIELD_E2E=1 npm run build && npm run test:e2e --workspace @contextshield/extension",
     "release": "./scripts/make-release.sh",
     "benchmark": "tsx benchmarks/run.ts",
-    "check": "npm run lint && npm run test && npm run build && npm run build:firefox"
+    "sync:demo-evidence": "node scripts/sync-demo-evidence.mjs",
+    "check": "npm run lint && npm run test && npm run build && npm run build:firefox && npm run build:judge"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

@@ -1,0 +1,223 @@
+{"kind":"slide","id":"sl/ro024z","slide":1,"title":"Slide 1","textShapes":0}
+{"kind":"image","id":"im/ylc3ylof","slide":1,"name":"","alt":"ContextShield SIH 2026 title slide supplied by team Chr0m1um","bbox":[0,0,1280,720]}
+{"kind":"notes","id":"nt/ro024z","slide":1,"text":"Opening: Browser agents are useful only when users can trust what leaves their device.\nIntroduce ContextShield as a privacy-preserving browser agent boundary built by Chr0m1um.\nVerify Team ID 12345 before final submission if the SIH portal assigns a different ID.\n\n[Sources]\n- /Users/arindam/Downloads/demo SIH.pdf\n[/Sources]"}
+{"kind":"slide","id":"sl/pye4jf","slide":2,"title":"CONTEXT","textShapes":17}
+{"kind":"textbox","id":"sh/329wjqhw","slide":2,"text":"CONTEXT\nSHIELD","textPreview":"CONTEXT | SHIELD","textChars":14,"textLines":2,"bbox":[73,13,95,43]}
+{"kind":"textbox","id":"sh/107eh0zq","slide":2,"text":"CONTEXT SHIELD","textPreview":"CONTEXT SHIELD","textChars":14,"textLines":1,"bbox":[205,17,830,54]}
+{"kind":"shape","id":"sh/gzydovil","slide":2,"bbox":[0,667,1280,53]}
+{"kind":"textbox","id":"sh/fypwfqh0","slide":2,"text":"@chr0m1um","textPreview":"@chr0m1um","textChars":9,"textLines":1,"bbox":[442,670,396,44]}
+{"kind":"textbox","id":"sh/exgvml0f","slide":2,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[1219,669,42,45]}
+{"kind":"textbox","id":"sh/lwbetkza","slide":2,"text":"(Privacy-Preserving Context Firewall)","textPreview":"(Privacy-Preserving Context Firewall)","textChars":37,"textLines":1,"bbox":[410,68,460,22]}
+{"kind":"textbox","id":"sh/69k3q5wf","slide":2,"text":"Innovation","textPreview":"Innovation","textChars":10,"textLines":1,"bbox":[981,74,90,22]}
+{"kind":"textbox","id":"sh/rutkzad0","slide":2,"text":"PROBLEM","textPreview":"PROBLEM","textChars":7,"textLines":1,"bbox":[38,102,88,24]}
+{"kind":"shape","id":"sh/sv2lsfel","slide":2,"bbox":[38,121,690,126]}
+{"kind":"textbox","id":"sh/twb210vq","slide":2,"text":"Too much context: Cloud agents may receive raw pixels, DOM text, cookies and identity the task never needs.\nBlanket redaction: Safer, but it strips labels and structure required to act correctly.\nUngated actions: Plausible server commands can still target stale or wrong controls.","textPreview":"Too much context: Cloud agents may receive raw pixels, DOM text, cookies and identity the task never needs. | Blanket redaction: Safer, b...","textChars":280,"textLines":3,"bbox":[50,131,667,108]}
+{"kind":"textbox","id":"sh/i503mlw3","slide":2,"text":"PROPOSED SOLUTION","textPreview":"PROPOSED SOLUTION","textChars":17,"textLines":1,"bbox":[38,258,145,24]}
+{"kind":"shape","id":"sh/j69kvqdo","slide":2,"bbox":[38,277,690,157]}
+{"kind":"textbox","id":"sh/k7ilove9","slide":2,"text":"Read locally: DOM, ARIA and visible pixels are interpreted inside the browser.\nDetect and redact: YOLOX, PP-OCR and Rampart find faces, visual text and contextual PII before any request.\nReason safely: Only SanitizedContext and LOCAL_* handles reach Qwen3-VL.\nAct locally: Typed actions are grounded, gated, executed and verified on-device.","textPreview":"Read locally: DOM, ARIA and visible pixels are interpreted inside the browser. | Detect and redact: YOLOX, PP-OCR and Rampart find faces,...","textChars":340,"textLines":4,"bbox":[50,286,667,140]}
+{"kind":"textbox","id":"sh/58b2x0vu","slide":2,"text":"UNIQUE VALUE PROPOSITION","textPreview":"UNIQUE VALUE PROPOSITION","textChars":24,"textLines":1,"bbox":[38,447,190,24]}
+{"kind":"shape","id":"sh/2143ypwn","slide":2,"bbox":[38,466,690,161]}
+{"kind":"textbox","id":"sh/32dk7ud8","slide":2,"text":"Privacy before AI access: Sensitive context is removed at the source—not after it reaches the cloud.\nMinimum necessary context: Useful structure crosses the boundary; raw identity stays in a memory-only vault.\nTwo-sided safety: Context is protected outbound; actions are validated inbound.\nBrowser-native: The same privacy contract supports Chrome and Firefox builds.","textPreview":"Privacy before AI access: Sensitive context is removed at the source—not after it reaches the cloud. | Minimum necessary context: Useful ...","textChars":367,"textLines":4,"bbox":[50,477,667,142]}
+{"kind":"shape","id":"sh/z650zmtk","slide":2,"bbox":[752,111,488,495]}
+{"kind":"textbox","id":"sh/y5wzqhcz","slide":2,"text":"WHAT THE JUDGE CAN SEE","textPreview":"WHAT THE JUDGE CAN SEE","textChars":22,"textLines":1,"bbox":[774,126,315,28]}
+{"kind":"shape","id":"sh/l8ni1wbq","slide":2,"bbox":[772,157,448,276]}
+{"kind":"shape","id":"sh/nap03mtg","slide":2,"bbox":[781,450,36,36]}
+{"kind":"textbox","id":"sh/9c7i5wbm","slide":2,"text":"Raw page state stays local","textPreview":"Raw page state stays local","textChars":26,"textLines":1,"bbox":[824,452,360,28]}
+{"kind":"shape","id":"sh/8byhwru1","slide":2,"bbox":[781,493,36,36]}
+{"kind":"textbox","id":"sh/adgzy1c7","slide":2,"text":"Server receives sanitized structure","textPreview":"Server receives sanitized structure","textChars":35,"textLines":1,"bbox":[824,495,360,28]}
+{"kind":"shape","id":"sh/s3ihoba5","slide":2,"bbox":[781,536,36,36]}
+{"kind":"textbox","id":"sh/6h0zm1sf","slide":2,"text":"Browser keeps the final say","textPreview":"Browser keeps the final say","textChars":27,"textLines":1,"bbox":[824,538,360,28]}
+{"kind":"textbox","id":"sh/729gf690","slide":2,"text":"OPEN PRIVACY PROOF","textPreview":"OPEN PRIVACY PROOF","textChars":18,"textLines":1,"bbox":[893,574,205,26]}
+{"kind":"image","id":"im/5w7uhc3i","slide":2,"name":"","alt":"ContextShield mark","bbox":[24,14,44,44]}
+{"kind":"image","id":"im/3u5cf2lc","slide":2,"name":"","alt":"Smart India Hackathon 2026 mark from the supplied template","bbox":[1042,5,214,88]}
+{"kind":"image","id":"im/to3u9s3a","slide":2,"name":"","alt":"StarFourIcon icon","bbox":[959,75,20,20]}
+{"kind":"image","id":"im/zmlgr6tk","slide":2,"name":"","geometry":"roundRect","alt":"ContextShield privacy proof page","bbox":[779,164,434,262]}
+{"kind":"image","id":"im/dk3ypwbe","slide":2,"name":"","alt":"EyeSlashIcon icon","bbox":[787,456,24,24]}
+{"kind":"image","id":"im/wfyhsvud","slide":2,"name":"","alt":"ShieldCheckIcon icon","bbox":[787,499,24,24]}
+{"kind":"image","id":"im/690jypwf","slide":2,"name":"","alt":"CursorClickIcon icon","bbox":[787,542,24,24]}
+{"kind":"notes","id":"nt/pye4jf","slide":2,"text":"Lead with the privacy boundary, not the model list.\nThe novelty is the combination of task-aware disclosure, local secret handles and a local action gate.\nClick OPEN PRIVACY PROOF for the controlled visual redaction demo.\n\n[Sources]\n- User-provided SIH 2026 problem statement\n- /Users/arindam/Documents/SIH 2026/contextshield/README.md\n- /Users/arindam/Documents/SIH 2026/contextshield/docs/api-contract.md\n- http://127.0.0.1:4173/privacy-proof.html\n[/Sources]"}
+{"kind":"slide","id":"sl/xzh3yu","slide":3,"title":"CONTEXT","textShapes":39}
+{"kind":"textbox","id":"sh/elwzq1sb","slide":3,"text":"CONTEXT\nSHIELD","textPreview":"CONTEXT | SHIELD","textChars":14,"textLines":2,"bbox":[73,13,95,43]}
+{"kind":"textbox","id":"sh/sjehoba5","slide":3,"text":"TECHNICAL APPROACH","textPreview":"TECHNICAL APPROACH","textChars":18,"textLines":1,"bbox":[205,17,830,54]}
+{"kind":"shape","id":"sh/dknixwrq","slide":3,"bbox":[0,667,1280,53]}
+{"kind":"textbox","id":"sh/qhwzm1sz","slide":3,"text":"@chr0m1um","textPreview":"@chr0m1um","textChars":9,"textLines":1,"bbox":[442,670,396,44]}
+{"kind":"textbox","id":"sh/ri50v69k","slide":3,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[1219,669,42,45]}
+{"kind":"textbox","id":"sh/wfi10vq9","slide":3,"text":"ON-DEVICE TRUST ZONE","textPreview":"ON-DEVICE TRUST ZONE","textChars":20,"textLines":1,"bbox":[38,96,165,24]}
+{"kind":"textbox","id":"sh/xgri90ru","slide":3,"text":"SANITIZED SERVER ZONE","textPreview":"SANITIZED SERVER ZONE","textChars":21,"textLines":1,"bbox":[948,96,174,24]}
+{"kind":"shape","id":"sh/tsz6pozu","slide":3,"bbox":[891,101,0,430]}
+{"kind":"shape","id":"sh/srqpw3yp","slide":3,"bbox":[42,137,230,140]}
+{"kind":"shape","id":"sh/76honyh4","slide":3,"bbox":[307,137,250,140]}
+{"kind":"shape","id":"sh/6587utgj","slide":3,"bbox":[592,137,260,140]}
+{"kind":"shape","id":"sh/54f6lozy","slide":3,"bbox":[932,137,292,140]}
+{"kind":"textbox","id":"sh/j2xojehs","slide":3,"text":"1  CAPTURE","textPreview":"1  CAPTURE","textChars":10,"textLines":1,"bbox":[98,151,150,28]}
+{"kind":"textbox","id":"sh/i1onq9g7","slide":3,"text":"DOM + ARIA + screenshot\nVisible controls, labels & state","textPreview":"DOM + ARIA + screenshot | Visible controls, labels & state","textChars":56,"textLines":2,"bbox":[58,187,196,70]}
+{"kind":"textbox","id":"sh/ozap4nyx","slide":3,"text":"2  PERCEIVE","textPreview":"2  PERCEIVE","textChars":11,"textLines":1,"bbox":[363,151,170,28]}
+{"kind":"textbox","id":"sh/8f2hgba5","slide":3,"text":"YOLOX → faces\nPP-OCR → visual text\nRampart ONNX → contextual PII","textPreview":"YOLOX → faces | PP-OCR → visual text | Rampart ONNX → contextual PII","textChars":64,"textLines":3,"bbox":[323,186,216,78]}
+{"kind":"textbox","id":"sh/md0zelsz","slide":3,"text":"3  PROTECT","textPreview":"3  PROTECT","textChars":10,"textLines":1,"bbox":[648,151,180,28]}
+{"kind":"textbox","id":"sh/net0n6tk","slide":3,"text":"Mask sensitive pixels\nReplace values with LOCAL_* handles\nSecrets remain in memory-only vault","textPreview":"Mask sensitive pixels | Replace values with LOCAL_* handles | Secrets remain in memory-only vault","textChars":93,"textLines":3,"bbox":[608,186,225,78]}
+{"kind":"textbox","id":"sh/lcrilgbe","slide":3,"text":"4  REASON","textPreview":"4  REASON","textChars":9,"textLines":1,"bbox":[988,151,190,28]}
+{"kind":"textbox","id":"sh/y90za1s3","slide":3,"text":"Qwen3-VL receives strict SanitizedContext and returns one typed action—never raw DOM, cookies or credentials.","textPreview":"Qwen3-VL receives strict SanitizedContext and returns one typed action—never raw DOM, cookies or credentials.","textChars":109,"textLines":1,"bbox":[948,186,257,78]}
+{"kind":"shape","id":"sh/za90j6to","slide":3,"bbox":[272,207,35,0]}
+{"kind":"shape","id":"sh/cnih8rax","slide":3,"bbox":[557,207,35,0]}
+{"kind":"shape","id":"sh/dorihwbi","slide":3,"bbox":[852,207,80,0]}
+{"kind":"shape","id":"sh/fip0rmd4","slide":3,"bbox":[585,288,312,52]}
+{"kind":"textbox","id":"sh/1k7itwva","slide":3,"text":"ONLY SanitizedContext crosses","textPreview":"ONLY SanitizedContext crosses","textChars":29,"textLines":1,"bbox":[636,299,245,28]}
+{"kind":"textbox","id":"sh/gjy1krup","slide":3,"text":"origin · task · safe elements · handles · redaction metadata","textPreview":"origin · task · safe elements · handles · redaction metadata","textChars":60,"textLines":1,"bbox":[579,344,332,30]}
+{"kind":"shape","id":"sh/3mp0v6dg","slide":3,"bbox":[932,386,292,92]}
+{"kind":"shape","id":"sh/2lgjm1cv","slide":3,"bbox":[592,386,260,92]}
+{"kind":"shape","id":"sh/p8rixgvm","slide":3,"bbox":[307,386,250,92]}
+{"kind":"shape","id":"sh/oni1obu1","slide":3,"bbox":[42,386,230,92]}
+{"kind":"textbox","id":"sh/q90jq1cr","slide":3,"text":"5  LOCAL ACTION GATE","textPreview":"5  LOCAL ACTION GATE","textChars":20,"textLines":1,"bbox":[987,400,214,28]}
+{"kind":"textbox","id":"sh/at832pk3","slide":3,"text":"Ground target · enforce policy · request confirmation","textPreview":"Ground target · enforce policy · request confirmation","textChars":53,"textLines":1,"bbox":[949,437,250,28]}
+{"kind":"textbox","id":"sh/wfql4f29","slide":3,"text":"6  EXECUTE","textPreview":"6  EXECUTE","textChars":10,"textLines":1,"bbox":[647,400,170,28]}
+{"kind":"textbox","id":"sh/xgzmxk3u","slide":3,"text":"Interact with the browser locally","textPreview":"Interact with the browser locally","textChars":33,"textLines":1,"bbox":[609,437,225,28]}
+{"kind":"textbox","id":"sh/ji14zulk","slide":3,"text":"7  VERIFY","textPreview":"7  VERIFY","textChars":9,"textLines":1,"bbox":[362,400,165,28]}
+{"kind":"textbox","id":"sh/kjal8z25","slide":3,"text":"Fresh observation proves the page changed","textPreview":"Fresh observation proves the page changed","textChars":41,"textLines":1,"bbox":[324,437,215,28]}
+{"kind":"textbox","id":"sh/elo3u5kv","slide":3,"text":"8  CONTINUE / STOP","textPreview":"8  CONTINUE / STOP","textChars":18,"textLines":1,"bbox":[97,400,154,28]}
+{"kind":"textbox","id":"sh/zmxknalg","slide":3,"text":"Next safe step—or fail closed","textPreview":"Next safe step—or fail closed","textChars":29,"textLines":1,"bbox":[59,437,194,28]}
+{"kind":"shape","id":"sh/hg36t8ny","slide":3,"bbox":[1078,277,0,109]}
+{"kind":"shape","id":"sh/gfu503md","slide":3,"bbox":[852,432,80,0]}
+{"kind":"shape","id":"sh/felory5s","slide":3,"bbox":[557,432,35,0]}
+{"kind":"shape","id":"sh/udcnyt4n","slide":3,"bbox":[272,432,35,0]}
+{"kind":"textbox","id":"sh/p4n6x8na","slide":3,"text":"TECH STACK","textPreview":"TECH STACK","textChars":10,"textLines":1,"bbox":[38,509,96,24]}
+{"kind":"shape","id":"sh/4je543mp","slide":3,"bbox":[38,528,1202,111]}
+{"kind":"textbox","id":"sh/2hcn2d4j","slide":3,"text":"Chrome + Firefox","textPreview":"Chrome + Firefox","textChars":16,"textLines":1,"bbox":[91,545,121,24]}
+{"kind":"textbox","id":"sh/l8j6lonq","slide":3,"text":"Browser extension","textPreview":"Browser extension","textChars":17,"textLines":1,"bbox":[91,569,121,39]}
+{"kind":"textbox","id":"sh/w3yxonyd","slide":3,"text":"WXT + TypeScript","textPreview":"WXT + TypeScript","textChars":16,"textLines":1,"bbox":[260,545,121,24]}
+{"kind":"textbox","id":"sh/x47ex8zy","slide":3,"text":"UI & content scripts","textPreview":"UI & content scripts","textChars":20,"textLines":1,"bbox":[260,569,121,39]}
+{"kind":"textbox","id":"sh/b2pwvihs","slide":3,"text":"ONNX Runtime Web","textPreview":"ONNX Runtime Web","textChars":16,"textLines":1,"bbox":[429,545,121,24]}
+{"kind":"textbox","id":"sh/k7yxsny9","slide":3,"text":"Local inference","textPreview":"Local inference","textChars":15,"textLines":1,"bbox":[429,569,121,39]}
+{"kind":"textbox","id":"sh/y5gfqdgj","slide":3,"text":"YOLOX + PP-OCR","textPreview":"YOLOX + PP-OCR","textChars":14,"textLines":1,"bbox":[598,545,121,24]}
+{"kind":"textbox","id":"sh/j6pgzih4","slide":3,"text":"Vision & OCR","textPreview":"Vision & OCR","textChars":12,"textLines":1,"bbox":[598,569,121,39]}
+{"kind":"textbox","id":"sh/twry5cz6","slide":3,"text":"Rampart","textPreview":"Rampart","textChars":7,"textLines":1,"bbox":[767,545,121,24]}
+{"kind":"textbox","id":"sh/3qt0v618","slide":3,"text":"Contextual PII","textPreview":"Contextual PII","textChars":14,"textLines":1,"bbox":[767,569,121,39]}
+{"kind":"textbox","id":"sh/psvixwje","slide":3,"text":"FastAPI","textPreview":"FastAPI","textChars":7,"textLines":1,"bbox":[936,545,121,24]}
+{"kind":"textbox","id":"sh/4r2hobit","slide":3,"text":"Strict gateway API","textPreview":"Strict gateway API","textChars":18,"textLines":1,"bbox":[936,569,121,39]}
+{"kind":"textbox","id":"sh/u1kzih0r","slide":3,"text":"Qwen3-VL","textPreview":"Qwen3-VL","textChars":8,"textLines":1,"bbox":[1105,545,121,24]}
+{"kind":"textbox","id":"sh/h4bitwj2","slide":3,"text":"Open-weights planner","textPreview":"Open-weights planner","textChars":20,"textLines":1,"bbox":[1105,569,121,39]}
+{"kind":"image","id":"im/072dw3ql","slide":3,"name":"","alt":"ContextShield mark","bbox":[24,14,44,44]}
+{"kind":"image","id":"im/e50vut8f","slide":3,"name":"","alt":"Smart India Hackathon 2026 mark from the supplied template","bbox":[1042,5,214,88]}
+{"kind":"image","id":"im/betsj2dk","slide":3,"name":"","alt":"BrowserIcon icon","bbox":[58,154,30,30]}
+{"kind":"image","id":"im/y1kruxwb","slide":3,"name":"","alt":"ScanIcon icon","bbox":[323,154,30,30]}
+{"kind":"image","id":"im/u547ixcj","slide":3,"name":"","alt":"FingerprintIcon icon","bbox":[608,154,30,30]}
+{"kind":"image","id":"im/72d872ts","slide":3,"name":"","alt":"CloudIcon icon","bbox":[948,154,30,30]}
+{"kind":"image","id":"im/p87ex4ni","slide":3,"name":"","alt":"LockKeyIcon icon","bbox":[599,300,27,27]}
+{"kind":"image","id":"im/szedgf6p","slide":3,"name":"","alt":"ShieldWarningIcon icon","bbox":[949,404,28,28]}
+{"kind":"image","id":"im/k7axcza5","slide":3,"name":"","alt":"CursorClickIcon icon","bbox":[609,404,28,28]}
+{"kind":"image","id":"im/x4ze14ru","slide":3,"name":"","alt":"CheckCircleIcon icon","bbox":[324,404,28,28]}
+{"kind":"image","id":"im/ah8f6ps3","slide":3,"name":"","alt":"ArrowCounterClockwiseIcon icon","bbox":[59,404,28,28]}
+{"kind":"image","id":"im/cjmtcbqp","slide":3,"name":"","alt":"GoogleChromeLogoIcon icon","bbox":[54,551,27,27]}
+{"kind":"image","id":"im/3etcz6p8","slide":3,"name":"","alt":"CodeIcon icon","bbox":[223,551,27,27]}
+{"kind":"image","id":"im/987it8ju","slide":3,"name":"","alt":"CpuIcon icon","bbox":[392,551,27,27]}
+{"kind":"image","id":"im/u9gzmdkf","slide":3,"name":"","alt":"ScanIcon icon","bbox":[561,551,27,27]}
+{"kind":"image","id":"im/be50je1g","slide":3,"name":"","alt":"FingerprintIcon icon","bbox":[730,551,27,27]}
+{"kind":"image","id":"im/1kjetkze","slide":3,"name":"","alt":"LightningIcon icon","bbox":[899,551,27,27]}
+{"kind":"image","id":"im/svaxgfix","slide":3,"name":"","alt":"BrainIcon icon","bbox":[1068,551,27,27]}
+{"kind":"notes","id":"nt/xzh3yu","slide":3,"text":"Explain the boundary left to right, then the typed action loop right to left.\nThe central claim is simple: pixels and identity are processed locally; only SanitizedContext crosses.\nIf the action cannot be grounded or verified, the controller stops safely instead of improvising.\n\n[Sources]\n- /Users/arindam/Documents/SIH 2026/contextshield/README.md\n- /Users/arindam/Documents/SIH 2026/contextshield/docs/api-contract.md\n- /Users/arindam/Documents/SIH 2026/contextshield/docs/full-setup.md\n[/Sources]"}
+{"kind":"slide","id":"sl/kdfzpk","slide":4,"title":"CONTEXT","textShapes":13}
+{"kind":"textbox","id":"sh/fy1ojeh8","slide":4,"text":"CONTEXT\nSHIELD","textPreview":"CONTEXT | SHIELD","textChars":14,"textLines":2,"bbox":[73,13,95,43]}
+{"kind":"textbox","id":"sh/po36pozq","slide":4,"text":"FEASIBILITY AND VIABILITY","textPreview":"FEASIBILITY AND VIABILITY","textChars":25,"textLines":1,"bbox":[205,17,830,54]}
+{"kind":"shape","id":"sh/onu5gji5","slide":4,"bbox":[0,667,1280,53]}
+{"kind":"textbox","id":"sh/3mlonyhk","slide":4,"text":"@chr0m1um","textPreview":"@chr0m1um","textChars":9,"textLines":1,"bbox":[442,670,396,44]}
+{"kind":"textbox","id":"sh/21cnet0z","slide":4,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[1219,669,42,45]}
+{"kind":"textbox","id":"sh/5sjmd4z6","slide":4,"text":"FEASIBILITY","textPreview":"FEASIBILITY","textChars":11,"textLines":1,"bbox":[40,101,104,24]}
+{"kind":"shape","id":"sh/4rq54zil","slide":4,"bbox":[40,121,582,257]}
+{"kind":"textbox","id":"sh/alofahkn","slide":4,"text":"Proven browser stack: WXT, TypeScript and Manifest V3 produce loadable Chrome and Firefox builds.\nLocal AI is practical: Quantized ONNX models run through ONNX Runtime Web; visual work is targeted to visible regions.\nServer is replaceable: FastAPI speaks a strict schema and the planner uses an OpenAI-compatible endpoint for Qwen3-VL.\nOne-command operation: START.sh launches the model, API and judge site; STATUS.sh and VERIFY.sh expose failures early.\nCurrent proof: Controlled privacy, action and fail-closed demos run end to end on the team laptop.","textPreview":"Proven browser stack: WXT, TypeScript and Manifest V3 produce loadable Chrome and Firefox builds. | Local AI is practical: Quantized ONNX...","textChars":553,"textLines":5,"bbox":[54,137,553,228]}
+{"kind":"textbox","id":"sh/vmxg3m18","slide":4,"text":"VIABILITY","textPreview":"VIABILITY","textChars":9,"textLines":1,"bbox":[658,101,88,24]}
+{"kind":"shape","id":"sh/wnqxc72t","slide":4,"bbox":[658,121,582,257]}
+{"kind":"textbox","id":"sh/xozy5cje","slide":4,"text":"Adoption path: Ship as a browser privacy layer that sits between existing users and cloud agent planners.\nDeployment model: Free local extension + self-hosted/community server; managed enterprise policy and audit controls.\nCost control: Small on-device models reduce server-side vision load; only sanitized structured context is transmitted.\nScalability: Add domain adapters, policy packs and independently versioned models without changing the privacy contract.\nTrust and retention: Visible redaction, confirmation gates and safe logs make delegated browser work understandable.","textPreview":"Adoption path: Ship as a browser privacy layer that sits between existing users and cloud agent planners. | Deployment model: Free local ...","textChars":579,"textLines":5,"bbox":[672,137,553,228]}
+{"kind":"textbox","id":"sh/ip8fehkj","slide":4,"text":"TECHNICAL CHALLENGES","textPreview":"TECHNICAL CHALLENGES","textChars":20,"textLines":1,"bbox":[40,395,160,24]}
+{"kind":"shape","id":"sh/jqhg7m14","slide":4,"bbox":[40,414,582,167]}
+{"kind":"textbox","id":"sh/krqxgr2p","slide":4,"text":"Dynamic pages / stale targets: Re-observe after every action, bind actions to fingerprints and fail closed when state changes.\nCross-site variability: Use semantic DOM + ARIA first, OCR as fallback, then add measured domain adapters.\nResource pressure: Load models lazily, crop visual regions, quantize weights and keep a deterministic no-vision fallback.","textPreview":"Dynamic pages / stale targets: Re-observe after every action, bind actions to fingerprints and fail closed when state changes. | Cross-si...","textChars":355,"textLines":3,"bbox":[54,429,553,140]}
+{"kind":"textbox","id":"sh/5szy9wja","slide":4,"text":"BUSINESS / USER CHALLENGES","textPreview":"BUSINESS / USER CHALLENGES","textChars":26,"textLines":1,"bbox":[658,395,190,24]}
+{"kind":"shape","id":"sh/6t8fi1kv","slide":4,"bbox":[658,414,582,167]}
+{"kind":"textbox","id":"sh/7e1gb61g","slide":4,"text":"User confidence: Show exactly what was redacted, what the server saw and why confirmation is requested.\nFalse privacy claims: Publish benchmark scope and caveats; never equate controlled recall with universal website coverage.\nMaintenance: Version models, schemas and policy packs separately; regression-test real controls before release.","textPreview":"User confidence: Show exactly what was redacted, what the server saw and why confirmation is requested. | False privacy claims: Publish b...","textChars":338,"textLines":3,"bbox":[672,429,553,140]}
+{"kind":"textbox","id":"sh/3i1wz6h8","slide":4,"text":"BUILD → MEASURE → DISCLOSE LIMITS → EXPAND COVERAGE","textPreview":"BUILD → MEASURE → DISCLOSE LIMITS → EXPAND COVERAGE","textChars":51,"textLines":1,"bbox":[300,602,680,30]}
+{"kind":"image","id":"im/xwjaxk76","slide":4,"name":"","alt":"ContextShield mark","bbox":[24,14,44,44]}
+{"kind":"image","id":"im/va1svup0","slide":4,"name":"","alt":"Smart India Hackathon 2026 mark from the supplied template","bbox":[1042,5,214,88]}
+{"kind":"notes","id":"nt/kdfzpk","slide":4,"text":"This slide answers both feasibility and honesty: the architecture is buildable, and the claims are explicitly scoped.\nThe enterprise path is policy and audit capability; the privacy contract stays the same.\nMention that independent production-scale evaluation is the next milestone, not a completed claim.\n\n[Sources]\n- /Users/arindam/Documents/SIH 2026/contextshield/README.md\n- /Users/arindam/Documents/SIH 2026/contextshield/docs/SIH-RELEASE-v1.3.0.md\n- /Users/arindam/Documents/SIH 2026/contextshield/demo/evidence.json\n[/Sources]"}
+{"kind":"slide","id":"sl/f10h3d","slide":5,"title":"CONTEXT","textShapes":32}
+{"kind":"textbox","id":"sh/f2xs3a58","slide":5,"text":"CONTEXT\nSHIELD","textPreview":"CONTEXT | SHIELD","textChars":14,"textLines":2,"bbox":[73,13,95,43]}
+{"kind":"textbox","id":"sh/psza9knq","slide":5,"text":"IMPACTS & BENEFITS","textPreview":"IMPACTS & BENEFITS","textChars":18,"textLines":1,"bbox":[205,17,830,54]}
+{"kind":"shape","id":"sh/orqt0f65","slide":5,"bbox":[0,667,1280,53]}
+{"kind":"textbox","id":"sh/nqhs7a5k","slide":5,"text":"@chr0m1um","textPreview":"@chr0m1um","textChars":9,"textLines":1,"bbox":[442,670,396,44]}
+{"kind":"textbox","id":"sh/2p8by5oz","slide":5,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[1219,669,42,45]}
+{"kind":"shape","id":"sh/xwjud4nm","slide":5,"bbox":[40,100,735,197]}
+{"kind":"textbox","id":"sh/cvqt4z61","slide":5,"text":"Privacy & trust impact: Users can delegate browser work without sending their full screen, raw DOM or secret values to a planner.\nSecurity & responsible automation: Local validation, confirmation and post-action verification constrain what server-generated commands can do.\nAdoption & ecosystem impact: A reusable privacy boundary helps browsers, enterprises and public services adopt agentic assistance with visible safeguards.","textPreview":"Privacy & trust impact: Users can delegate browser work without sending their full screen, raw DOM or secret values to a planner. | Secur...","textChars":428,"textLines":3,"bbox":[54,114,707,169]}
+{"kind":"textbox","id":"sh/mx4beh8z","slide":5,"text":"MEASURED PROTOTYPE EVIDENCE","textPreview":"MEASURED PROTOTYPE EVIDENCE","textChars":27,"textLines":1,"bbox":[798,100,196,24]}
+{"kind":"shape","id":"sh/nyxcnmpk","slide":5,"bbox":[798,119,442,178]}
+{"kind":"textbox","id":"sh/oz6tgrq5","slide":5,"text":"Visual context","textPreview":"Visual context","textChars":14,"textLines":1,"bbox":[811,132,160,23]}
+{"kind":"textbox","id":"sh/90fupc7q","slide":5,"text":"167 / 167","textPreview":"167 / 167","textChars":9,"textLines":1,"bbox":[976,132,104,23]}
+{"kind":"textbox","id":"sh/a1obih8b","slide":5,"text":"60 controlled screens","textPreview":"60 controlled screens","textChars":21,"textLines":1,"bbox":[1083,132,143,23]}
+{"kind":"textbox","id":"sh/b2xcrmpw","slide":5,"text":"PII precision / recall","textPreview":"PII precision / recall","textChars":22,"textLines":1,"bbox":[811,163,160,23]}
+{"kind":"textbox","id":"sh/w36tkrq1","slide":5,"text":"100% / 100%","textPreview":"100% / 100%","textChars":11,"textLines":1,"bbox":[976,163,104,23]}
+{"kind":"textbox","id":"sh/x4futw7m","slide":5,"text":"295 synthetic cases","textPreview":"295 synthetic cases","textChars":19,"textLines":1,"bbox":[1083,163,143,23]}
+{"kind":"textbox","id":"sh/q5kb6x8r","slide":5,"text":"Redaction precision","textPreview":"Redaction precision","textChars":19,"textLines":1,"bbox":[811,194,160,23]}
+{"kind":"textbox","id":"sh/r6tsf2pc","slide":5,"text":"100 / 100","textPreview":"100 / 100","textChars":9,"textLines":1,"bbox":[976,194,104,23]}
+{"kind":"textbox","id":"sh/va98ny54","slide":5,"text":"supplied-box masks","textPreview":"supplied-box masks","textChars":18,"textLines":1,"bbox":[1083,194,143,23]}
+{"kind":"textbox","id":"sh/u90retoj","slide":5,"text":"Client resource","textPreview":"Client resource","textChars":15,"textLines":1,"bbox":[811,225,160,23]}
+{"kind":"textbox","id":"sh/hcrqp8na","slide":5,"text":"99.6 MB","textPreview":"99.6 MB","textChars":7,"textLines":1,"bbox":[976,225,104,23]}
+{"kind":"textbox","id":"sh/gbi9g36p","slide":5,"text":"packaged Chrome release","textPreview":"packaged Chrome release","textChars":23,"textLines":1,"bbox":[1083,225,143,23]}
+{"kind":"textbox","id":"sh/76p8je58","slide":5,"text":"End-to-end latency","textPreview":"End-to-end latency","textChars":18,"textLines":1,"bbox":[811,256,160,23]}
+{"kind":"textbox","id":"sh/6lg7a9on","slide":5,"text":"3.67 s","textPreview":"3.67 s","textChars":6,"textLines":1,"bbox":[976,256,104,23]}
+{"kind":"textbox","id":"sh/t8rqlony","slide":5,"text":"median, 3 / 3 tasks","textPreview":"median, 3 / 3 tasks","textChars":19,"textLines":1,"bbox":[1083,256,143,23]}
+{"kind":"textbox","id":"sh/87ypcj6t","slide":5,"text":"HOW CONTEXTSHIELD WORKS","textPreview":"HOW CONTEXTSHIELD WORKS","textChars":23,"textLines":1,"bbox":[44,315,1192,31]}
+{"kind":"shape","id":"sh/r2t8vi5c","slide":5,"bbox":[40,344,1200,0]}
+{"kind":"shape","id":"sh/qhkrmdor","slide":5,"bbox":[40,363,390,231]}
+{"kind":"shape","id":"sh/obux0bix","slide":5,"bbox":[57,378,40,40]}
+{"kind":"textbox","id":"sh/pc3etgzi","slide":5,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[57,383,40,30]}
+{"kind":"textbox","id":"sh/na1wr6hs","slide":5,"text":"PRIVATE CONTEXT MODE","textPreview":"PRIVATE CONTEXT MODE","textChars":20,"textLines":1,"bbox":[108,377,255,40]}
+{"kind":"textbox","id":"sh/cfux4vi9","slide":5,"text":"For: Everyday pages containing identity, credentials or personal details.\nProcess: Read locally → detect → redact → send safe structure.\nBenefit: The planner receives useful context without raw identity.","textPreview":"For: Everyday pages containing identity, credentials or personal details. | Process: Read locally → detect → redact → send safe structure...","textChars":203,"textLines":3,"bbox":[58,428,354,145]}
+{"kind":"shape","id":"sh/xg3ex0zu","slide":5,"bbox":[445,363,390,231]}
+{"kind":"shape","id":"sh/adcf2l03","slide":5,"bbox":[462,378,40,40]}
+{"kind":"textbox","id":"sh/belwvqho","slide":5,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[462,383,40,30]}
+{"kind":"textbox","id":"sh/l4ne10zq","slide":5,"text":"TASK-AWARE CONTEXT MODE","textPreview":"TASK-AWARE CONTEXT MODE","textChars":23,"textLines":1,"bbox":[513,377,255,40]}
+{"kind":"textbox","id":"sh/5cveh036","slide":5,"text":"For: Tasks where a private value is genuinely required to complete the workflow.\nProcess: Bind a LOCAL_* handle → plan on the handle → resolve only at execution.\nBenefit: Balances privacy with task completion; server never sees the secret.","textPreview":"For: Tasks where a private value is genuinely required to complete the workflow. | Process: Bind a LOCAL_* handle → plan on the handle → ...","textChars":239,"textLines":3,"bbox":[463,428,354,145]}
+{"kind":"shape","id":"sh/kbmx8vml","slide":5,"bbox":[850,363,390,231]}
+{"kind":"shape","id":"sh/jadwfql0","slide":5,"bbox":[867,378,40,40]}
+{"kind":"textbox","id":"sh/i94f6l4f","slide":5,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[867,383,40,30]}
+{"kind":"textbox","id":"sh/wnmx4bm9","slide":5,"text":"CONTROLLED EXECUTION","textPreview":"CONTROLLED EXECUTION","textChars":20,"textLines":1,"bbox":[918,377,255,40]}
+{"kind":"textbox","id":"sh/vmdwb65o","slide":5,"text":"For: Navigation, forms and multi-step workflows proposed by a remote planner.\nProcess: Typed action → local grounding → policy gate → verify or fail closed.\nBenefit: Prevents stale, ambiguous or high-risk actions from silently executing.","textPreview":"For: Navigation, forms and multi-step workflows proposed by a remote planner. | Process: Typed action → local grounding → policy gate → v...","textChars":237,"textLines":3,"bbox":[868,428,354,145]}
+{"kind":"textbox","id":"sh/al4f214j","slide":5,"text":"Evidence is controlled prototype proof—not a claim of universal website coverage.","textPreview":"Evidence is controlled prototype proof—not a claim of universal website coverage.","textChars":81,"textLines":1,"bbox":[310,608,660,27]}
+{"kind":"image","id":"im/9gralcnq","slide":5,"name":"","alt":"ContextShield mark","bbox":[24,14,44,44]}
+{"kind":"image","id":"im/7epsj25k","slide":5,"name":"","alt":"Smart India Hackathon 2026 mark from the supplied template","bbox":[1042,5,214,88]}
+{"kind":"image","id":"im/xs3mdwbu","slide":5,"name":"","alt":"EyeSlashIcon icon","bbox":[375,379,27,27]}
+{"kind":"image","id":"im/zy1432tw","slide":5,"name":"","alt":"FingerprintIcon icon","bbox":[780,379,27,27]}
+{"kind":"image","id":"im/yhgval4f","slide":5,"name":"","alt":"ShieldCheckIcon icon","bbox":[1185,379,27,27]}
+{"kind":"notes","id":"nt/f10h3d","slide":5,"text":"Map the five dark-panel rows directly to the official evaluation metrics.\nState the scope aloud: controlled screens and synthetic PII cases validate the prototype, not every website.\nThen use the three modes to explain end-to-end user value in simple language.\n\n[Sources]\n- User-provided official SIH evaluation metrics\n- /Users/arindam/Documents/SIH 2026/contextshield/demo/evidence.json\n[/Sources]"}
+{"kind":"slide","id":"sl/oui9e7","slide":6,"title":"CONTEXT","textShapes":21}
+{"kind":"textbox","id":"sh/7qdw3md8","slide":6,"text":"CONTEXT\nSHIELD","textPreview":"CONTEXT | SHIELD","textChars":14,"textLines":2,"bbox":[73,13,95,43]}
+{"kind":"textbox","id":"sh/love1cv2","slide":6,"text":"RESEARCH AND REFERENCES","textPreview":"RESEARCH AND REFERENCES","textChars":23,"textLines":1,"bbox":[205,17,830,54]}
+{"kind":"shape","id":"sh/knmd87eh","slide":6,"bbox":[0,667,1280,53]}
+{"kind":"textbox","id":"sh/zmdwz2dw","slide":6,"text":"@chr0m1um","textPreview":"@chr0m1um","textChars":9,"textLines":1,"bbox":[442,670,396,44]}
+{"kind":"textbox","id":"sh/yl4v6hwb","slide":6,"text":"6","textPreview":"6","textChars":1,"textLines":1,"bbox":[1219,669,42,45]}
+{"kind":"shape","id":"sh/dkvexcvq","slide":6,"bbox":[38,99,1204,150]}
+{"kind":"textbox","id":"sh/cj2d47e5","slide":6,"text":"FOUNDATIONAL REFERENCES","textPreview":"FOUNDATIONAL REFERENCES","textChars":23,"textLines":1,"bbox":[53,111,250,24]}
+{"kind":"textbox","id":"sh/y58r2dor","slide":6,"text":"Browser inference: WebGPU · ONNX Runtime Web · Transformers.js\nLocal vision and privacy: YOLOX · PP-OCR · Rampart\nServer reasoning: Qwen3-VL open-weights VLM behind a strict SanitizedContext API.","textPreview":"Browser inference: WebGPU · ONNX Runtime Web · Transformers.js | Local vision and privacy: YOLOX · PP-OCR · Rampart | Server reasoning: Q...","textChars":195,"textLines":3,"bbox":[51,139,1168,95]}
+{"kind":"textbox","id":"sh/j6h8vipc","slide":6,"text":"EXISTING AGENT PATTERN","textPreview":"EXISTING AGENT PATTERN","textChars":22,"textLines":1,"bbox":[38,266,158,24]}
+{"kind":"shape","id":"sh/krq94n6x","slide":6,"bbox":[38,285,574,128]}
+{"kind":"textbox","id":"sh/lszaxs7i","slide":6,"text":"Cloud-first perception: Screenshots or raw DOM can leave the device before privacy classification.\nOpaque data exposure: Users cannot easily see which sensitive values were shared.\nPlanner-led execution: A remote model may propose actions without a local policy and verification gate.","textPreview":"Cloud-first perception: Screenshots or raw DOM can leave the device before privacy classification. | Opaque data exposure: Users cannot e...","textChars":284,"textLines":3,"bbox":[52,298,545,103]}
+{"kind":"textbox","id":"sh/a1orytov","slide":6,"text":"WHY CONTEXTSHIELD STANDS OUT","textPreview":"WHY CONTEXTSHIELD STANDS OUT","textChars":28,"textLines":1,"bbox":[630,266,205,24]}
+{"kind":"shape","id":"sh/b2h8rypg","slide":6,"bbox":[630,285,612,128]}
+{"kind":"textbox","id":"sh/w3q90361","slide":6,"text":"Minimum disclosure: Local models create a safe representation before the planner sees anything.\nLocal secret handles: LOCAL_* tokens let the plan refer to private data without revealing its value.\nVerifiable control loop: Every action is grounded, gated, executed and checked against a fresh page state.","textPreview":"Minimum disclosure: Local models create a safe representation before the planner sees anything. | Local secret handles: LOCAL_* tokens le...","textChars":303,"textLines":3,"bbox":[644,298,583,103]}
+{"kind":"textbox","id":"sh/x4zqt87m","slide":6,"text":"PROJECT RESOURCES — CLICK TO OPEN","textPreview":"PROJECT RESOURCES — CLICK TO OPEN","textChars":33,"textLines":1,"bbox":[38,431,230,24]}
+{"kind":"shape","id":"sh/2xorut8z","slide":6,"bbox":[38,450,1204,180]}
+{"kind":"textbox","id":"sh/nyx8nyp4","slide":6,"text":"LIVE PROTOTYPE","textPreview":"LIVE PROTOTYPE","textChars":14,"textLines":1,"bbox":[54,462,158,26]}
+{"kind":"textbox","id":"sh/r2tovu5w","slide":6,"text":"SOURCE CODE","textPreview":"SOURCE CODE","textChars":11,"textLines":1,"bbox":[54,492,158,26]}
+{"kind":"textbox","id":"sh/q1kn2p4r","slide":6,"text":"SETUP GUIDE","textPreview":"SETUP GUIDE","textChars":11,"textLines":1,"bbox":[54,522,158,26]}
+{"kind":"textbox","id":"sh/d4v6x4n2","slide":6,"text":"JUDGE RUNBOOK","textPreview":"JUDGE RUNBOOK","textChars":13,"textLines":1,"bbox":[54,552,158,26]}
+{"kind":"textbox","id":"sh/s3m54zmh","slide":6,"text":"BENCHMARK EVIDENCE","textPreview":"BENCHMARK EVIDENCE","textChars":18,"textLines":1,"bbox":[54,582,158,26]}
+{"kind":"shape","id":"sh/f6dozu58","slide":6,"bbox":[238,466,306,115]}
+{"kind":"textbox","id":"sh/18v614ne","slide":6,"text":"JUDGE CONTROL ROOM  ↗","textPreview":"JUDGE CONTROL ROOM  ↗","textChars":21,"textLines":1,"bbox":[292,589,198,26]}
+{"kind":"shape","id":"sh/07mp8zmt","slide":6,"bbox":[564,466,306,115]}
+{"kind":"textbox","id":"sh/u90nu5oj","slide":6,"text":"PRIVACY PROOF  ↗","textPreview":"PRIVACY PROOF  ↗","textChars":16,"textLines":1,"bbox":[618,589,198,26]}
+{"kind":"shape","id":"sh/kfylobm1","slide":6,"bbox":[890,466,306,115]}
+{"kind":"textbox","id":"sh/ydg3m14b","slide":6,"text":"END-TO-END TASK  ↗","textPreview":"END-TO-END TASK  ↗","textChars":18,"textLines":1,"bbox":[944,589,198,26]}
+{"kind":"textbox","id":"sh/jepkv6lw","slide":6,"text":"Public proofs:","textPreview":"Public proofs:","textChars":14,"textLines":1,"bbox":[841,429,86,20]}
+{"kind":"textbox","id":"sh/wrelkrm5","slide":6,"text":"Selenium · Checkboxes · Dropdown","textPreview":"Selenium · Checkboxes · Dropdown","textChars":32,"textLines":1,"bbox":[925,426,310,24]}
+{"kind":"image","id":"im/lsbu14zq","slide":6,"name":"","alt":"ContextShield mark","bbox":[24,14,44,44]}
+{"kind":"image","id":"im/zqtczuhk","slide":6,"name":"","alt":"Smart India Hackathon 2026 mark from the supplied template","bbox":[1042,5,214,88]}
+{"kind":"image","id":"im/5or61kzq","slide":6,"name":"","geometry":"roundRect","alt":"Judge control room","bbox":[243,471,296,105]}
+{"kind":"image","id":"im/oj2p4zy9","slide":6,"name":"","geometry":"roundRect","alt":"Privacy proof","bbox":[569,471,296,105]}
+{"kind":"image","id":"im/ydorut0b","slide":6,"name":"","geometry":"roundRect","alt":"End-to-end task","bbox":[895,471,296,105]}
+{"kind":"notes","id":"nt/oui9e7","slide":6,"text":"Every blue/green resource label is a real PowerPoint hyperlink.\nThe local prototype link assumes START.sh has been run on the presentation laptop.\nUse the public proof links only after the controlled demo; site changes are outside the prototype benchmark scope.\n\n[Sources]\n- https://www.w3.org/TR/webgpu/\n- https://onnxruntime.ai/docs/tutorials/web/\n- https://huggingface.co/docs/transformers.js/\n- https://arxiv.org/abs/2107.08430\n- https://arxiv.org/abs/2009.09941\n- https://huggingface.co/nationaldesignstudio/rampart\n- https://github.com/QwenLM/Qwen3-VL\n- https://github.com/Arindam636-prog/chr0m1um\n- http://127.0.0.1:4173\n[/Sources]"}

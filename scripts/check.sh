@@ -8,6 +8,7 @@ npm run lint
 npm test
 npm run build
 npm run build:firefox
+npm run build:judge
 npm run test:e2e
 .venv/bin/ruff check server
 .venv/bin/pytest server/tests

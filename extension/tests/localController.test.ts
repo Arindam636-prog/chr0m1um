@@ -42,6 +42,20 @@ describe('local controller', () => {
     expect(action).toMatchObject({ type: 'TYPE_HANDLE', element_id: 'el_email', handle: 'LOCAL_EMAIL_1' });
   });
 
+  it('fills a labelled generic text fixture through a local handle', () => {
+    const action = planLocalAction(context(
+      'Fill the text input with LOCAL_TEXT_1 and do not submit.',
+      [element({
+        id: 'el_text',
+        role: 'textbox',
+        label: 'Text input',
+        input_type: 'text',
+        value_handle: 'LOCAL_TEXT_1',
+      })],
+    ));
+    expect(action).toMatchObject({ type: 'TYPE_HANDLE', element_id: 'el_text', handle: 'LOCAL_TEXT_1' });
+  });
+
   it('grounds select, ordinal, and named control tasks locally', () => {
     const elements = [
       element({ id: 'el_select', role: 'combobox', options: ['JAVA', 'Python'], selected_option: 'JAVA' }),

@@ -3,6 +3,8 @@
 > **New to the project?** Use the one-command guide:
 > [START-HERE.md](START-HERE.md). In short, load the stable release once and run
 > double-click `START.command` (or run `./START.sh`) whenever you want to use the product.
+> Presenting to judges? Follow the exact six-minute script in
+> [judge-demo.md](docs/judge-demo.md).
 
 ContextShield is a privacy-preserving autonomous browser agent for SIH 2026,
 Problem Statement 26171. The browser observes the page, detects and transforms
@@ -76,7 +78,7 @@ Rampart, Qwen, YOLOX, and PP-OCR each do, read
 - Node.js 22+ and npm 11+
 - Python 3.11–3.14
 - Chrome/Chromium or Firefox 140+
-- About 100 MB for the unpacked Chrome release (the v1.2.0 ZIP is about 38 MB),
+- About 100 MB for the unpacked Chrome release (the ZIP is about 38 MB),
   plus project dependencies and the larger Firefox fallback build
 - About 15 MB of packaged Rampart artifacts; setup verifies their pinned
   SHA-256 values and the extension never downloads them at runtime
@@ -117,11 +119,18 @@ Then load one build:
 - Firefox: open `about:debugging#/runtime/this-firefox`, choose **Load Temporary
   Add-on**, and select `release/ContextShield-Firefox/manifest.json`.
 
-Open [http://127.0.0.1:4173](http://127.0.0.1:4173), choose a demo, open the
-extension, optionally add an Email to the memory-only vault, enter the suggested
-task, and select **Start agent**. Rampart, YOLOX and PP-OCR are already packaged
+Open [http://127.0.0.1:4173](http://127.0.0.1:4173). The judge control room shows
+live planner readiness, the six-minute presentation route, measured evidence and
+safe public-site tests. Choose a demo, open the extension, optionally add an Email
+to the memory-only vault, enter the suggested task, and select **Start agent**.
+Rampart, YOLOX and PP-OCR are already packaged
 inside the release and never download model files at runtime. If any local model
 cannot load, the popup fails closed before any page context is sent.
+
+The judge control room is a React 19 and Tailwind CSS 4 application in
+[`judge-site`](judge-site). `START.command` builds it automatically. For visual
+development only, run `npm run dev:judge`; the production stack remains the
+single-command `START.command` workflow.
 
 The backend health check is:
 
@@ -132,7 +141,7 @@ curl http://127.0.0.1:8000/health
 Expected in the normal mode:
 
 ```json
-{"status":"ok","service":"contextshield-agent","model_backend":"llama"}
+{"status":"ok","service":"contextshield-agent","model_backend":"llama","planner_ready":true,"privacy_boundary":"sanitized-context-only"}
 ```
 
 For a plain-English readiness report, run:
@@ -207,35 +216,39 @@ latency. The report labels independently reviewed YOLOX accuracy unavailable;
 it does not fabricate that score.
 
 The measured v1.2.0 acceptance summary is in
-[SIH-ACCEPTANCE-v1.2.0.md](docs/SIH-ACCEPTANCE-v1.2.0.md).
+[SIH-ACCEPTANCE-v1.2.0.md](docs/SIH-ACCEPTANCE-v1.2.0.md). The fresh v1.3.0
+build, test and public-Selenium verification is recorded in
+[SIH-RELEASE-v1.3.0.md](docs/SIH-RELEASE-v1.3.0.md).
 
 ## Demo procedure
 
 1. Privacy proof: use `privacy-proof.html`, run a task, expand **Actual server
    view**, and inspect the `/v1/agent/*` request in DevTools. The synthetic email,
-   phone, password, UPI ID, and marked face must be absent.
+   phone, password, UPI ID, and fictional portrait pixels must be absent.
 2. Autonomous agent: use `checkout.html` and ask it to choose the cheapest
    morning fare and continue. The timeline shows every observe/sanitize/plan/
    execute/verify transition.
 3. Local secret: add a synthetic email to the popup vault, run checkout, and
    show `LOCAL_EMAIL_1` in the request while the actual email appears only in the
    local form.
-4. Fail closed: use `fail-closed.html` with `Complete the task shown on this
-   page.`, or stop Rampart/model inference. A stale action terminates immediately
+4. Fail closed: use `fail-closed.html` with `Click Arm stale-state mutation,
+   then click Continue to finish task.`, or stop Rampart/model inference. A stale action terminates immediately
    with a specific safe error instead of consuming the global step limit.
 5. General controls: use `general-controls.html` and ask it to select Python from
-   the first dropdown, Option 2, and Blue. The same regression is also verified
-   against WebDriver University's public controls page.
-6. Public ordinal checkboxes: open
+   the first dropdown, Option 2, and Blue. The controlled regression checks all
+   three final states.
+6. Public Selenium form: open
+   `https://www.selenium.dev/selenium/web/web-form.html` and use the exact prompt
+   in [judge-demo.md](docs/judge-demo.md). The opt-in external test checks the
+   generic text value, selected option, checkbox state and unchanged URL.
+7. Public ordinal checkboxes: open
    `https://the-internet.herokuapp.com/checkboxes` and ask `Select the first
    checkbox and clear the second checkbox.` The release test checks both final
    DOM states and rejects a blocked planner response as an unsuccessful task.
-7. Public React form: open `https://demoqa.com/automation-practice-form`, use the
-   exact task in [START-HERE.md](START-HERE.md), and verify the requested fields
-   are filled while hobbies and Submit remain untouched. This exact final state
-   and the sanitized server view are covered by the external regression suite.
 
-Detailed judge narration is in [demo-scenarios.md](docs/demo-scenarios.md).
+The maintained judge narration, public URLs and exact prompts are in
+[judge-demo.md](docs/judge-demo.md). [demo-scenarios.md](docs/demo-scenarios.md)
+contains the shorter engineering scenario notes.
 
 ## Docker
 

@@ -127,4 +127,21 @@ describe('privacy gateway', () => {
       checkAgentHealth(new URL('http://127.0.0.1:8000'), fetchImpl),
     ).rejects.toThrow('AGENT_SERVER_OFFLINE');
   });
+
+  it('does not report Qwen ready when only the API process is alive', async () => {
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          status: 'ok',
+          service: 'contextshield-agent',
+          model_backend: 'llama',
+          planner_ready: false,
+        }),
+        { status: 200, headers: { 'content-type': 'application/json' } },
+      ),
+    );
+    await expect(
+      checkAgentHealth(new URL('http://127.0.0.1:8000'), fetchImpl),
+    ).rejects.toThrow('AGENT_SERVER_OFFLINE');
+  });
 });
