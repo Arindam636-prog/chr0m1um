@@ -246,9 +246,16 @@ async function main() {
   const modelBytes = await directoryBytes(join(process.cwd(), 'extension', 'public', 'models'));
   const browserPerformance = browserCompatibility?.performance as Record<string, unknown> | undefined;
   const report = {
-    schema_version: 1,
+    schema_version: 2,
     generated_at: new Date().toISOString(),
     implementation: 'deterministic-local-cascade',
+    measurement_scope: {
+      pii: 'Synthetic case/type-level deterministic detector tests; not exact-span or full-model accuracy.',
+      redaction: 'Detected text removal and mask application with supplied boxes; not ground-truth detector coverage.',
+      browser: 'DOM control recall, not general visual understanding accuracy.',
+      latency: 'Separated by execution mode; task timers exclude browser setup. Planner round trips are not model inference latency.',
+      resources: 'Aggregate Chromium RSS and process-lifetime CPU; GPU process RSS is not VRAM. See fresh-audit.json for paired baseline.',
+    },
     dataset: {
       total_cases: dataset.length,
       positive_cases: dataset.length - negativeCases,
@@ -282,10 +289,10 @@ async function main() {
       detector_latency_ms_median: percentile(latencies, 0.5),
       detector_latency_ms_p95: percentile(latencies, 0.95),
       heap_delta_bytes: process.memoryUsage().heapUsed - memoryBefore,
-      contextual_model_latency_ms:
-        livePerformance?.planner_round_trip_latency_ms_median ?? null,
-      end_to_end_task_latency_ms:
-        livePerformance?.end_to_end_task_latency_ms_median ?? null,
+      contextual_model_latency_ms: null,
+      planner_round_trip_latency_ms: livePerformance?.planner_round_trip_latency_ms_median ?? null,
+      end_to_end_task_latency_ms: null,
+      latency_by_mode: livePerformance?.latency_by_mode ?? null,
       client_stage_latency_ms: livePerformance?.client_stages_ms_median ?? null,
       peak_browser_rss_bytes: browserPerformance?.peak_browser_rss_bytes ?? null,
       average_browser_cpu_percent: browserPerformance?.average_browser_cpu_percent ?? null,
@@ -308,16 +315,15 @@ async function main() {
       peak_browser_rss_bytes: browserPerformance?.peak_browser_rss_bytes ?? null,
       chrome_extension_package_bytes: chromePackageBytes,
       latency_weight: 0.15,
-      end_to_end_task_latency_ms_median:
-        livePerformance?.end_to_end_task_latency_ms_median ?? null,
+      end_to_end_task_latency_ms_median: null,
+      latency_by_mode: livePerformance?.latency_by_mode ?? null,
       measured_task_completion_rate: liveCompletion?.rate ?? null,
     },
     browser_compatibility: browserCompatibility,
     live_product: liveProduct,
     unavailable_metrics: {
-      screen_context_accuracy: browserCompatibility
-        ? null
-        : 'Requires the controlled browser compatibility benchmark',
+      screen_context_accuracy: 'DOM control recall is available separately; general visual understanding accuracy is not measured.',
+      full_pipeline_entity_span_precision_recall: 'Requires a held-out, reviewed corpus; fresh-audit.json is a synthetic full-pipeline regression audit, not population accuracy.',
       reviewed_yolox_detection_accuracy:
         'Requires a separately licensed, human-reviewed face/document image dataset; controlled pixel redaction is measured above',
       task_completion_rate: liveCompletion?.rate !== undefined

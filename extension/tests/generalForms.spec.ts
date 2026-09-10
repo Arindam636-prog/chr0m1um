@@ -143,8 +143,9 @@ test('grounds and completes dropdown, checkbox, and radio tasks without clarific
     // Exact form controls are now handled entirely on-device. The mock Qwen
     // endpoint should receive no page context at all for this task.
     expect(payloads).toHaveLength(0);
+    await popup.locator('.activity-details > summary').click();
     await expect(popup.getByText('Local controller returned a structured action').first()).toBeVisible();
-    await expect(popup.getByText('Local + Qwen modes ready')).toBeVisible();
+    await expect(popup.getByText('Server ready', { exact: true })).toBeVisible();
   } finally {
     await context.close();
     await close(server);

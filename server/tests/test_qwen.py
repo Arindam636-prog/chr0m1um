@@ -1,7 +1,29 @@
 import json
 
-from app.model.qwen import SYSTEM_PROMPT, QwenLlamaPlanner
+from app.model.qwen import SYSTEM_PROMPT, QwenLlamaPlanner, _compact_element, _selection_note
 from app.schemas import SanitizedContext
+
+
+def test_compaction_preserves_false_states_and_omits_only_absent_metadata(safe_context):
+    element = SanitizedContext.model_validate(safe_context).elements[0]
+    element = element.model_copy(update={'enabled': False, 'selected': False, 'dom_index': 0})
+    compact = _compact_element(element)
+    assert compact['enabled'] is False
+    assert compact['selected'] is False
+    assert compact['dom_index'] == 0
+    assert 'value_handle' not in compact
+    assert 'options' not in compact
+
+
+def test_selection_note_exposes_satisfied_price_without_claiming_other_goals(safe_context):
+    element = SanitizedContext.model_validate(safe_context).elements[0].model_copy(update={
+        'options': ['₹1,499 / Flex / 08:00', '₹899 / Saver / 09:15'],
+        'selected_option': '₹899 / Saver / 09:15',
+    })
+    note = _selection_note(element)
+    assert "Lowest displayed numeric price: '₹899 / Saver / 09:15'" in note
+    assert 'Already selected: True' in note
+    assert 'additional user constraints separately' in note
 
 
 class FakeResponse:
@@ -88,6 +110,32 @@ def test_qwen_followup_uses_a_safe_grounded_transition_without_reinference(
 
     assert action.type == "CLICK"
     assert action.element_id == "el_1"
+
+
+def test_followup_does_not_treat_a_satisfied_selection_as_the_whole_task(monkeypatch, safe_context):
+    safe_context['task'] = 'Select Python. Then explain the remaining choices.'
+    safe_context['elements'][0].update(text='Prepare ticket', label='Prepare ticket')
+    safe_context['elements'].append({
+        **safe_context['elements'][0], 'id': 'el_select', 'role': 'combobox',
+        'input_type': 'select', 'text': None, 'label': 'Language',
+        'options': ['Java', 'Python'], 'selected_option': 'Python',
+    })
+    calls = []
+
+    def fake_urlopen(request, timeout):
+        calls.append(request)
+        action = {'type': 'FINISH', 'action_id': 'act_explain',
+                  'snapshot_id': safe_context['snapshot_id'],
+                  'reason': 'The selection and explanation are complete',
+                  'summary': 'Python is selected. Java is the other available choice.'}
+        return FakeResponse({'choices': [{'message': {'content': json.dumps(action)}}]})
+
+    monkeypatch.setattr('app.model.qwen.urlopen', fake_urlopen)
+    action = QwenLlamaPlanner('http://127.0.0.1:8080', 'qwen', 10).plan_followup(
+        SanitizedContext.model_validate(safe_context))
+    assert action.type == 'FINISH'
+    assert 'Java' in action.summary
+    assert len(calls) == 1
 
 
 def test_qwen_sends_crop_bytes_once_and_bounds_third_party_dom(monkeypatch, safe_context):

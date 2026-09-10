@@ -5,6 +5,7 @@ import {
   checkAgentHealth,
   PrivacyAssertionError,
   startAgent,
+  stepAgent,
 } from '../lib/network/privacyGateway';
 
 const context: SanitizedContext = {
@@ -17,6 +18,17 @@ const context: SanitizedContext = {
 };
 
 describe('privacy gateway', () => {
+  it('records dispatch only after all privacy assertions pass', async () => {
+    const onDispatch = vi.fn();
+    const fetchImpl = vi.fn<typeof fetch>().mockRejectedValue(new TypeError('offline'));
+    const endpoint = new URL('http://127.0.0.1:8000');
+    await expect(startAgent(endpoint, { ...context, task: 'private@example.com' }, [], fetchImpl, onDispatch)).rejects.toThrow();
+    expect(onDispatch).not.toHaveBeenCalled();
+    await expect(startAgent(endpoint, context, [], fetchImpl, onDispatch)).rejects.toThrow();
+    expect(onDispatch).toHaveBeenCalledTimes(1);
+    await expect(stepAgent(endpoint, '11111111-1111-4111-8111-111111111111', context, [], fetchImpl, onDispatch)).rejects.toThrow();
+    expect(onDispatch).toHaveBeenCalledTimes(2);
+  });
   it('blocks known secrets before fetch', async () => {
     const fetchImpl = vi.fn<typeof fetch>();
     await expect(

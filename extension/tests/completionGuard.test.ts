@@ -66,4 +66,11 @@ describe('finish completion guard', () => {
       ),
     ).toBe(true);
   });
+
+  it('rejects partial completion before any explicitly named enabled button', () => {
+    const context = { ...pendingOrderContext, task: 'Compare fares. Then click Prepare ticket. Do not purchase anything.', elements: pendingOrderContext.elements.map((element) => ({ ...element, text: 'Prepare ticket' })) };
+    expect(finishRepresentsSuccess('Every requested form state is already satisfied', 'The fare is selected.', context)).toBe(false);
+    expect(finishRepresentsSuccess('The ticket is prepared', 'Done', { ...context, elements: context.elements.map((element) => ({ ...element, enabled: false })) })).toBe(true);
+    expect(finishRepresentsSuccess('Selected without preparation', 'Done', { ...context, task: 'Compare fares. Do not click Prepare ticket.' })).toBe(true);
+  });
 });

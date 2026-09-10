@@ -7,7 +7,8 @@ server_arguments=(
   --host 127.0.0.1
   --port 8080
   --ctx-size 8192
-  --image-min-tokens 1024
+  --image-min-tokens 256
+  --cache-ram 512
   --parallel 1
   --jinja
 )

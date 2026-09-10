@@ -53,6 +53,18 @@ function observation(): PageObservation {
 }
 
 describe('local privacy pipeline', () => {
+  it('classifies a single-word private name from input metadata without relying on NER', async () => {
+    const page = observation();
+    const first = page.elements[0];
+    if (!first) throw new Error('Missing fixture element');
+    page.elements = [{ ...first, input_type: 'text', label: 'First name', value_present: true }];
+    const result = await new LocalPrivacyPipeline(new SecretVault()).sanitize({
+      observation: page, privateValues: [{ elementId: 'el_1', inputType: 'text', value: 'Context' }],
+      visualHints: [], ocrHints: [], safeVisualCrops: [], fingerprint: 'fp_1',
+    }, 'Continue');
+    expect(result.context.privacy_summary.PERSON_NAME).toBe(1);
+    expect(result.serverPreview).not.toContain('Context');
+  });
   it('replaces task secrets with local handles and never places values in context', async () => {
     const vault = new SecretVault();
     const pipeline = new LocalPrivacyPipeline(vault);
@@ -84,7 +96,8 @@ describe('local privacy pipeline', () => {
       'Continue',
     );
     expect(result.context.elements[1]?.text).toContain('[GIVEN_NAME_1] [SURNAME_1]');
-    expect(result.context.privacy_summary.PERSON_NAME).toBe(2);
+    expect(result.context.privacy_summary.PERSON_NAME).toBe(1);
+    expect(result.evidence.detectorHits.PERSON_NAME).toBe(2);
   });
 
   it('fails closed when contextual inference fails', async () => {
@@ -98,6 +111,25 @@ describe('local privacy pipeline', () => {
         'Continue',
       ),
     ).rejects.toBeInstanceOf(PrivacyPipelineUnavailableError);
+  });
+
+  it('groups adjacent name tokens but keeps two distinct full names separate', async () => {
+    const page = observation();
+    page.elements = page.elements.map((element, index) => index === 1 ? { ...element, text: 'Meet Ada Smith and Bob Jones' } : element);
+    const values = [['Ada', '[GIVEN_NAME_1]'], ['Smith', '[SURNAME_1]'], ['Bob', '[GIVEN_NAME_2]'], ['Jones', '[SURNAME_2]']] as const;
+    const scanner: ContextualPiiScanner = {
+      protectMany: (texts) => Promise.resolve(texts.map((text) => {
+        const found = values.filter(([value]) => text.includes(value));
+        return { text: found.reduce((safe, [value, placeholder]) => safe.replace(value, placeholder), text), placeholders: found.map(([, placeholder]) => placeholder), localValues: found.map(([value, placeholder]) => ({ value, placeholder })) };
+      })),
+      terminate: () => undefined,
+    };
+    const result = await new LocalPrivacyPipeline(new SecretVault(), scanner).sanitize(
+      { observation: page, privateValues: [], visualHints: [], ocrHints: [], safeVisualCrops: [], fingerprint: 'names' }, 'Continue',
+    );
+    expect(result.evidence.uniqueItems.PERSON_NAME).toBe(2);
+    expect(result.evidence.detectorHits.PERSON_NAME).toBe(4);
+    expect(JSON.stringify(result.evidence)).not.toContain('Ada');
   });
 
   it('turns contextual task placeholders into resolvable local handles', async () => {

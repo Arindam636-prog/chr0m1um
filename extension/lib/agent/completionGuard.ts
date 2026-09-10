@@ -9,7 +9,18 @@ const BUTTON_INTENTS: ReadonlyArray<{ task: RegExp; negative: RegExp; button: Re
 ];
 
 function hasPendingRequestedButton(context: SanitizedContext): boolean {
-  return BUTTON_INTENTS.some(
+  const explicitlyNamedButton = context.elements.some((element) => {
+    if (!element.enabled || element.role !== 'button') return false;
+    return [element.text, element.label].some((value) => {
+      const name = value?.trim();
+      if (!name) return false;
+      const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const target = `(?:click|press)\\s+(?:the\\s+)?["'“]?${escaped}(?!\\w)`;
+      return new RegExp(`\\b${target}`, 'i').test(context.task) &&
+        !new RegExp(`\\b(?:do\\s+not|don't|never)\\s+${target}`, 'i').test(context.task);
+    });
+  });
+  return explicitlyNamedButton || BUTTON_INTENTS.some(
     (intent) =>
       intent.task.test(context.task) &&
       !intent.negative.test(context.task) &&

@@ -2,6 +2,7 @@ import { env } from '@huggingface/transformers';
 import { createGuard, type ChatGuard } from '@nationaldesignstudio/rampart';
 import rampartWasmFactoryUrl from 'onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs?url';
 import rampartWasmUrl from 'onnxruntime-web/ort-wasm-simd-threaded.asyncify.wasm?url';
+import { protectSegments } from '../lib/privacy/protectSegments';
 
 // MV3 extension workers cannot import the CDN fallback selected by
 // Transformers.js. Package both ORT files and load them from the extension.
@@ -42,16 +43,18 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
     }
     if (!guard) throw new Error('MODEL_UNAVAILABLE');
     const protections = [];
+    const currentGuard = guard;
     for (const text of event.data.texts) {
-      const protectedText = await guard.protect(text);
-      protections.push({
-        text: protectedText.text,
-        placeholders: [...protectedText.placeholders],
-        localValues: protectedText.placeholders.map((placeholder) => ({
-          placeholder,
-          value: guard?.reveal(placeholder) ?? placeholder,
-        })),
-      });
+      protections.push(await protectSegments(text, async (part) => {
+        const protectedText = await currentGuard.protect(part);
+        return {
+          text: protectedText.text,
+          placeholders: [...protectedText.placeholders],
+          localValues: protectedText.placeholders.map((placeholder) => ({
+            placeholder, value: currentGuard.reveal(placeholder),
+          })),
+        };
+      }));
     }
     self.postMessage({ id, ok: true, protections });
   } catch (error: unknown) {

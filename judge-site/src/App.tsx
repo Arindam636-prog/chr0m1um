@@ -373,7 +373,7 @@ function Hero() {
         <h1>The agent sees everything.<br /><span>The server never does.</span></h1>
         <p>Local vision removes identity before Qwen plans a single verified browser action.</p>
         <div className="hero-actions">
-          <a className="button button-primary" href="#judge-run"><Play weight="fill" /> Run the 6-minute proof</a>
+          <a className="button button-primary" href="judge-run.html"><Play weight="fill" /> Launch 3-minute demo</a>
           <a className="button button-ghost" href="privacy-proof.html">Open privacy lab <ArrowRight /></a>
         </div>
         <dl className="hero-stats">

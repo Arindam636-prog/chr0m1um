@@ -137,11 +137,13 @@ export async function startAgent(
   context: SanitizedContext,
   knownSecrets: readonly string[],
   fetchImpl: typeof fetch = fetch,
+  onDispatch?: () => void,
 ): Promise<AgentStartResponse> {
   assertEndpoint(endpoint);
   const safeContext = SanitizedContextSchema.parse(context);
   inspectPayload(safeContext, knownSecrets);
 
+  onDispatch?.();
   const response = await fetchAgent(fetchImpl, new URL('/v1/agent/start', endpoint), {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -162,10 +164,12 @@ export async function stepAgent(
   context: SanitizedContext,
   knownSecrets: readonly string[],
   fetchImpl: typeof fetch = fetch,
+  onDispatch?: () => void,
 ): Promise<AgentStartResponse> {
   assertEndpoint(endpoint);
   const request = AgentStepRequestSchema.parse({ session_id: sessionId, context });
   inspectPayload(request.context, knownSecrets);
+  onDispatch?.();
   const response = await fetchAgent(fetchImpl, new URL('/v1/agent/step', endpoint), {
     method: 'POST',
     headers: { 'content-type': 'application/json' },

@@ -24,6 +24,9 @@ export interface RawSensitiveEntity {
   end: number;
   field: SensitiveField;
   optionIndex: number | null;
+  /** Local-only correlation; never serialized to the planning API. */
+  evidenceId?: string;
+  contextual?: boolean;
 }
 
 export interface LocalPrivateValue {
@@ -35,12 +38,14 @@ export interface LocalPrivateValue {
 export interface LocalVisualHint {
   regionId: string;
   type: 'FACE' | 'PRIVATE_DOCUMENT';
+  evidenceId?: string;
 }
 
 export interface LocalOcrHint {
   regionId: string;
   type: SensitiveEntityType;
   confidence: number;
+  rawValue?: string;
 }
 
 export interface LocalPageObservation {
@@ -59,6 +64,13 @@ export interface PrivacyPipelineResult {
   serverPreview: string;
   blockedVisualRegions: number;
   processingMs: number;
+  evidence: PrivacyEvidence;
+}
+
+export interface PrivacyEvidence {
+  uniqueItems: Partial<Record<SensitiveEntityType, number>>;
+  detectorHits: Partial<Record<SensitiveEntityType, number>>;
+  reviewItems: Partial<Record<SensitiveEntityType, number>>;
 }
 
 export interface SecretVaultAdapter {

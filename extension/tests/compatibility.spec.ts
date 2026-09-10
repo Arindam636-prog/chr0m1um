@@ -200,8 +200,8 @@ test('detects visible interactables across representative and extension-injected
     args: [
       '--enable-precise-memory-info',
       '--contextshield-benchmark-process',
-      `--disable-extensions-except=${resolve('.output/chrome-mv3')}`,
-      `--load-extension=${resolve('.output/chrome-mv3')}`,
+      `--disable-extensions-except=${resolve(process.env.CONTEXTSHIELD_EXTENSION_DIR ?? '.output/chrome-mv3')}`,
+      `--load-extension=${resolve(process.env.CONTEXTSHIELD_EXTENSION_DIR ?? '.output/chrome-mv3')}`,
     ],
   });
 
@@ -343,10 +343,10 @@ test('detects visible interactables across representative and extension-injected
             ? browserCpuSamples.reduce((total, value) => total + value, 0) /
               browserCpuSamples.length
             : null,
-        gpu_memory_bytes: peakGpuRssBytes || null,
+        gpu_memory_bytes: null,
       },
       resource_measurement_scope:
-        'Aggregate Chromium test-profile processes, including renderer, extension, network and GPU processes',
+        'Aggregate Chromium test-profile processes, including renderer, extension, network and GPU processes. CPU is ps process-lifetime average; GPU-process RSS is not GPU VRAM. No extension-only attribution.',
       environment: {
         platform: platform(),
         os_release: release(),

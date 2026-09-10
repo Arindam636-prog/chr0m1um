@@ -4,7 +4,7 @@ import type {
   VerificationResult,
 } from '@contextshield/shared';
 
-import type { LocalPageObservation } from '../privacy/types';
+import type { LocalPageObservation, PrivacyEvidence } from '../privacy/types';
 
 export type AgentPhase =
   | 'IDLE'
@@ -54,10 +54,23 @@ export interface PublicAgentState {
   origin: string | null;
   sessionId: string | null;
   privacySummary: Partial<Record<SensitiveEntityType, number>>;
+  privacyEvidence?: PrivacyEvidence;
+  /** First sanitized snapshot is retained locally for a stable before/after explanation. */
+  proofPreview?: string | null;
+  proofEvidence?: PrivacyEvidence;
+  verifiedActions?: number;
+  lastVerifiedAction?: string | null;
   blockedVisualRegions: number;
   localProcessingMs: number | null;
   clientMetrics: ClientStageMetrics;
   serverPreview: string | null;
+  /** Latest context only. Dispatch is recorded after gateway checks, not at preparation. */
+  contextDelivery?: {
+    status: 'PREPARED' | 'LOCAL_ONLY' | 'DISPATCHED' | 'ACKNOWLEDGED' | 'UNCONFIRMED';
+    endpoint: string;
+    requests: number;
+  };
+  proofDelivery?: PublicAgentState['contextDelivery'];
   timeline: TimelineEntry[];
   pendingConfirmation: PendingConfirmation | null;
   secretHandles: string[];

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Private ticket assistant | ContextShield</title><link rel="stylesheet" href="judge-run.css" /></head>
+<body>
+  <main>
+    <header><a href="index.html">ContextShield</a><span>Live prototype / fictional data only</span></header>
+    <div class="intro"><p class="kicker">The 3-minute demonstration</p><h1>Help me choose.<br />Keep my details private.</h1><p>One task shows local vision, privacy filtering, server reasoning and a checked browser action.</p></div>
+    <div class="workspace">
+      <section class="profile"><h2>My private profile</h2><div class="profile-details"><img src="assets/fictional-profile.png" width="150" height="140" alt="Fictional customer portrait" /><div><p>Name: Context Shield</p><p>Email: privacy.fixture@example.com</p><label for="password">Password</label><input id="password" type="password" value="NeverSendThis!" readonly /></div></div><p class="caption">Synthetic information and an AI-generated portrait. No real customer data.</p></section>
+      <section class="booking"><h2>Morning train fares</h2><p>The agent must compare the prices and prepare the lowest-cost option.</p><label for="fare">Choose a fare</label><select id="fare"><option value="">Select a fare</option><option>₹1,499 / Flex / 08:00</option><option>₹899 / Saver / 09:15</option><option>₹1,099 / Standard / 10:00</option></select><button id="prepare">Prepare ticket</button><p id="done" role="status" hidden></p></section>
+    </div>
+    <aside><strong>Open the extension → Use demo task → Start agent</strong><p>Keep this page active. After the task stops, select “Show the privacy proof” in the extension. No purchase is made.</p></aside>
+  </main>
+  <script src="judge-run.js"></script>
+</body>
+</html>

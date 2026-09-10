@@ -1,27 +1,27 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-31T07:27:33.360Z",
+  "generated_at": "2026-09-04T17:33:15.653Z",
   "source": "benchmarks/results/latest.json",
   "metrics": {
     "visual": {
-      "value": "167 / 167",
-      "scope": "Expected interactables found across 60 controlled browser screens. This is semantic DOM, ARIA and OCR recall, not pixel box accuracy."
+      "value": "168 / 168",
+      "scope": "Expected interactables found across 61 controlled browser screens. DOM/ARIA observation only, not OCR or pixel box accuracy."
     },
     "pii": {
-      "value": "100% / 100%",
-      "scope": "295 labelled synthetic cases. Precision is shown first, recall second."
+      "value": "68.4% / 100%",
+      "scope": "11 synthetic pages through real local models. Case/type classifications, including conservative policy flags; NOT entity/span accuracy. Precision first, recall second. Extra alerts count against precision."
     },
     "redaction": {
-      "value": "100 / 100",
-      "scope": "Controlled supplied-box pixel masks verified, with detected text entities removed from sanitized context."
+      "value": "4 / 4",
+      "scope": "Actual pipeline crops fully covering authored annotations: two canvas secrets and one synthetic portrait at two sizes. Not a population redaction-precision score; surrounding content is also masked."
     },
     "latency": {
-      "value": "3.67 s",
-      "scope": "Median across 3 of 3 completed controlled live-product tasks."
+      "value": "51.87 s",
+      "scope": "Real Qwen judge workflow: 3/3 attempts passed. Median successful task timer; cold client models, running server. Failures excluded from latency, NOT completion rate."
     },
     "resources": {
-      "value": "99.6 MB release",
-      "scope": "1.26 GB peak aggregate Chromium test profile. Extension-only RAM is not yet isolated."
+      "value": "99.7 MiB release",
+      "scope": "2.57 GiB active browser peak vs 0.86 GiB rendering baseline. Whole process trees; NOT isolated extension allocation or GPU VRAM."
     }
   },
   "caveat": "Controlled results validate the prototype. A human-reviewed face and document dataset, pixel-level UI grounding benchmark, extension-only resource measurement and larger independent task suite remain required before production claims."

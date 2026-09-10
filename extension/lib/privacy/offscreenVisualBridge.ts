@@ -60,9 +60,10 @@ export class OffscreenVisualBridge {
     await this.creating;
   }
 
-  async analyze(local: LocalPageObservation): Promise<VisualAnalysisResult> {
+  async analyze(local: LocalPageObservation, tabId?: number): Promise<VisualAnalysisResult> {
     const captureStarted = performance.now();
-    const screenshotDataUrl = await captureLocalScreenshot();
+    const tab = tabId === undefined ? undefined : await browser.tabs.get(tabId);
+    const screenshotDataUrl = await captureLocalScreenshot(tab?.windowId, tabId);
     const captureMs = performance.now() - captureStarted;
     const localForVisuals: LocalPageObservation = {
       ...local,

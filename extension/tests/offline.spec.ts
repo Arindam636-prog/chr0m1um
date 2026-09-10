@@ -63,7 +63,7 @@ test('completes a grounded browser task while the Qwen service is offline', asyn
 
     await expect(target.locator('#one')).not.toBeChecked();
     await expect(target.locator('#two')).toBeChecked();
-    await expect(popup.getByText('Device-local mode ready')).toBeVisible();
+    await expect(popup.getByText('Server offline: start START.command')).toBeVisible();
     const reply: AgentCommandResponse = await popup.evaluate(() =>
       browser.runtime.sendMessage({ type: 'GET_AGENT_STATE' }),
     );

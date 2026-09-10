@@ -165,6 +165,8 @@ test('runs the complete private local-handle agent loop in real Chrome MV3', asy
     if (!rampartSmoke) {
       await popup.evaluate(() => browser.storage.local.set({ contextshieldPiiMode: 'deterministic' }));
     }
+    await popup.locator('.vault > summary').click();
+    await popup.locator('.activity-details > summary').click();
     await popup.getByLabel('Secret value').fill('private@example.com');
     await popup.getByRole('button', { name: 'Add' }).click();
     await expect(popup.locator('code', { hasText: 'LOCAL_EMAIL_1' })).toBeVisible();
@@ -212,6 +214,7 @@ test('runs the complete private local-handle agent loop in real Chrome MV3', asy
       browser.runtime.sendMessage({ type: 'GET_AGENT_STATE' }),
     );
     expect(finalState.state.serverPreview).not.toContain('private@example.com');
+    expect(finalState.state.contextDelivery).toMatchObject({ status: 'LOCAL_ONLY', requests: 0 });
     expect(finalState.state.serverPreview).toContain('"redaction_verified": true');
     expect(finalState.state.clientMetrics.pixelRecords).toBeGreaterThanOrEqual(0);
   } finally {

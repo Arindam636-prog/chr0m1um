@@ -9,6 +9,7 @@ import { decidePolicy } from './policyEngine';
 import type { ContextualPiiScanner } from './rampartScanner';
 import { redactText } from './textRedactor';
 import { localizeTaskFieldValues } from './taskHandles';
+import { summarizeEvidence } from './evidenceSummary';
 import type {
   LocalPageObservation,
   PrivacyPipelineResult,
@@ -37,13 +38,6 @@ function inferHandleKind(inputType: string | null, label: string | null): string
   if (inputType === 'search' || normalizedLabel.includes('search')) return 'TEXT';
   if (inputType === 'text' && normalizedLabel.includes('text input')) return 'TEXT';
   return undefined;
-}
-
-function incrementSummary(
-  summary: Partial<Record<SensitiveEntityType, number>>,
-  type: SensitiveEntityType,
-): void {
-  summary[type] = (summary[type] ?? 0) + 1;
 }
 
 const CONTEXTUAL_PERSON_OR_ADDRESS = new Set([
@@ -128,7 +122,7 @@ export class LocalPrivacyPipeline {
 
     detect(task, 'TASK', null);
     for (const element of local.observation.elements) {
-      const source = element.sources?.includes('OCR') ? 'OCR' : 'DOM';
+      const source = element.sources?.includes('OCR') && !element.sources.includes('DOM') ? 'OCR' : 'DOM';
       detect(element.text, 'TEXT', element.id, null, source);
       detect(element.label, 'LABEL', element.id, null, source);
       element.options.forEach((option, index) => detect(option, 'OPTION', element.id, index, source));
@@ -138,11 +132,16 @@ export class LocalPrivacyPipeline {
     for (const privateValue of local.privateValues) {
       const before = rawEntities.length;
       detect(privateValue.value, 'PRIVATE_VALUE', privateValue.elementId);
-      if (rawEntities.length === before && privateValue.inputType === 'password') {
+      const input = local.observation.elements.find((element) => element.id === privateValue.elementId);
+      const kind = inferHandleKind(privateValue.inputType, input?.label ?? null);
+      const metadataType = privateValue.inputType === 'password' ? 'PASSWORD'
+        : ['GIVEN_NAME', 'SURNAME', 'PERSON_NAME'].includes(kind ?? '') ? 'PERSON_NAME'
+          : kind === 'ADDRESS' ? 'ADDRESS' : null;
+      if (rawEntities.length === before && metadataType) {
         rawEntities.push({
           entity: {
             entity_id: nextEntityId(),
-            type: 'PASSWORD',
+            type: metadataType,
             source: 'INPUT_METADATA',
             confidence: 1,
             element_id: privateValue.elementId,
@@ -197,6 +196,7 @@ export class LocalPrivacyPipeline {
         end: 0,
         field: 'VISUAL',
         optionIndex: null,
+        evidenceId: hint.evidenceId,
       });
     }
     for (const hint of local.ocrHints) {
@@ -209,7 +209,7 @@ export class LocalPrivacyPipeline {
           element_id: null,
           region_id: hint.regionId,
         },
-        rawValue: '',
+        rawValue: hint.rawValue ?? '',
         start: 0,
         end: 0,
         field: 'VISUAL',
@@ -405,6 +405,31 @@ export class LocalPrivacyPipeline {
         }
         target.apply(protectedText);
         if (preserveOriginal) return;
+        // Join adjacent model tokens (given name + surname, address parts) for
+        // counting, while retaining every individual redaction decision.
+        const spans = (protection.localValues ?? []).map((value) => ({
+          ...value,
+          type: mappedContextualType(value.placeholder),
+          start: target.value.indexOf(value.value),
+          end: target.value.indexOf(value.value) + value.value.length,
+        })).filter((span) => span.value && span.start >= 0).sort((a, b) => a.start - b.start);
+        const groupedValues = new Map<string, string>();
+        for (let i = 0; i < spans.length; i += 1) {
+          const first = spans[i];
+          if (!first) continue;
+          let end = first.end;
+          const members = [first.placeholder];
+          if (first.type === 'PERSON_NAME' || first.type === 'ADDRESS') {
+            while (spans[i + 1]?.type === first.type) {
+              const next = spans[i + 1];
+              if (!next || next.start < end || !/^[\s,-]*$/.test(target.value.slice(end, next.start))) break;
+              end = next.end;
+              members.push(next.placeholder);
+              i += 1;
+            }
+          }
+          for (const placeholder of members) groupedValues.set(placeholder, target.value.slice(first.start, end));
+        }
         for (const placeholder of protection.placeholders) {
           const mappedType = mappedContextualType(placeholder);
           const entityId = nextEntityId();
@@ -417,19 +442,20 @@ export class LocalPrivacyPipeline {
               element_id: target.elementId,
               region_id: null,
             },
-            rawValue: '',
+            rawValue: groupedValues.get(placeholder) ?? '',
             start: 0,
             end: 0,
             field: target.field,
             optionIndex: target.optionIndex,
+            contextual: true,
           });
           decisions.push({ entity_id: entityId, decision: 'ABSTRACT', replacement: placeholder });
         }
       });
     }
 
-    const privacySummary: Partial<Record<SensitiveEntityType, number>> = {};
-    for (const raw of rawEntities) incrementSummary(privacySummary, raw.entity.type);
+    const evidence = summarizeEvidence(rawEntities);
+    const privacySummary = evidence.uniqueItems;
 
     const context = SanitizedContextSchema.parse({
       task: sanitizedTask,
@@ -440,9 +466,9 @@ export class LocalPrivacyPipeline {
       privacy_summary: privacySummary,
     });
 
-    const blockedVisualRegions = rawEntities.filter(
+    const blockedVisualRegions = new Set(rawEntities.filter(
       (raw) => raw.field === 'VISUAL' && decisionsById.get(raw.entity.entity_id)?.decision === 'DROP',
-    ).length;
+    ).map((raw) => raw.evidenceId ?? raw.entity.region_id)).size;
 
     return {
       context,
@@ -451,6 +477,7 @@ export class LocalPrivacyPipeline {
       serverPreview: JSON.stringify(context, null, 2),
       blockedVisualRegions,
       processingMs: performance.now() - started,
+      evidence,
     };
   }
 }

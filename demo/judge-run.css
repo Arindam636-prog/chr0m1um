@@ -1,0 +1,31 @@
+@font-face { font-family: Bricolage; src: url('assets/judge/bricolage-grotesque-latin-wght-normal-DLoelf7F.woff2') format('woff2'); font-weight: 200 800; font-display: swap; }
+:root { font-family: Bricolage, system-ui, sans-serif; color: #173b2c; background: #edf3ef; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 1080px; padding: 28px 32px; margin: auto; }
+header { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 16px; border-bottom: 1px solid #bdd0c4; font-size: 12px; }
+header a { color: inherit; text-decoration: none; font-size: 19px; font-weight: 750; }
+header span { color: #536d60; }
+.intro { margin: 25px 0; }
+.kicker { color: #0b6a4e; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+h1 { font-size: clamp(32px, 4vw, 46px); line-height: 1.02; letter-spacing: -.045em; margin: 10px 0; font-weight: 650; }
+.intro > p:last-child { color: #536d60; font-size: 14px; }
+.workspace { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; }
+section { padding: 22px; border: 1px solid #bfd3c6; border-radius: 18px; background: #fbfdfb; }
+h2 { font-size: 19px; margin: 0 0 16px; letter-spacing: -.025em; }
+.profile-details { display: flex; gap: 17px; align-items: flex-start; }
+.profile-details img { width: 130px; height: 140px; object-fit: cover; border-radius: 12px; }
+.profile-details > div { min-width: 0; flex: 1; }
+p { font-size: 13px; line-height: 1.5; }
+.profile-details p { margin: 0 0 10px; overflow-wrap: anywhere; }
+label { display: block; font-size: 12px; font-weight: 650; margin: 12px 0 6px; }
+input, select, button { font: inherit; border-radius: 9px; padding: 10px; font-size: 13px; }
+input, select { width: 100%; min-width: 0; background: #f1f6f3; border: 1px solid #bdd0c4; color: #173b2c; }
+button { border: 0; background: #0b6a4e; color: #fff; font-weight: 650; cursor: pointer; margin-top: 12px; }
+button:disabled { opacity: .55; }
+.booking > p { color: #536d60; }
+.caption { font-size: 11px; color: #536d60; margin: 16px 0 0; }
+#done { border-left: 3px solid #0b6a4e; padding: 8px 12px; color: #0b6a4e; background: #edf7f0; }
+aside { padding: 15px 0; margin-top: 16px; font-size: 13px; }
+aside p { color: #536d60; margin: 6px 0 0; font-size: 12px; }
+@media (max-width: 780px) { main { padding: 20px; } .workspace { grid-template-columns: 1fr; } header { flex-wrap: wrap; } }

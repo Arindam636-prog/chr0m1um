@@ -68,7 +68,7 @@ def _element_priority(element: SanitizedElement, task_words: set[str]) -> int:
 
 def _compact_element(element: SanitizedElement) -> dict[str, object]:
     """Bound untrusted page prose while preserving every grounding field."""
-    return {
+    values = {
         "id": element.id,
         "role": element.role,
         "text": element.text[:320] if element.text else None,
@@ -82,9 +82,25 @@ def _compact_element(element: SanitizedElement) -> dict[str, object]:
         "selected_option": element.selected_option,
         "control_value": element.control_value,
         "dom_index": element.dom_index,
-        "bbox": element.bbox.model_dump() if element.bbox else None,
+        "bbox": {key: round(value, 1) for key, value in element.bbox.model_dump().items()} if element.bbox else None,
         "sources": element.sources,
     }
+    # Repeated nulls/empty arrays were consuming thousands of prompt tokens.
+    # Keep false/zero (real control state), omit only inapplicable metadata.
+    return {key: value for key, value in values.items() if value is not None and value != []}
+
+
+def _selection_note(element: SanitizedElement) -> str:
+    note = f"select currently shows {element.selected_option!r}; do not reselect this option."
+    prices = []
+    for option in element.options:
+        match = re.search(r"(?:₹|Rs\.?|INR|\$)\s*([0-9][0-9,]*(?:\.[0-9]+)?)", option, re.I)
+        if match:
+            prices.append((float(match.group(1).replace(',', '')), option))
+    if prices:
+        lowest = min(prices, key=lambda item: item[0])[1]
+        note += f" Lowest displayed numeric price: {lowest!r}. Already selected: {element.selected_option == lowest}. Apply any additional user constraints separately."
+    return note
 
 
 def _select_planning_elements(
@@ -155,6 +171,9 @@ Interpret form state exactly as follows:
   after the requested fields are filled. Never infer a checkbox from an unrelated numeric value.
 
 Prefer the least risky action and make forward progress rather than repeating a completed action.
+Missing optional fields are inapplicable, not evidence of an unfinished action. A disabled button
+must not be clicked. If the requested selection is already correct and visible page status shows
+the requested button's outcome, FINISH; do not change the selection to another option.
 Use ASK_USER when intent or a consequential action is ambiguous. Use FINISH as successful only
 after every requested state is visibly satisfied. If no safe grounded progress is possible, say
 that plainly in FINISH reason/summary; never describe an incomplete task as complete."""
@@ -179,14 +198,11 @@ class QwenLlamaPlanner:
         deterministic_action = MockPlanner().plan(context)
         safe_deterministic_followup = isinstance(
             deterministic_action, (ClickAction, SelectAction)
-        ) or (
-            isinstance(deterministic_action, FinishAction)
-            and deterministic_action.reason
-            in {
-                "Every requested form state is already satisfied",
-                "The page visibly reports successful task completion",
-            }
         )
+        # This helper recognizes only a subset of possible task clauses. A
+        # satisfied dropdown does not prove that a later button click, summary,
+        # or other requested step is complete. Let Qwen evaluate the WHOLE task
+        # before FINISH; the client independently checks grounded completion.
         if safe_deterministic_followup:
             self._validate_grounding(deterministic_action, context)
             return deterministic_action
@@ -208,8 +224,7 @@ class QwenLlamaPlanner:
             f"- {element.id}: "
             + (
                 (
-                    f"select currently shows {element.selected_option!r}; "
-                    "choose a requested different option"
+                    _selection_note(element)
                 )
                 if element.input_type == "select"
                 else (
@@ -353,8 +368,8 @@ class QwenLlamaPlanner:
             if isinstance(action, SelectAction) and action.option == element.selected_option:
                 raise ModelInferenceError("The model repeated an already selected option")
             if isinstance(action, ClickAction) and element.role == "button":
-                visible_name = " ".join(filter(None, (element.text, element.label)))
-                if button_is_prohibited(context.task, visible_name):
+                if any(button_is_prohibited(context.task, name)
+                       for name in (element.text, element.label) if name):
                     raise ModelInferenceError("The model violated a negative button instruction")
             if isinstance(action, ClickAction) and element.role in {"checkbox", "radio"}:
                 task = context.task.lower().replace("-", " ")

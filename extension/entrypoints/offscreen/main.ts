@@ -8,8 +8,8 @@ interface OffscreenRequest {
   screenshotDataUrl: string;
 }
 
-const scanner = new VisualPrivacyScanner();
 const rampartScanner = new RampartWorkerScanner();
+const scanner = new VisualPrivacyScanner(rampartScanner);
 
 browser.runtime.onConnect.addListener((port) => {
   if (port.name === 'contextshield-rampart-offscreen') {

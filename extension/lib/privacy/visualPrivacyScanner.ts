@@ -6,7 +6,10 @@ import type {
 } from '@contextshield/shared';
 
 import { detectSensitiveText } from './deterministicDetectors';
-import { createVerifiedPngCrop, type RasterImage } from './rasterRedactor';
+import { mergeVisualDetections } from './visualEvidence';
+import { RampartWorkerScanner } from './rampartScanner';
+import { createVerifiedPngCrop, irreversiblyMask, type RasterImage } from './rasterRedactor';
+import { privateInputMasks } from './inputMasks';
 import type {
   LocalOcrHint,
   LocalPageObservation,
@@ -98,15 +101,14 @@ function transferableCopy(data: Uint8ClampedArray): ArrayBuffer {
   return data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer;
 }
 
-function expanded(box: BBox, width: number, height: number): BBox {
-  const padding = 3;
+function expanded(box: BBox, width: number, height: number, padding = 6): BBox {
   const x = Math.max(0, box.x - padding);
   const y = Math.max(0, box.y - padding);
   return {
     x,
     y,
-    width: Math.min(width - x, box.width + padding * 2),
-    height: Math.min(height - y, box.height + padding * 2),
+    width: Math.min(width, box.x + box.width + padding) - x,
+    height: Math.min(height, box.y + box.height + padding) - y,
   };
 }
 
@@ -197,7 +199,7 @@ function intersection(left: BBox, right: BBox): BBox | null {
   return { x, y, width: rightEdge - x, height: bottomEdge - y };
 }
 
-function viewportBoxToCrop(box: BBox, region: BBox, crop: RasterImage): BBox | null {
+function viewportBoxToCrop(box: BBox, region: BBox, crop: RasterImage, linePaddingRatio = 0): BBox | null {
   const clipped = intersection(box, region);
   if (!clipped || region.width <= 0 || region.height <= 0) return null;
   return expanded(
@@ -209,6 +211,7 @@ function viewportBoxToCrop(box: BBox, region: BBox, crop: RasterImage): BBox | n
     },
     crop.width,
     crop.height,
+    Math.max(6, (clipped.height / region.height) * crop.height * linePaddingRatio),
   );
 }
 
@@ -235,6 +238,9 @@ export interface VisualAnalysisResult {
 }
 
 export class VisualPrivacyScanner {
+  // The text channel and the image channel must use the same contextual
+  // protection. Regex-only OCR masking misses names embedded in sentences.
+  constructor(private readonly contextualScanner = new RampartWorkerScanner()) {}
   private readonly vision = new LocalWorkerClient(
     new Worker(new URL('../../workers/vision.worker.ts', import.meta.url), { type: 'module' }),
   );
@@ -253,6 +259,7 @@ export class VisualPrivacyScanner {
       throw new Error('PRIVACY_SCAN_FAILED');
     }
     await Promise.all([
+      this.contextualScanner.initialize(),
       this.vision.request(
         {
           type: 'INITIALIZE',
@@ -284,7 +291,16 @@ export class VisualPrivacyScanner {
     const modelInitializationMs = performance.now() - initializationStarted;
     const inferenceStarted = performance.now();
     const screenshot = await screenshotCanvas(screenshotDataUrl);
-    const viewportRaster = fullViewportRaster(screenshot);
+    const originalViewport = fullViewportRaster(screenshot);
+    const inputMasks = privateInputMasks(local.observation.elements);
+    // Do not let OCR reintroduce a filled local-only input into the safe text
+    // channel. The same boxes are applied to every outgoing image crop below.
+    const viewportRaster = irreversiblyMask(originalViewport, inputMasks.map((box) => ({
+      x: box.x / local.observation.viewport.width * originalViewport.width,
+      y: box.y / local.observation.viewport.height * originalViewport.height,
+      width: box.width / local.observation.viewport.width * originalViewport.width,
+      height: box.height / local.observation.viewport.height * originalViewport.height,
+    })));
     const visualHints = [...local.visualHints];
     const ocrHints = [...local.ocrHints];
     const safeVisualCrops = [...local.safeVisualCrops];
@@ -317,7 +333,9 @@ export class VisualPrivacyScanner {
       ),
     ]);
 
-    const faceBoxes = (visionReply.detections ?? []).map((detection) => ({
+    const candidates = local.observation.visual_regions.filter((region) => region.requires_analysis);
+    const rasters = new Map<string, RasterImage>();
+    const viewportDetections = (visionReply.detections ?? []).map((detection) => ({
       ...detection,
       viewportBox: rasterBoxToViewport(
         detection.bbox,
@@ -325,8 +343,26 @@ export class VisualPrivacyScanner {
         local.observation.viewport,
       ),
     }));
+    // A small portrait may disappear when the whole viewport is scaled to the
+    // model's 192px input. Inspect bounded candidate crops at local resolution
+    // too, then merge overlapping detections in viewport coordinates.
+    for (const region of candidates.slice(0, MAX_VISUAL_REGIONS)) {
+      const raster = cropRegion(screenshot, region, local.observation.viewport);
+      rasters.set(region.id, raster);
+      const buffer = transferableCopy(raster.data);
+      const reply = await this.vision.request({ type: 'DETECT', width: raster.width, height: raster.height, rgba: buffer, confidence: 0.35 }, 30_000, [buffer]);
+      for (const detection of reply.detections ?? []) {
+        viewportDetections.push({ ...detection, viewportBox: {
+          x: region.bbox.x + detection.bbox.x / raster.width * region.bbox.width,
+          y: region.bbox.y + detection.bbox.y / raster.height * region.bbox.height,
+          width: detection.bbox.width / raster.width * region.bbox.width,
+          height: detection.bbox.height / raster.height * region.bbox.height,
+        } });
+      }
+    }
+    const faceBoxes = mergeVisualDetections(viewportDetections);
     for (const detection of faceBoxes) {
-      visualHints.push({ regionId: VIEWPORT_REGION_ID, type: detection.type });
+      visualHints.push({ regionId: VIEWPORT_REGION_ID, type: detection.type, evidenceId: detection.evidenceId });
       if (visualElements.length < MAX_PIXEL_RECORDS) {
         visualElements.push({
           id: stableVisualId(detection.type, detection.viewportBox, visualElements.length),
@@ -350,6 +386,11 @@ export class VisualPrivacyScanner {
     }
 
     const sensitiveOcrBoxes: Array<{ box: BBox; types: SensitiveEntityType[] }> = [];
+    const ocrLines = ocrReply.lines ?? [];
+    const protections = await this.contextualScanner.protectMany(
+      ocrLines.map((line) => line.text.trim().replace(/\s+/g, ' ').slice(0, 2_000)),
+    );
+    if (protections.length !== ocrLines.length) throw new Error('PRIVACY_SCAN_FAILED');
     for (const [index, line] of (ocrReply.lines ?? []).entries()) {
       const text = line.text.trim().replace(/\s+/g, ' ').slice(0, 2_000);
       if (!text) continue;
@@ -387,29 +428,36 @@ export class VisualPrivacyScanner {
         null,
         () => `pii_visual_${++localEntitySequence}`,
       );
-      if (found.length === 0) continue;
+      if (found.length === 0 && !protections[index]?.placeholders.length) continue;
       const types = [...new Set(found.map((entity) => entity.entity.type))];
       sensitiveOcrBoxes.push({ box: viewportBox, types });
       for (const entity of found) {
         ocrHints.push({
           regionId: VIEWPORT_REGION_ID,
           type: entity.entity.type,
+          rawValue: entity.rawValue,
           confidence: Math.min(1, Math.max(0, line.confidence)),
         });
       }
     }
 
-    const candidates = local.observation.visual_regions.filter(
-      (region) => region.requires_analysis,
-    );
     for (const region of candidates.slice(0, MAX_VISUAL_REGIONS)) {
-      const raster = cropRegion(screenshot, region, local.observation.viewport);
+      const raster = rasters.get(region.id);
+      if (!raster) throw new Error('PRIVACY_SCAN_FAILED');
       const masks: BBox[] = [];
+      for (const input of inputMasks) {
+        const mask = viewportBoxToCrop(input, region.bbox, raster);
+        if (mask) masks.push(mask);
+      }
       for (const detection of faceBoxes) {
-        const mask = viewportBoxToCrop(detection.viewportBox, region.bbox, raster);
+        // Detector boxes are estimates, not perfect face outlines. Pad the
+        // mask only (not the detection/count), proportional to face size.
+        const padded = expanded(detection.viewportBox, local.observation.viewport.width,
+          local.observation.viewport.height, Math.max(6, detection.viewportBox.height * .15));
+        const mask = viewportBoxToCrop(padded, region.bbox, raster);
         if (!mask) continue;
         masks.push(mask);
-        visualHints.push({ regionId: region.id, type: detection.type });
+        visualHints.push({ regionId: region.id, type: detection.type, evidenceId: detection.evidenceId });
       }
 
       const declared = local.visualHints.filter((hint) => hint.regionId === region.id);
@@ -419,7 +467,9 @@ export class VisualPrivacyScanner {
       }
 
       for (const sensitive of sensitiveOcrBoxes) {
-        const mask = viewportBoxToCrop(sensitive.box, region.bbox, raster);
+        // OCR boxes can clip glyph edges after viewport downscaling. Include
+        // a line-height-scaled safety margin rather than trusting tight boxes.
+        const mask = viewportBoxToCrop(sensitive.box, region.bbox, raster, .4);
         if (!mask) continue;
         masks.push(mask);
         if (sensitive.types.some((type) => PRIVATE_DOCUMENT_TYPES.has(type))) {

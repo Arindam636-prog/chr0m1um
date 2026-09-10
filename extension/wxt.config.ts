@@ -5,7 +5,7 @@ export default defineConfig({
   manifest: ({ browser }) => ({
     name: 'ContextShield',
     description: 'Privacy-preserving local-first browser agent',
-    version: '1.3.0',
+    version: '1.4.0',
     permissions: [
       'activeTab',
       'scripting',

@@ -17,8 +17,24 @@ const liveResults: Array<{
   endToEndMs: number;
   privacyMs: number | null;
   plannerRoundTripsMs: number[];
-  clientMetrics: AgentCommandResponse['state']['clientMetrics'];
+  clientMetrics: AgentCommandResponse['state']['clientMetrics'] | null;
+  failure?: string;
 }> = [];
+
+// Failed attempts must remain in the denominator, even if an assertion throws
+// before the scenario can append its success measurements.
+test.afterEach(() => {
+  const info = test.info();
+  const tracked: Record<string, string> = {
+    'completes the real checkout with Rampart and the local Qwen backend': 'autonomous-checkout',
+    'summarizes the real privacy proof without sending raw private values': 'privacy-proof-summary',
+    'completes general dropdown, checkbox, and radio controls with real Qwen': 'general-form-controls',
+  };
+  const scenario = tracked[info.title];
+  if (scenario && info.status !== 'passed' && info.status !== 'skipped') {
+    liveResults.push({ scenario, completed: false, endToEndMs: info.duration, privacyMs: null, plannerRoundTripsMs: [], clientMetrics: null, failure: info.error?.message ?? info.status });
+  }
+});
 
 function captureContextShieldErrors(context: BrowserContext): void {
   const attach = (source: Page | Worker) => {
@@ -64,14 +80,22 @@ function percentile(values: number[], fraction: number): number | null {
 test.afterAll(async () => {
   if (liveResults.length === 0) return;
   const completed = liveResults.filter((result) => result.completed).length;
-  const endToEnd = liveResults.map((result) => result.endToEndMs);
+  const endToEnd = liveResults.filter((result) => result.completed).map((result) => result.endToEndMs);
   const planner = liveResults.flatMap((result) => result.plannerRoundTripsMs);
   const privacy = liveResults
     .map((result) => result.privacyMs)
     .filter((value): value is number => value !== null);
   const stageValues = (
     key: keyof AgentCommandResponse['state']['clientMetrics'],
-  ) => liveResults.map((result) => result.clientMetrics[key]);
+  ) => liveResults.flatMap((result) => result.clientMetrics ? [result.clientMetrics[key]] : []);
+  const latencyByMode = Object.fromEntries(['local_only', 'server_assisted'].map((mode) => {
+    const group = liveResults.filter((result) => (result.scenario === 'autonomous-checkout' ? 'server_assisted' : 'local_only') === mode);
+    const successful = group.filter((result) => result.completed);
+    return [mode, { attempted: group.length, completed: successful.length,
+      task_ms_median: percentile(successful.flatMap((result) => result.clientMetrics ? [result.clientMetrics.totalMs] : []), .5),
+      task_ms_p95: percentile(successful.flatMap((result) => result.clientMetrics ? [result.clientMetrics.totalMs] : []), .95),
+      scope: 'Successful task timers only; failures retained in attempts. Cold client models, warm server; automated confirmation.' }];
+  }));
   const report = {
     schema_version: 1,
     generated_at: new Date().toISOString(),
@@ -83,6 +107,8 @@ test.afterAll(async () => {
       rate: completed / liveResults.length,
     },
     performance: {
+      latency_by_mode: latencyByMode,
+      scope: 'Legacy end_to_end fields include browser setup and assertions and mix modes. Use latency_by_mode for task timings. Planner round trips include deterministic server transitions, NOT isolated model inference.',
       end_to_end_task_latency_ms_median: percentile(endToEnd, 0.5),
       end_to_end_task_latency_ms_p95: percentile(endToEnd, 0.95),
       planner_round_trip_latency_ms_median: percentile(planner, 0.5),
@@ -137,6 +163,7 @@ test('completes the real checkout with Rampart and the local Qwen backend', asyn
     const extensionId = new URL(serviceWorker.url()).hostname;
     const popup = await context.newPage();
     await popup.goto(`chrome-extension://${extensionId}/popup.html`);
+    await popup.locator('.vault > summary').click();
     await popup.getByLabel('Secret value').fill('private@example.com');
     await popup.getByRole('button', { name: 'Add' }).click();
     await popup.getByLabel('What should the agent do?').fill(
@@ -170,6 +197,7 @@ test('completes the real checkout with Rampart and the local Qwen backend', asyn
     await expect(target.locator('#email')).toHaveValue('private@example.com');
     await expect(target.locator('#fare')).toHaveValue('₹899 · Saver · 09:15');
     await expect(target.locator('#done')).toBeVisible();
+    await popup.locator('.activity-details > summary').click();
     await expect(popup.getByText('Rampart ONNX contextual PII model ready')).toBeVisible();
     await expect(popup.getByText('Server returned a structured action').first()).toBeVisible();
     const finalReply: AgentCommandResponse = await popup.evaluate(() =>
@@ -249,6 +277,7 @@ test('summarizes the real privacy proof without sending raw private values', asy
     expect(reply.state.privacySummary.PASSWORD).toBeGreaterThanOrEqual(1);
     expect(reply.state.privacySummary.FACE).toBeGreaterThanOrEqual(1);
     await expect(popup.locator('.success-result')).toContainText('Task complete');
+    await popup.locator('.activity-details > summary').click();
     await expect(popup.getByText('Visual privacy scan complete')).toBeVisible();
     liveResults.push({
       scenario: 'privacy-proof-summary',

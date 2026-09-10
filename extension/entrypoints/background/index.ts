@@ -21,7 +21,6 @@ import {
 import { LocalPrivacyPipeline } from '../../lib/privacy/pipeline';
 import { OffscreenRampartBridge } from '../../lib/privacy/offscreenRampartBridge';
 import { OffscreenVisualBridge } from '../../lib/privacy/offscreenVisualBridge';
-import type { VisualAnalysisResult } from '../../lib/privacy/visualPrivacyScanner';
 import type { LocalPageObservation } from '../../lib/privacy/types';
 import { fuseScreenState } from '../../lib/perception/fuseScreenState';
 import { SecretVault } from '../../lib/vault/secretVault';
@@ -311,7 +310,6 @@ async function runAgent(task: string, generation: number): Promise<void> {
       1,
       task.match(/\b(?:click|press)\b/gi)?.length ?? 0,
     );
-    const visualCache = new Map<string, VisualAnalysisResult>();
     const clarifications: string[] = [];
     for (let step = 1; step <= MAX_STEPS && generation === runGeneration; step += 1) {
       if (Date.now() >= activeRunDeadline) throw new Error('AGENT_TIME_LIMIT');
@@ -352,37 +350,15 @@ async function runAgent(task: string, generation: number): Promise<void> {
         `${visualCandidateCount} visible pixel surfaces`,
       );
       visualScanner ??= new OffscreenVisualBridge();
-      const visualKey = JSON.stringify({
-        url: local.observation.url,
-        viewport: local.observation.viewport,
-        regions: local.observation.visual_regions.map((region) => [
-          region.id,
-          region.kind,
-          region.bbox,
-        ]),
-      });
-      let visualCacheHit = false;
-      let visual: VisualAnalysisResult;
-      const cached = visualCache.get(visualKey);
-      if (cached) {
-        visual = cached;
-        visualCacheHit = true;
-        timeline('Reused the verified local pixel analysis', 'The visual surfaces did not change');
-      } else {
-        visual = await visualScanner.analyze(local);
-        visualCache.clear();
-        visualCache.set(visualKey, visual);
-      }
+      // Geometry does not prove that pixels are unchanged. Selected values,
+      // canvas content and private text can change within the same rectangles.
+      // Re-capture and re-sanitize each observation; retain only loaded models.
+      const visual = await visualScanner.analyze(local, tab.id);
       const visualElements = visual.visualElements ?? [];
       state.clientMetrics.pixelRecords += visualElements.length;
-      if (!visualCacheHit) {
-        addMetric('modelInitializationMs', visual.timings?.modelInitializationMs ?? 0);
-        addMetric('screenshotCaptureMs', visual.timings?.captureMs ?? 0);
-        addMetric(
-          'visualInferenceAndRedactionMs',
-          visual.timings?.inferenceAndRedactionMs ?? 0,
-        );
-      }
+      addMetric('modelInitializationMs', visual.timings?.modelInitializationMs ?? 0);
+      addMetric('screenshotCaptureMs', visual.timings?.captureMs ?? 0);
+      addMetric('visualInferenceAndRedactionMs', visual.timings?.inferenceAndRedactionMs ?? 0);
       local = {
         ...local,
         observation: {
@@ -404,10 +380,23 @@ async function runAgent(task: string, generation: number): Promise<void> {
         taskWithClarifications(task, clarifications),
       );
       state.privacySummary = privacy.context.privacy_summary;
+      state.privacyEvidence = privacy.evidence;
+      const firstSnapshot = !state.proofPreview;
+      if (firstSnapshot) {
+        state.proofPreview = privacy.serverPreview;
+        state.proofEvidence = privacy.evidence;
+      }
       state.blockedVisualRegions = privacy.blockedVisualRegions;
       state.localProcessingMs = Math.round(privacy.processingMs * 100) / 100;
       addMetric('privacyClassificationMs', privacy.processingMs);
       state.serverPreview = privacy.serverPreview;
+      const delivery: NonNullable<PublicAgentState['contextDelivery']> = {
+        status: 'PREPARED',
+        endpoint: AGENT_ENDPOINT.origin,
+        requests: state.contextDelivery?.requests ?? 0,
+      };
+      state.contextDelivery = delivery;
+      if (firstSnapshot) state.proofDelivery = delivery;
       state.secretHandles = vault.handles();
       const entityCount = Object.values(privacy.context.privacy_summary).reduce(
         (total, count) => total + count,
@@ -427,11 +416,24 @@ async function runAgent(task: string, generation: number): Promise<void> {
         localAction ? 'Planning a grounded action entirely on this device' : 'Sending sanitized context and planning next action',
       );
       const serverPlanningStarted = performance.now();
-      const plan: AgentStartResponse | null = localAction
-        ? null
-        : sessionId
-          ? await stepAgent(AGENT_ENDPOINT, sessionId, privacy.context, vault.values())
-          : await startAgent(AGENT_ENDPOINT, privacy.context, vault.values());
+      let plan: AgentStartResponse | null = null;
+      if (localAction) {
+        delivery.status = 'LOCAL_ONLY';
+      } else {
+        const onDispatch = () => {
+          delivery.status = 'DISPATCHED';
+          delivery.requests += 1;
+        };
+        try {
+          plan = sessionId
+            ? await stepAgent(AGENT_ENDPOINT, sessionId, privacy.context, vault.values(), undefined, onDispatch)
+            : await startAgent(AGENT_ENDPOINT, privacy.context, vault.values(), undefined, onDispatch);
+          delivery.status = 'ACKNOWLEDGED';
+        } catch (error) {
+          if (delivery.status === 'DISPATCHED') delivery.status = 'UNCONFIRMED';
+          throw error;
+        }
+      }
       if (!localAction) addMetric('serverPlanningMs', performance.now() - serverPlanningStarted);
       if (generation !== runGeneration) return;
       const activeSessionId: string | null = plan?.session_id ?? null;
@@ -506,6 +508,8 @@ async function runAgent(task: string, generation: number): Promise<void> {
         fail(`Action blocked safely: ${verification.error ?? 'VERIFICATION_FAILED'}`);
         return;
       }
+      state.verifiedActions = (state.verifiedActions ?? 0) + 1;
+      state.lastVerifiedAction = action.type;
       if (localAction) {
         timeline('Local verification accepted', 'No raw page state left this device');
         if (action.type === 'CLICK') completedLocalClicks += 1;
@@ -551,6 +555,7 @@ async function runAgent(task: string, generation: number): Promise<void> {
         UNSUPPORTED_PAGE: 'Open a normal HTTP(S) page before starting.',
         CONTENT_UNAVAILABLE: 'The page does not allow the local content script.',
         PERCEPTION_FAILED: 'Local page perception failed; nothing was transmitted.',
+        TARGET_TAB_CHANGED: 'The active tab changed. Return to the task website and start again.',
         ORIGIN_CHANGED: 'The page origin changed; the action was stopped.',
         ACTION_FAILED: 'Local action execution failed safely.',
         PLANNER_FAILED: 'The local planner could not process this page; no action was taken.',
@@ -578,10 +583,17 @@ function resetRunState(task: string): void {
   state.origin = null;
   state.sessionId = null;
   state.privacySummary = {};
+  state.privacyEvidence = undefined;
+  state.proofPreview = null;
+  state.proofEvidence = undefined;
+  state.verifiedActions = 0;
+  state.lastVerifiedAction = null;
   state.blockedVisualRegions = 0;
   state.localProcessingMs = null;
   state.clientMetrics = emptyClientMetrics();
   state.serverPreview = null;
+  state.contextDelivery = undefined;
+  state.proofDelivery = undefined;
   state.timeline = [];
   state.pendingConfirmation = null;
   state.secretHandles = vault.handles();

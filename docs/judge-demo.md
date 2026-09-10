@@ -1,6 +1,8 @@
 # ContextShield judge demonstration
 
-This is the safe, repeatable order for presenting the complete system. The judge-facing website at <http://127.0.0.1:4173> contains the same route, live service health and measured benchmark evidence.
+**Team Chr0m1um · SIH 26171 · three-minute live demonstration**
+
+Use one page: <http://127.0.0.1:4173/judge-run.html>. It combines a fictional profile, a real image, a password and a fare-comparison task. The models, privacy gateway, server and browser actions run normally; this is not a simulated animation.
 
 The judge website is built from the React and Tailwind source in `judge-site/`.
 `START.command` rebuilds it automatically before starting the services.
@@ -11,12 +13,51 @@ The judge website is built from the React and Tailwind source in `judge-site/`.
 2. Wait until the Terminal says `ContextShield is running`.
 3. Open <http://127.0.0.1:4173>.
 4. Confirm the home page says the Agent API is **Online** and the reasoning mode is **Qwen3-VL ready**.
-5. Confirm the installed extension footer shows the current release version.
-6. Use only synthetic values during the demonstration.
+5. On `chrome://extensions`, reload ContextShield once after this update. Its footer must show **v1.4.0**. The stable unpacked folder is `release/ContextShield-Chrome`.
+6. Open the single demo page above. Open the extension, click **Use demo task**, then **Start agent**. Keep the website active. Run this once before presenting to load the local models and verify the machine is ready.
+7. Reload the demo page before the judged run to reset its dropdown and button. Use only synthetic values. No vault setup is needed for this demonstration.
 
 If the home page says **API only**, Qwen is not responding. Exact local select, checkbox, radio, structured form and page-summary tasks can still run, but the autonomous comparison demo needs Qwen. Run `./STATUS.sh`, then `./STOP.sh` and `./START.sh` if necessary.
 
-## Six-minute route
+## The three-minute script
+
+| Time | Show | Say |
+| --- | --- | --- |
+| 0:00–0:10 | Extension → **Use demo task** → **Start agent** | “Compare fares and prepare a test ticket, without sharing my private details.” |
+| 0:10–1:50 | Keep the page active. Explain the fictional profile and Read → Hide → Plan → Act while the real task runs. | “The AI needs these fares, not my name, email, password or face. Read and Hide happen on this device. Local vision and text checks remove detected private information before the server receives context.” |
+| 1:50–2:00 | The ₹899 fare and **Ticket prepared** | “The server chooses the next action. The browser validates it and checks the result. This is a test ticket—no purchase.” |
+| 2:00–2:40 | Extension → **Show the privacy proof**. Optionally **Freeze view**. | “Left: what stayed local. Right: the actual redacted image and readable structure allowed through. ‘Server responded’ confirms a response. We did not send the original screenshot.” |
+| 2:40–3:00 | Keep the privacy proof visible; explain verbally | “Encryption protects the journey, but the receiving server decrypts it. ContextShield limits what arrives in the first place. We need both.” |
+
+The four steps are a live status display, not a timed animation. Read → Hide → Plan → Act can repeat as the agent observes the result of each action. Technical logs and JSON are available under details, but are not part of the three-minute pitch.
+
+Start the task immediately and explain while it runs. Local Qwen on this machine can take most of the first two minutes; this is not a guaranteed runtime. Rehearse on the presentation laptop, with unnecessary applications closed.
+
+**Use the actual page result, not just the green extension badge.** The fare must be ₹899 and “Ticket prepared” must appear. If it stops, show the reason honestly; do not describe a timeout, partial selection or safety stop as successful task completion.
+
+### What the proof means
+
+- The presentation starts with the **first sanitized snapshot**, retained locally, so the original privacy evidence does not disappear after the page changes. The latest snapshot is available under details.
+- Repeated detector hits for the same local text value or visual face identity are grouped. These are **detection groups, not unique people or accuracy scores**. Uncorroborated language-model or OCR detections and low-confidence findings are shown separately; they are still masked.
+- The image is the actual sanitized crop from that context—not a staged before/after drawing. If no image was included, the view explicitly says so.
+- “Handled on device” means no context was sent. “Server responded” means a valid response arrived. Unconfirmed delivery is labelled as such. This view reports extension state, not an independent packet capture.
+- The proof tab is read-only and cannot be opened through the extension while a task is running. Switching target tabs during capture is checked and stops the task safely.
+
+### How this addresses the PS
+
+| PS requirement | Evidence in this run |
+| --- | --- |
+| Local visual perception | Browser-local YOLOX face detection and targeted OCR; real portrait pixels, not an annotation-only fixture |
+| Client-side privacy filter | Hidden sensitive groups and the actual redacted image, before the request |
+| Central server integration | Qwen receives sanitized context and returns grounded actions; request status is visible |
+| End-to-end assistance | The lowest fare is selected and a test ticket is prepared, with local action checks |
+| Latency/resource/accuracy trade-offs | Measured stage timings under technical details; benchmark evidence remains separately scoped |
+
+One live run demonstrates the pipeline. It does **not** establish population-level detection precision/recall, redaction precision, cross-site accuracy or extension-only memory usage. Do not present detector counts as the PS's accuracy metrics.
+
+## Optional longer demonstrations
+
+These are alternatives for Q&A, not additional steps in the three-minute route.
 
 ### 1. Privacy boundary, 90 seconds
 
@@ -24,7 +65,11 @@ Open <http://127.0.0.1:4173/privacy-proof.html> and run:
 
 > Summarize what is safe on this page without exposing personal or sensitive information.
 
-Show the fictional portrait, email, mobile, UPI and password on the page. In the extension, show the local category counts and expand **Actual server view**. The source values and face pixels must be absent. Explain that YOLOX, PP-OCR and Rampart ran in browser workers before the only outbound gateway was reached.
+Show the fictional portrait, email, mobile, UPI and password on the page. Keep that website active until the task stops: screen capture reads the active tab. Then click **Show the privacy proof**, or **Privacy proof → Open judge view**. Put the synthetic test page and the read-only view side by side after the run. **Freeze view** freezes only the display, not the agent. Return to the target website before another task.
+
+On the left, point to the sensitive classification counts and masked representations. The originals are deliberately not copied into the presentation view. On the right, point to the actual sanitized task, readable page records, local references and any sanitized image crops. If there are no crops, say that this snapshot contains no image data; do not imply the server received a screenshot.
+
+This summary task is handled locally: the receipt should say **Handled on device · this context was not sent**, with zero context request attempts. It demonstrates local privacy processing, not server inference. For a server-assisted example, use the comparison task. JSON remains optional under **Detection details and exact server context**.
 
 ### 2. Autonomous task and secret handle, 120 seconds
 
@@ -79,6 +124,16 @@ Open <https://the-internet.herokuapp.com/dropdown> and run:
 > Select Option 2 from the dropdown and stop.
 
 ## The simple explanation
+
+### Why encryption alone is not enough
+
+“Encryption locks the envelope while it travels. But the receiving server opens it. ContextShield removes the detected private details before putting anything in that envelope. The AI gets the page structure and local references; it does not need the original email or password to choose the next action.”
+
+Ordinary HTTPS protects against interception; the receiving endpoint decrypts the data for processing. Encryption at rest protects stored bytes but does not hide data from an authorized service reading it. ContextShield adds client-side data minimization. Use it **with** transport encryption, not instead of it. Specialized encrypted computation such as FHE is a different architecture, not ordinary HTTPS. See [TLS 1.3 record protection, RFC 8446 §5.2](https://www.rfc-editor.org/rfc/rfc8446.html#section-5.2).
+
+The current prototype uses HTTP to a loopback planner on the same machine; the gateway rejects insecure remote endpoints, and remote deployment also requires updating the extension's CSP allowlist. Detection can miss PII and retained context can reveal information indirectly: do not claim perfect anonymity. Vault references protect values from the planning server, not from the destination website when the user authorizes filling its fields. The visual view is based on extension state, not an independent packet capture. Health checks and action-verification messages are not included in the context request counter.
+
+### Explain the processing loop
 
 1. The browser reads the page and screenshot locally.
 2. YOLOX finds faces, PP-OCR reads pixels and Rampart classifies sensitive context.

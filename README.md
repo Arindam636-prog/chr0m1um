@@ -3,7 +3,7 @@
 > **New to the project?** Use the one-command guide:
 > [START-HERE.md](START-HERE.md). In short, load the stable release once and run
 > double-click `START.command` (or run `./START.sh`) whenever you want to use the product.
-> Presenting to judges? Follow the exact six-minute script in
+> Presenting to judges? Follow the three-minute, single-page script in
 > [judge-demo.md](docs/judge-demo.md).
 
 ContextShield is a privacy-preserving autonomous browser agent for SIH 2026,
@@ -209,11 +209,27 @@ loop, and asserts that the raw email is absent from every captured API payload.
 ```
 
 The command runs regression tests, a 295-case synthetic PII corpus, 100 pixel
-redaction cases, and a 60-screen controlled perception corpus, then writes real
+redaction cases, and a 61-screen controlled perception corpus, then writes real
 calculated output to `benchmarks/results/latest.json`. When the full stack is
 running it also records real Qwen task completion and stage-by-stage client
 latency. The report labels independently reviewed YOLOX accuracy unavailable;
 it does not fabricate that score.
+
+For the expanded real-model audit, first start the stack with `START.command`,
+then run **`npm run audit:fresh`**. It packages the extension, runs eleven authored
+privacy pages through DOM + YOLOX + OCR + Rampart, checks actual redacted pixels,
+measures a paired Chromium baseline, and repeats the real Qwen judge task three
+times. Failed attempts stay in the results. Set `CONTEXTSHIELD_E2E_EXTERNAL=1`
+to include the five public practice-site scenarios. External tests use fake data.
+
+Reports are in `benchmarks/results/`. Full-model regression classifications are
+not equivalent to independently reviewed entity/span precision and recall.
+Local-only and server-assisted task timings are reported separately. Browser
+process RSS is not extension-only memory, and GPU-process RSS is not VRAM.
+Read the [fresh audit results and remaining limits](docs/FRESH-AUDIT-RESULTS.md).
+
+The v1.4.0 judge-extension changes and real-model verification are recorded in
+[SIH-RELEASE-v1.4.0.md](docs/SIH-RELEASE-v1.4.0.md).
 
 The measured v1.2.0 acceptance summary is in
 [SIH-ACCEPTANCE-v1.2.0.md](docs/SIH-ACCEPTANCE-v1.2.0.md). The fresh v1.3.0
@@ -221,6 +237,15 @@ build, test and public-Selenium verification is recorded in
 [SIH-RELEASE-v1.3.0.md](docs/SIH-RELEASE-v1.3.0.md).
 
 ## Demo procedure
+
+**For the three-minute pitch:** open <http://127.0.0.1:4173/judge-run.html> in
+Chrome, open ContextShield v1.4.0, click **Use demo task**, then **Start agent**.
+Keep that page active. After the test ticket is prepared, click **Show the
+privacy proof**. It shows the actual redacted image, hidden-item groups and
+server delivery status without making judges read JSON. See
+[the timed script](docs/judge-demo.md) for exact narration and limitations.
+
+The following are optional Q&A examples:
 
 1. Privacy proof: use `privacy-proof.html`, run a task, expand **Actual server
    view**, and inspect the `/v1/agent/*` request in DevTools. The synthetic email,

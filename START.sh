@@ -187,7 +187,8 @@ if [[ "$planner_mode" == "llama" ]]; then
         --host 127.0.0.1
         --port 8080
         --ctx-size 8192
-        --image-min-tokens 1024
+        --image-min-tokens 256
+        --cache-ram 512
         --parallel 1
         --jinja
       )
@@ -303,14 +304,15 @@ echo " ContextShield is running"
 echo "========================================"
 echo
 echo "1. Install release/ContextShield-Chrome once from chrome://extensions."
-echo "   After this v1.3.0 update, reload the unpacked extension once."
+echo "   After this v1.4.0 update, reload the unpacked extension once."
 echo "2. The judge control room opens at: http://127.0.0.1:4173"
 if [[ "$planner_mode" == "llama" ]]; then
   echo "3. Confirm that it shows Agent API Online and Qwen3-VL ready."
 else
   echo "3. Confirm that it shows Agent API Online and Predictable mock planner."
 fi
-echo "4. Start with Privacy proof and follow the six-minute route on the page."
+echo "4. Three-minute demo: http://127.0.0.1:4173/judge-run.html"
+echo "   Open the extension, click Use demo task, then Start agent."
 echo
 if [[ "$planner_mode" == "llama" ]]; then
   echo "Planner: real local Qwen3-VL"
