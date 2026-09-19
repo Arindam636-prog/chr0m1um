@@ -105,6 +105,12 @@ const steps = [
 
 const demoRoutes: DemoRoute[] = [
   {
+    index: 'NEW', time: '3 min', title: 'A complete railway journey',
+    description: 'Search, compare, authorize private fills, simulate payment and inspect the signed local action ledger. Not affiliated with IRCTC.',
+    prompt: 'Open the extension’s Railway demo, load the synthetic profile and select local rehearsal or Qwen mode.',
+    href: 'railway.html', signal: 'BOOKING SANDBOX + SIGNED LEDGER',
+  },
+  {
     index: '01',
     time: '90 sec',
     title: 'Prove the privacy boundary',
@@ -265,6 +271,7 @@ function Nav() {
       <div className="nav-actions">
         <StatusBeacon />
         <a className="nav-proof" href="privacy-proof.html">Open lab <ArrowRight weight="bold" /></a>
+        <a className="nav-proof" href="railway.html">Railway demo <ArrowRight weight="bold" /></a>
         <button
           className="menu-toggle"
           type="button"

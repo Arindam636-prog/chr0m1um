@@ -66,7 +66,11 @@ def _requested_named_state(task: str, names: list[str]) -> bool | None:
 def button_is_prohibited(task: str, visible_name: str) -> bool:
     normalized_task = task.lower().replace("-", " ")
     normalized_name = visible_name.lower().strip()
-    if re.search(rf"\b(?:do\s+not|don't|never)\s+(?:click\s+|press\s+)?(?:the\s+)?[\"'“]?{re.escape(normalized_name)}(?!\w)", normalized_task):
+    if re.search(
+        rf"\b(?:do\s+not|don't|never)\s+(?:click\s+|press\s+)?(?:the\s+)?[\"'“]?"
+        rf"{re.escape(normalized_name)}(?!\w)",
+        normalized_task,
+    ):
         return True
     if "submit" in normalized_name:
         return bool(
@@ -254,13 +258,17 @@ class MockPlanner:
             if not element.enabled or element.role != 'button':
                 continue
             names = {name.strip().lower() for name in (element.text, element.label) if name}
-            if any(re.search(rf"\b(?:click|press)\s+(?:the\s+)?[\"'“]?{re.escape(name)}(?!\w)", task)
-                   and not button_is_prohibited(task, name) for name in names):
+            if any(
+                re.search(rf"\b(?:click|press)\s+(?:the\s+)?[\"'“]?{re.escape(name)}(?!\w)", task)
+                and not button_is_prohibited(task, name) for name in names
+            ):
                 named_buttons.append(element)
         if len(named_buttons) == 1:
-            return ClickAction(type='CLICK', action_id=_action_id(), snapshot_id=context.snapshot_id,
-                               element_id=named_buttons[0].id,
-                               reason='Click the exact button explicitly requested by the user')
+            return ClickAction(
+                type='CLICK', action_id=_action_id(), snapshot_id=context.snapshot_id,
+                element_id=named_buttons[0].id,
+                reason='Click the exact button explicitly requested by the user',
+            )
 
         if recognized_state_request:
             return FinishAction(

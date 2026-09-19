@@ -15,6 +15,7 @@ export interface ActionValidationContext {
   fingerprint: string;
   resolvedValue?: string;
   confirmedActionIds: ReadonlySet<string>;
+  preflight?: boolean;
 }
 
 export interface ActionBroker {
@@ -72,7 +73,7 @@ function riskText(element: HTMLElement): string {
 
 function isHighRisk(action: AgentAction, element: HTMLElement | undefined): boolean {
   if (action.type === 'TYPE_HANDLE') {
-    return element instanceof HTMLInputElement && element.type === 'password';
+    return true;
   }
   if (action.type !== 'CLICK' || !element) return false;
   return HIGH_RISK_TEXT.test(riskText(element));
@@ -217,6 +218,16 @@ export class DomActionBroker implements ActionBroker {
     if (!visible(executionTarget) || !enabled(element) || !enabled(executionTarget)) {
       return result(action.action_id, false, false, true, 'ACTION_FAILED');
     }
+    if (action.type === 'TYPE_HANDLE') {
+      const observedField = observed.observation.elements.find((item) => item.id === action.element_id);
+      const currentType = element instanceof HTMLInputElement ? element.type : (element instanceof HTMLTextAreaElement || element.isContentEditable) ? 'text' : null;
+      const editable = element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement || element.isContentEditable;
+      const readOnly = (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) && element.readOnly;
+      if (observedField?.input_type !== currentType || !editable || readOnly) {
+        return result(action.action_id, false, false, true, 'STALE_SNAPSHOT');
+      }
+    }
+    if (context.preflight) return result(action.action_id, true, false, false, null);
     if (isHighRisk(action, executionTarget) && !context.confirmedActionIds.has(action.action_id)) {
       return result(action.action_id, false, false, false, 'CONFIRMATION_REQUIRED');
     }

@@ -304,7 +304,7 @@ echo " ContextShield is running"
 echo "========================================"
 echo
 echo "1. Install release/ContextShield-Chrome once from chrome://extensions."
-echo "   After this v1.4.0 update, reload the unpacked extension once."
+echo "   After this v1.5.0 update, reload the unpacked extension once."
 echo "2. The judge control room opens at: http://127.0.0.1:4173"
 if [[ "$planner_mode" == "llama" ]]; then
   echo "3. Confirm that it shows Agent API Online and Qwen3-VL ready."
@@ -313,6 +313,8 @@ else
 fi
 echo "4. Three-minute demo: http://127.0.0.1:4173/judge-run.html"
 echo "   Open the extension, click Use demo task, then Start agent."
+echo "5. Railway sandbox: http://127.0.0.1:4173/railway.html"
+echo "   Extension -> Railway demo -> Load synthetic profile. Select rehearsal or Qwen mode."
 echo
 if [[ "$planner_mode" == "llama" ]]; then
   echo "Planner: real local Qwen3-VL"

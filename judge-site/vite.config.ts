@@ -10,6 +10,7 @@ export default defineConfig({
     emptyOutDir: false,
     assetsDir: 'assets/judge',
     rollupOptions: {
+      input: { main: 'index.html', railway: 'railway.html' },
       output: {
         assetFileNames: 'assets/judge/[name]-[hash][extname]',
         chunkFileNames: 'assets/judge/[name]-[hash].js',

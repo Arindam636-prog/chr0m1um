@@ -49,6 +49,8 @@ export interface LocalOcrHint {
 }
 
 export interface LocalPageObservation {
+  /** Isolated-world document identity. Never sent to the planner. */
+  documentId?: string;
   observation: PageObservation;
   privateValues: LocalPrivateValue[];
   visualHints: LocalVisualHint[];

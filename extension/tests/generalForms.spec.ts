@@ -218,9 +218,10 @@ test('accepts a typed clarification and sanitizes it before replanning', async (
     await target.bringToFront();
     await popup.getByRole('button', { name: 'Start agent' }).evaluate((button: HTMLButtonElement) => button.click());
 
-    await expect(popup.getByRole('heading', { name: 'Information needed' })).toBeVisible({ timeout: 60_000 });
+    await expect(popup.getByRole('heading', { name: 'One detail needed' })).toBeVisible({ timeout: 60_000 });
     await popup.getByLabel('Your answer').fill('first dropdown');
-    await popup.getByRole('button', { name: 'Send answer' }).click();
+    await target.bringToFront();
+    await popup.getByRole('button', { name: 'Send answer' }).evaluate((button: HTMLButtonElement) => button.click());
     await expect.poll(async () => {
       const reply: AgentCommandResponse = await popup.evaluate(() =>
         browser.runtime.sendMessage({ type: 'GET_AGENT_STATE' }),

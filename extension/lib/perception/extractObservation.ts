@@ -297,6 +297,7 @@ function pageFingerprint(observation: PageObservation): string {
       elements: observation.elements.map((element) => [
         element.id,
         element.role,
+        element.input_type,
         element.text,
         element.label,
         element.enabled,

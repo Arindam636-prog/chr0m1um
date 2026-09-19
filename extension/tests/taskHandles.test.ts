@@ -17,9 +17,7 @@ describe('task field handles', () => {
     expect(localized).toContain('Do not submit it');
     expect(localized).not.toContain('Arindam');
     expect(localized).not.toContain('owner@example.com');
-    expect(vault.resolve('LOCAL_GIVEN_NAME_1')).toBe('Arindam');
-    expect(vault.resolve('LOCAL_SURNAME_1')).toBe('Test');
-    expect(vault.resolve('LOCAL_ADDRESS_1')).toBe('Kolkata');
+    expect(vault.values()).toEqual(expect.arrayContaining(['Arindam', 'Test', 'Kolkata']));
   });
 
   it('does not wrap an existing local handle a second time', () => {
@@ -46,6 +44,12 @@ describe('task field handles', () => {
     );
     expect(localized).toContain('Text input with LOCAL_TEXT_1');
     expect(localized).not.toContain('ContextShield public test');
-    expect(vault.resolve('LOCAL_TEXT_1')).toBe('ContextShield public test');
+    expect(vault.values()).toContain('ContextShield public test');
+  });
+  it('preserves a Search button name instead of treating it as a secret search value', () => {
+    const vault = new SecretVault();
+    const task = 'click search trains; compare morning departures and choose the lowest fare';
+    expect(localizeTaskFieldValues(task, vault)).toBe(task);
+    expect(vault.size).toBe(0);
   });
 });

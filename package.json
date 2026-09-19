@@ -1,6 +1,6 @@
 {
   "name": "contextshield",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "description": "Privacy-preserving autonomous browser agent for SIH 2026",
   "engines": {

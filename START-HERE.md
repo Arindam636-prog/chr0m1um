@@ -6,7 +6,8 @@ whole product. If macOS asks, choose **Open**.
 The Terminal equivalent is one command:
 
 ```bash
-cd "/Users/arindam/Documents/SIH 2026/contextshield" && ./START.sh
+cd chr0m1um
+./START.sh
 ```
 
 You can close that Terminal window after it says the system is ready. The local
@@ -21,8 +22,14 @@ once:
 2. Remove older ContextShield development builds.
 3. Enable **Developer mode**, click **Load unpacked**, and select
    `release/ContextShield-Chrome`.
-4. Confirm that the popup footer says **v1.3.0**.
-5. Open <http://127.0.0.1:4173> and select **Run the 6-minute proof**.
+4. Confirm that the popup footer says **v1.5.0**.
+5. Open <http://127.0.0.1:4173> and select **Railway demo** for the current
+   presentation route. Follow [the railway guide](docs/RAILWAY-DEMO.md) for its
+   synthetic profile, approval steps and assisted/rehearsal distinction.
+
+For the earlier single-page fare demonstration, use
+<http://127.0.0.1:4173/judge-run.html>:
+
 6. Click the ContextShield extension icon.
 7. Add an Email to the memory-only local vault.
 8. Enter `Choose the cheapest morning fare, fill my email, continue, and place the order.`
@@ -93,9 +100,12 @@ Normal websites are supported. Chrome-protected pages (`chrome://`, the Chrome
 Web Store), closed Shadow DOM, browser-owned PDF UI, and inaccessible
 cross-origin frames cannot be controlled by browser extensions.
 
-The latest completed measured baseline is recorded in
+The current release evidence and its limitations are recorded in
+[docs/RAILWAY-VALIDATION.md](docs/RAILWAY-VALIDATION.md) and
+[docs/SIH-RELEASE-v1.5.0.md](docs/SIH-RELEASE-v1.5.0.md).
+An older measured baseline is recorded in
 [docs/SIH-ACCEPTANCE-v1.2.0.md](docs/SIH-ACCEPTANCE-v1.2.0.md). The v1.3.0
-release adds the judge control room and public-form compatibility improvements. This is a broad
+release added the judge control room and public-form compatibility improvements. This is a broad
 prototype, not a truthful guarantee that every control on every future website
 will be automatable.
 

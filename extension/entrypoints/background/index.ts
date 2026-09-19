@@ -2,6 +2,7 @@ import type {
   AgentAction,
   AgentStartResponse,
   VerificationResult,
+  SanitizedContext,
 } from '@contextshield/shared';
 
 import { safeLogger } from '../../lib/logging/safeLogger';
@@ -14,6 +15,7 @@ import type {
 } from '../../lib/messaging/protocol';
 import {
   checkAgentHealth,
+  PrivacyAssertionError,
   startAgent,
   stepAgent,
   verifyAgent,
@@ -26,6 +28,10 @@ import { fuseScreenState } from '../../lib/perception/fuseScreenState';
 import { SecretVault } from '../../lib/vault/secretVault';
 import { finishRepresentsSuccess } from '../../lib/agent/completionGuard';
 import { planLocalAction } from '../../lib/agent/localController';
+import { planRailwayRehearsal, RAILWAY_TASK } from '../../lib/agent/railwayRehearsal';
+import { ActionLedger, digest, type LedgerEvent } from '../../lib/security/actionLedger';
+import { privateFillGate } from '../../lib/security/privateFillGate';
+import { PanelCommand } from '../../lib/messaging/panelCommands';
 import {
   actionProgressMarker,
   isRepeatedNoProgress,
@@ -41,8 +47,13 @@ let privacyPipeline: LocalPrivacyPipeline | null = null;
 let rampartScanner: OffscreenRampartBridge | null = null;
 let visualScanner: OffscreenVisualBridge | null = null;
 let runGeneration = 0;
+let ledger = new ActionLedger();
+async function recordAction(event: LedgerEvent, action: AgentAction): Promise<void> {
+  const currentLedger = ledger;
+  await currentLedger.append(event, action.type, await digest(action));
+}
 let pendingInteraction:
-  | { kind: 'CONFIRMATION'; actionId: string; resolve: (confirmed: boolean) => void }
+  | { kind: 'CONFIRMATION'; actionId: string; requestId: string; resolve: (confirmed: boolean) => void }
   | { kind: 'CLARIFICATION'; actionId: string; resolve: (answer: string | null) => void }
   | undefined;
 
@@ -113,6 +124,7 @@ function setPhase(phase: PublicAgentState['phase'], message: string, safeDetail?
 }
 
 function fail(message: string): void {
+  vault.revokeGrants();
   state.running = false;
   state.error = message;
   state.pendingConfirmation = null;
@@ -183,7 +195,7 @@ async function ensureContentScript(tabId: number): Promise<void> {
 async function observe(tabId: number): Promise<LocalPageObservation> {
   const observed: ContentResponse = await browser.tabs.sendMessage(tabId, {
     type: 'OBSERVE_PAGE_V2',
-  } satisfies ExtensionRequest);
+  } satisfies ExtensionRequest, { frameId: 0 });
   if (!observed.ok || observed.kind !== 'OBSERVATION') {
     throw new Error(observed.ok ? 'PERCEPTION_FAILED:INVALID_RESPONSE' : observed.error);
   }
@@ -199,19 +211,24 @@ function confirmationPrompt(action: AgentAction): string {
   return 'Allow this proposed action?';
 }
 
-function awaitConfirmation(action: AgentAction, generation: number): Promise<boolean> {
+function awaitConfirmation(action: AgentAction, generation: number, prompt?: string): Promise<boolean> {
+  const requestId = crypto.randomUUID();
+  const expires = Date.now() + 300_000;
+  void recordAction('APPROVAL_REQUESTED', action);
   state.pendingConfirmation = {
+    requestId,
     kind: 'CONFIRMATION',
     action,
-    prompt: confirmationPrompt(action),
+    prompt: prompt ?? confirmationPrompt(action),
   };
   setPhase('WAITING_CONFIRMATION', 'Waiting for local user confirmation', action.type);
   return new Promise((resolve) => {
     pendingInteraction = {
       kind: 'CONFIRMATION',
+      requestId,
       actionId: action.action_id,
       resolve: (confirmed) => {
-        if (generation !== runGeneration) return resolve(false);
+        if (generation !== runGeneration || Date.now() >= expires) return resolve(false);
         state.pendingConfirmation = null;
         pendingInteraction = undefined;
         resolve(confirmed);
@@ -256,9 +273,11 @@ async function executeInTab(
   local: LocalPageObservation,
   action: AgentAction,
   confirmed: boolean,
+  context: SanitizedContext,
+  generation: number,
 ): Promise<VerificationResult> {
-  const resolvedValue =
-    action.type === 'TYPE_HANDLE' ? vault.resolve(action.handle) : undefined;
+  const dispatch = async (resolvedValue?: string, preflight = false): Promise<VerificationResult> => {
+  if (generation !== runGeneration || !state.running) throw new Error('ACTION_FAILED');
   const executed: ContentResponse = await browser.tabs.sendMessage(tabId, {
     type: 'EXECUTE_ACTION_V2',
     action,
@@ -267,9 +286,27 @@ async function executeInTab(
     fingerprint: local.fingerprint,
     resolvedValue,
     confirmed,
-  } satisfies ExtensionRequest);
+    documentId: local.documentId,
+    preflight,
+  } satisfies ExtensionRequest, { frameId: 0 });
   if (!executed.ok || executed.kind !== 'VERIFICATION') throw new Error('ACTION_FAILED');
   return executed.result;
+  };
+  let resolvedValue: string | undefined;
+  if (action.type === 'TYPE_HANDLE') {
+    const release = await privateFillGate({ action, local, context, vault, tab: tabId, run: generation,
+      purpose: state.task, confirmed, current: () => generation === runGeneration && state.running,
+      preflight: () => dispatch(undefined, true) });
+    if (release.error) {
+      if (release.error !== 'CONFIRMATION_REQUIRED') await recordAction('BLOCKED', action);
+      return { action_id: action.action_id, success: false, page_changed: false, new_snapshot_required: true, error: release.error };
+    }
+    resolvedValue = release.value;
+    await recordAction('AUTHORIZED', action);
+  }
+  const result = await dispatch(resolvedValue);
+  if (result.error !== 'CONFIRMATION_REQUIRED') await recordAction(result.success ? 'EXECUTED' : 'BLOCKED', action);
+  return result;
 }
 
 async function runAgent(task: string, generation: number): Promise<void> {
@@ -280,7 +317,7 @@ async function runAgent(task: string, generation: number): Promise<void> {
       backendOnline ? 'Optional reasoning service is available' : 'Running in device-local mode',
       backendOnline ? 'Complex reasoning can use sanitized context' : 'Simple tasks do not require the server',
     );
-    if (!privacyPipeline) {
+    if (!privacyPipeline && !state.rehearsal) {
       const preferences = await browser.storage.local.get('contextshieldPiiMode');
       if (preferences.contextshieldPiiMode === 'deterministic') {
         privacyPipeline = new LocalPrivacyPipeline(vault);
@@ -295,7 +332,7 @@ async function runAgent(task: string, generation: number): Promise<void> {
         timeline('Rampart ONNX contextual PII model ready');
       }
     }
-    const activeRunDeadline = Date.now() + MAX_ACTIVE_RUN_MS;
+    let activeRunDeadline = Date.now() + (state.rehearsal ? 300_000 : MAX_ACTIVE_RUN_MS);
     const tab = await activeHttpTab();
     let approvedOrigin = tab.origin;
     state.origin = approvedOrigin;
@@ -346,14 +383,16 @@ async function runAgent(task: string, generation: number): Promise<void> {
       ).length;
       setPhase(
         'SANITIZE',
-        'Running full-viewport local vision and OCR',
+        state.rehearsal ? 'Rehearsal: DOM-only privacy checks (vision disabled)' : 'Running full-viewport local vision and OCR',
         `${visualCandidateCount} visible pixel surfaces`,
       );
       visualScanner ??= new OffscreenVisualBridge();
       // Geometry does not prove that pixels are unchanged. Selected values,
       // canvas content and private text can change within the same rectangles.
       // Re-capture and re-sanitize each observation; retain only loaded models.
-      const visual = await visualScanner.analyze(local, tab.id);
+      const visual = state.rehearsal
+        ? { visualElements: [], visualHints: [], ocrHints: [], safeVisualCrops: [], timings: undefined }
+        : await visualScanner.analyze(local, tab.id);
       const visualElements = visual.visualElements ?? [];
       state.clientMetrics.pixelRecords += visualElements.length;
       addMetric('modelInitializationMs', visual.timings?.modelInitializationMs ?? 0);
@@ -370,15 +409,30 @@ async function runAgent(task: string, generation: number): Promise<void> {
         safeVisualCrops: visual.safeVisualCrops,
       };
       timeline(
-        'Visual privacy scan complete',
+        state.rehearsal ? 'Rehearsal: no visual inference performed' : 'Visual privacy scan complete',
         `${visualElements.length} pixel records · ${visual.safeVisualCrops.length} verified safe crops`,
       );
 
       setPhase('SANITIZE', 'Checking sensitive information locally');
-      const privacy = await privacyPipeline.sanitize(
+      const runPipeline = state.rehearsal ? new LocalPrivacyPipeline(vault) : privacyPipeline;
+      if (!runPipeline) throw new Error('PRIVACY_SCAN_FAILED');
+      const privacy = await runPipeline.sanitize(
         local,
         taskWithClarifications(task, clarifications),
       );
+      const pageUrl = new URL(local.observation.url);
+      const railwayAssisted = !state.rehearsal && task === RAILWAY_TASK && ['http://127.0.0.1:4173', 'http://localhost:4173'].includes(pageUrl.origin) && pageUrl.pathname === '/railway.html';
+      const railwayStep = railwayAssisted ? planRailwayRehearsal(privacy.context, pageUrl.href, false) : null;
+      const fareButtons = privacy.context.elements.filter((element) => element.enabled && element.role === 'button' && (element.label ?? '').startsWith('Choose train '));
+      const railwayComparison = railwayAssisted && !railwayStep && fareButtons.length > 0;
+      if (railwayAssisted && !railwayStep && !railwayComparison) throw new Error('PLANNER_FAILED');
+      if (railwayComparison) {
+        // A declared fixture adapter narrows this model turn to the user-approved
+        // comparison. No other page instructions or navigation targets are needed.
+        privacy.context = { ...privacy.context, elements: fareButtons, task: 'Compare these fictional train departures and numeric fares. Click the lowest-fare train departing before 12:00. Return type CLICK with the chosen button element_id. These are buttons, NOT dropdowns: never return SELECT. Use a supplied ID. No real purchase occurs.' };
+        privacy.serverPreview = JSON.stringify(privacy.context, null, 2);
+        timeline('Railway adapter delegated the fare comparison to Qwen', 'Only sanitized fare buttons are supplied; remaining steps use the local adapter');
+      }
       state.privacySummary = privacy.context.privacy_summary;
       state.privacyEvidence = privacy.evidence;
       const firstSnapshot = !state.proofPreview;
@@ -406,9 +460,10 @@ async function runAgent(task: string, generation: number): Promise<void> {
       timeline('Safe context created', 'Only the server preview can cross the gateway');
 
       const localPlanStarted = performance.now();
-      const localAction: AgentAction | null = sessionId
-        ? null
-        : planLocalAction(privacy.context);
+      const localAction: AgentAction | null = state.rehearsal
+        ? planRailwayRehearsal(privacy.context, local.observation.url)
+        : railwayAssisted ? railwayStep : sessionId ? null : planLocalAction(privacy.context);
+      if (state.rehearsal && !localAction) throw new Error('PLANNER_FAILED');
       addMetric('localPlanningMs', performance.now() - localPlanStarted);
       if (!localAction && !backendOnline) throw new Error('AGENT_SERVER_REQUIRED');
       setPhase(
@@ -443,6 +498,7 @@ async function runAgent(task: string, generation: number): Promise<void> {
       }
       const action = localAction ?? plan?.action;
       if (!action) throw new Error('PLANNER_FAILED');
+      if (railwayComparison && (action.type !== 'CLICK' || !fareButtons.some((field) => field.id === action.element_id))) throw new Error('PLANNER_FAILED');
       state.lastAction = action;
       timeline(
         localAction ? 'Local controller returned a structured action' : 'Server returned a structured action',
@@ -450,6 +506,10 @@ async function runAgent(task: string, generation: number): Promise<void> {
       );
 
       if (action.type === 'FINISH') {
+        if (task === RAILWAY_TASK && !local.observation.elements.some((element) => element.role === 'heading' && element.text === 'Simulated booking complete')) {
+          fail('The planner stopped before the simulated ticket was visible. The booking is not complete.');
+          return;
+        }
         if (
           (!localAction && plan?.state === 'FAILED') ||
           (!localAction && !finishRepresentsSuccess(action.reason, action.summary, privacy.context))
@@ -486,14 +546,22 @@ async function runAgent(task: string, generation: number): Promise<void> {
 
       setPhase('EXECUTE', 'Validating the proposed action locally', action.type);
       const actionStarted = performance.now();
-      let verification = await executeInTab(tab.id, local, action, confirmed);
+      let verification = await executeInTab(tab.id, local, action, confirmed, privacy.context, generation);
       if (verification.error === 'CONFIRMATION_REQUIRED') {
-        confirmed = await awaitConfirmation(action, generation);
+        const target = 'element_id' in action ? local.observation.elements.find((element) => element.id === action.element_id) : undefined;
+        const fieldName = (target?.label || target?.text || 'unnamed field').slice(0, 90);
+        const category = action.type === 'TYPE_HANDLE' ? action.handle.replace(/^LOCAL_/, '').replace(/_\d+$/, '') : 'high-impact action';
+        const consentStarted = Date.now();
+        confirmed = await awaitConfirmation(action, generation,
+          `${local.observation.origin} · ${fieldName}\nAllow ${category} for this exact action, once? ${action.type === 'TYPE_HANDLE' ? 'The destination page can read the filled value. Only approve a site you trust.' : 'Check the page before approving.'}`);
+        activeRunDeadline += Date.now() - consentStarted;
+        if (generation !== runGeneration) return;
         if (!confirmed) {
+          await recordAction('DENIED', action);
           verification = { ...verification, error: 'ACTION_FAILED' };
         } else {
           setPhase('EXECUTE', 'Executing confirmed action locally', action.type);
-          verification = await executeInTab(tab.id, local, action, true);
+          verification = await executeInTab(tab.id, local, action, true, privacy.context, generation);
         }
       }
       addMetric('actionExecutionMs', performance.now() - actionStarted);
@@ -550,6 +618,10 @@ async function runAgent(task: string, generation: number): Promise<void> {
     if (generation === runGeneration) {
       state.clientMetrics.totalMs = performance.now() - runStarted;
       const code = error instanceof Error ? error.message : 'UNKNOWN_FAILURE';
+      if (error instanceof PrivacyAssertionError) {
+        fail('The outbound privacy check rejected this context; it was not sent to the planner.');
+        return;
+      }
       const safeMessage: Record<string, string> = {
         NO_ACTIVE_TAB: 'No active browser tab is available.',
         UNSUPPORTED_PAGE: 'Open a normal HTTP(S) page before starting.',
@@ -577,6 +649,10 @@ async function runAgent(task: string, generation: number): Promise<void> {
 }
 
 function resetRunState(task: string): void {
+  vault.revokeGrants();
+  ledger = new ActionLedger();
+  void ledger.append('RUN_STARTED');
+  state.ledger = undefined;
   state.phase = 'IDLE';
   state.running = true;
   state.task = task;
@@ -607,14 +683,29 @@ function resetRunState(task: string): void {
 
 export default defineBackground(() => {
   browser.runtime.onMessage.addListener(
-    async (message: ExtensionRequest): Promise<AgentCommandResponse | undefined> => {
+    async (untrusted: unknown, sender): Promise<AgentCommandResponse | undefined> => {
       await Promise.resolve();
+      if (sender.id !== browser.runtime.id || sender.url?.split('?')[0] !== browser.runtime.getURL('/popup.html')) return undefined;
+      const parsed = PanelCommand.safeParse(untrusted);
+      if (!parsed.success) return response(false, 'Invalid local command.');
+      const message = parsed.data;
       if (message.type === 'GET_AGENT_STATE') return response(true);
+      if (message.type === 'GET_LEDGER') { state.ledger = await ledger.proof(); return response(true); }
+      if (message.type === 'LOAD_DEMO_PROFILE') {
+        if (state.running) return response(false, 'Stop the task before replacing the vault.');
+        vault.clear();
+        vault.store('PERSON_NAME', 'Demo Traveller');
+        vault.store('EMAIL', 'traveller@example.test');
+        vault.store('PHONE', '9000000000');
+        state.secretHandles = vault.handles();
+        return response(true);
+      }
       if (message.type === 'CHECK_BACKEND_HEALTH') {
         const online = await refreshBackendHealth();
         return response(online, online ? undefined : state.backendDetail ?? undefined);
       }
       if (message.type === 'SET_SECRET') {
+        if (state.running) return response(false, 'Stop the task before changing private values.');
         try {
           const handle = vault.store(message.kind, message.value);
           state.secretHandles = vault.handles();
@@ -625,13 +716,17 @@ export default defineBackground(() => {
         }
       }
       if (message.type === 'CLEAR_SECRETS') {
+        if (state.running) return response(false, 'Stop the task before clearing private values.');
         vault.clear();
+        await ledger.append('VAULT_CLEARED');
         state.secretHandles = [];
         timeline('Memory-only secret vault cleared');
         return response(true);
       }
       if (message.type === 'STOP_AGENT') {
         runGeneration += 1;
+        vault.revokeGrants();
+        await ledger.append('STOPPED');
         if (pendingInteraction?.kind === 'CONFIRMATION') pendingInteraction.resolve(false);
         else if (pendingInteraction?.kind === 'CLARIFICATION') pendingInteraction.resolve(null);
         pendingInteraction = undefined;
@@ -644,7 +739,7 @@ export default defineBackground(() => {
         if (
           !pendingInteraction ||
           pendingInteraction.kind !== 'CONFIRMATION' ||
-          pendingInteraction.actionId !== message.actionId
+          pendingInteraction.actionId !== message.actionId || pendingInteraction.requestId !== message.requestId
         ) {
           return response(false, 'The confirmation request is no longer active.');
         }
@@ -664,17 +759,18 @@ export default defineBackground(() => {
         pendingInteraction.resolve(answer);
         return response(true);
       }
-      if (message.type === 'START_AGENT') {
+      {
         const task = message.task.trim();
         if (!task) return response(false, 'Task is required.');
+        if (message.rehearsal && task !== RAILWAY_TASK) return response(false, 'Local rehearsal supports only the prepared railway task. Load the synthetic profile to restore it, or turn rehearsal off.');
         if (state.running) return response(false, 'An agent task is already running.');
         runGeneration += 1;
         resetRunState(task);
+        state.rehearsal = message.rehearsal === true;
         const generation = runGeneration;
         void runAgent(task, generation);
         return response(true);
       }
-      return undefined;
     },
   );
 });

@@ -155,7 +155,7 @@ describe('local privacy pipeline', () => {
 
     expect(result.context.task).toBe('Greet LOCAL_GIVEN_NAME_1');
     expect(result.serverPreview).not.toContain('Arindam');
-    expect(vault.resolve('LOCAL_GIVEN_NAME_1')).toBe('Arindam');
+    expect(vault.values()).toContain('Arindam');
   });
 
   it('exposes task-supplied local handles only to their matching form fields', async () => {

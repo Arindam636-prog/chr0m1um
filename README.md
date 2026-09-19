@@ -3,13 +3,34 @@
 > **New to the project?** Use the one-command guide:
 > [START-HERE.md](START-HERE.md). In short, load the stable release once and run
 > double-click `START.command` (or run `./START.sh`) whenever you want to use the product.
-> Presenting to judges? Follow the three-minute, single-page script in
-> [judge-demo.md](docs/judge-demo.md).
+> Presenting to judges? Start with the current
+> [railway demo guide](docs/RAILWAY-DEMO.md) and
+> [SIH presentation](docs/presentation/SIH.pptx).
 
 ContextShield is a privacy-preserving autonomous browser agent for SIH 2026,
 Problem Statement 26171. The browser observes the page, detects and transforms
 sensitive data locally, sends only a strict `SanitizedContext` to a local
 planner, validates its typed action, executes locally, verifies, and repeats.
+
+## Current version: 1.5.0
+
+- **[Latest SIH deck](docs/presentation/SIH.pptx)** — six slides, academic references,
+  scoped test evidence and remaining validation work. Team ID is intentionally blank.
+- **[Railway demo and 2–3 minute script](docs/RAILWAY-DEMO.md)** — a labelled local
+  booking sandbox with fictional fares, passengers and payment. No live reservation
+  or IRCTC affiliation.
+- **[Validation report](docs/RAILWAY-VALIDATION.md)** — tested authorization boundaries,
+  assisted/rehearsal outcomes and known limitations.
+- **[Publication checks](docs/SIH-RELEASE-v1.5.0.md)** — checks rerun for this publication.
+
+Qwen-assisted mode uses Qwen for fare comparison and a declared local adapter for
+the other prepared screens. Rehearsal is deterministic and DOM-only, with no
+Qwen or visual inference. Both require one-use approval before private fills.
+The signed local action ledger records non-secret events. It is not a distributed
+blockchain and does not detect prompt injection by itself.
+
+The source and presentation are public; the running demo remains local. GitHub
+does not host the extension, Qwen service or a live railway booking service.
 
 ## Architecture
 
@@ -19,14 +40,15 @@ flowchart LR
   B --> C[Deterministic + Rampart privacy workers]
   C --> D[Policy, handles, text/pixel redaction]
   D --> E{Local controller can finish?}
-  E -->|Yes| I[Local snapshot/risk validator]
+  E -->|Yes| I[Local validation + one-use private-fill consent]
   E -->|Needs reasoning| F[Privacy gateway: SanitizedContext only]
   F --> K[FastAPI state machine]
   K --> G[Mock planner or Qwen3-VL via llama.cpp]
   G --> H[Typed AgentAction]
-  H --> I[Local snapshot/risk validator]
+  H --> I
   I --> J[DOM action + local verification]
   J --> B
+  I --> L[Non-secret event hash chain + signed checkpoint]
 ```
 
 There is no network API that accepts a raw DOM, `PageObservation`, screenshot,
@@ -88,7 +110,8 @@ Rampart, Qwen, YOLOX, and PP-OCR each do, read
 ## Install
 
 ```bash
-cd contextshield
+git clone https://github.com/Arindam636-prog/chr0m1um.git
+cd chr0m1um
 ./scripts/setup.sh
 ```
 
@@ -227,6 +250,11 @@ not equivalent to independently reviewed entity/span precision and recall.
 Local-only and server-assisted task timings are reported separately. Browser
 process RSS is not extension-only memory, and GPU-process RSS is not VRAM.
 Read the [fresh audit results and remaining limits](docs/FRESH-AUDIT-RESULTS.md).
+
+The current railway and private-fill changes are recorded in
+[RAILWAY-VALIDATION.md](docs/RAILWAY-VALIDATION.md) and
+[SIH-RELEASE-v1.5.0.md](docs/SIH-RELEASE-v1.5.0.md). Older reports below describe
+their dated builds, not new v1.5 performance measurements.
 
 The v1.4.0 judge-extension changes and real-model verification are recorded in
 [SIH-RELEASE-v1.4.0.md](docs/SIH-RELEASE-v1.4.0.md).

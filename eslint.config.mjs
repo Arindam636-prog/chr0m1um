@@ -7,6 +7,7 @@ export default tseslint.config(
       '**/.wxt/**',
       '**/.output/**',
       'release/**',
+      'tmp/presentations/**',
       '**/node_modules/**',
       '**/coverage/**',
       '**/playwright-report/**',

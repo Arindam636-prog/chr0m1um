@@ -5,6 +5,7 @@ import type {
 } from '@contextshield/shared';
 
 import type { LocalPageObservation, PrivacyEvidence } from '../privacy/types';
+import type { LedgerProof } from '../security/actionLedger';
 
 export type AgentPhase =
   | 'IDLE'
@@ -27,6 +28,7 @@ export interface TimelineEntry {
 }
 
 export interface PendingConfirmation {
+  requestId?: string;
   kind: 'CONFIRMATION' | 'CLARIFICATION';
   action: AgentAction;
   prompt: string;
@@ -48,6 +50,8 @@ export interface ClientStageMetrics {
 }
 
 export interface PublicAgentState {
+  ledger?: LedgerProof;
+  rehearsal?: boolean;
   phase: AgentPhase;
   running: boolean;
   task: string;
@@ -92,14 +96,18 @@ export type ExtensionRequest =
       fingerprint: string;
       resolvedValue?: string;
       confirmed: boolean;
+      preflight?: boolean;
+      documentId?: string;
     }
-  | { type: 'START_AGENT'; task: string }
+  | { type: 'START_AGENT'; task: string; rehearsal?: boolean }
+  | { type: 'LOAD_DEMO_PROFILE' }
+  | { type: 'GET_LEDGER' }
   | { type: 'STOP_AGENT' }
   | { type: 'GET_AGENT_STATE' }
   | { type: 'CHECK_BACKEND_HEALTH' }
   | { type: 'SET_SECRET'; kind: string; value: string }
   | { type: 'CLEAR_SECRETS' }
-  | { type: 'CONFIRM_ACTION'; actionId: string; confirmed: boolean }
+  | { type: 'CONFIRM_ACTION'; actionId: string; requestId?: string; confirmed: boolean }
   | { type: 'ANSWER_CLARIFICATION'; actionId: string; answer: string };
 
 export type ContentResponse =

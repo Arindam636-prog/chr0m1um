@@ -1,5 +1,12 @@
 const HANDLE_PATTERN = /^LOCAL_[A-Z][A-Z0-9_]*_[1-9][0-9]*$/;
 
+export interface ReleaseScope {
+  run: number; tab: number; document: string; origin: string;
+  target: string; fieldType: string; purpose: string; actionDigest: string;
+  snapshot: string; fingerprint: string;
+}
+interface ReleaseGrant { handle: string; scope: string; expires: number }
+
 /**
  * Memory-only secret storage. Values disappear when the extension worker is
  * unloaded and are never written to browser.storage.
@@ -8,6 +15,16 @@ export class SecretVault {
   readonly #values = new Map<string, string>();
   readonly #kinds = new Map<string, string>();
   readonly #counters = new Map<string, number>();
+  readonly #grants = new Map<string, ReleaseGrant>();
+
+  approveOnce(handle: string, scope: ReleaseScope, now = Date.now()): string {
+    if (!this.#values.has(handle) || !scope.document || !scope.actionDigest || !scope.purpose) throw new Error('INVALID_RELEASE_SCOPE');
+    const id = crypto.randomUUID();
+    this.#grants.set(id, { handle, scope: JSON.stringify(scope), expires: now + 30_000 });
+    return id;
+  }
+
+  revokeGrants(): void { this.#grants.clear(); }
 
   store(kind: string, value: string): string {
     const normalizedKind = kind.toUpperCase().replace(/[^A-Z0-9]+/g, '_');
@@ -27,12 +44,16 @@ export class SecretVault {
     return handle;
   }
 
-  resolve(handle: string): string | undefined {
-    if (!HANDLE_PATTERN.test(handle)) return undefined;
+  resolve(handle: string, authorization?: { grantId: string; scope: ReleaseScope }, now = Date.now()): string | undefined {
+    if (!authorization) return undefined;
+    const grant = this.#grants.get(authorization.grantId);
+    this.#grants.delete(authorization.grantId);
+    if (!HANDLE_PATTERN.test(handle) || !grant || grant.expires <= now || grant.handle !== handle || grant.scope !== JSON.stringify(authorization.scope)) return undefined;
     return this.#values.get(handle);
   }
 
   remove(handle: string): boolean {
+    this.revokeGrants();
     this.#kinds.delete(handle);
     return this.#values.delete(handle);
   }
@@ -54,6 +75,7 @@ export class SecretVault {
   }
 
   clear(): void {
+    this.revokeGrants();
     this.#values.clear();
     this.#kinds.clear();
     this.#counters.clear();

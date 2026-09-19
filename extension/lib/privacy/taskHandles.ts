@@ -41,6 +41,10 @@ export function localizeTaskFieldValues(task: string, vault: SecretVaultAdapter)
   for (const field of TASK_FIELDS) {
     field.expression.lastIndex = 0;
     for (const match of task.matchAll(field.expression)) {
+      // A named click target such as "click Search trains" is not a supplied
+      // search-field value. Turning "trains" into a secret also strips intent.
+      const prefix = task.slice(Math.max(0, match.index - 40), match.index);
+      if (/\b(?:click|press)\s+(?:the\s+)?["'“]?$/i.test(prefix)) continue;
       const captured = (match[1] ?? match[2] ?? match[3] ?? '').trim();
       const value = captured.endsWith('.') ? captured.slice(0, -1).trimEnd() : captured;
       if (!value || /^LOCAL_[A-Z0-9_]+$/.test(value)) continue;

@@ -82,7 +82,10 @@ def _compact_element(element: SanitizedElement) -> dict[str, object]:
         "selected_option": element.selected_option,
         "control_value": element.control_value,
         "dom_index": element.dom_index,
-        "bbox": {key: round(value, 1) for key, value in element.bbox.model_dump().items()} if element.bbox else None,
+        "bbox": (
+            {key: round(value, 1) for key, value in element.bbox.model_dump().items()}
+            if element.bbox else None
+        ),
         "sources": element.sources,
     }
     # Repeated nulls/empty arrays were consuming thousands of prompt tokens.
@@ -99,7 +102,11 @@ def _selection_note(element: SanitizedElement) -> str:
             prices.append((float(match.group(1).replace(',', '')), option))
     if prices:
         lowest = min(prices, key=lambda item: item[0])[1]
-        note += f" Lowest displayed numeric price: {lowest!r}. Already selected: {element.selected_option == lowest}. Apply any additional user constraints separately."
+        note += (
+            f" Lowest displayed numeric price: {lowest!r}. "
+            f"Already selected: {element.selected_option == lowest}. "
+            "Apply any additional user constraints separately."
+        )
     return note
 
 
@@ -367,10 +374,15 @@ class QwenLlamaPlanner:
                 raise ModelInferenceError("The model invented a select option")
             if isinstance(action, SelectAction) and action.option == element.selected_option:
                 raise ModelInferenceError("The model repeated an already selected option")
-            if isinstance(action, ClickAction) and element.role == "button":
-                if any(button_is_prohibited(context.task, name)
-                       for name in (element.text, element.label) if name):
-                    raise ModelInferenceError("The model violated a negative button instruction")
+            if (
+                isinstance(action, ClickAction)
+                and element.role == "button"
+                and any(
+                    button_is_prohibited(context.task, name)
+                    for name in (element.text, element.label) if name
+                )
+            ):
+                raise ModelInferenceError("The model violated a negative button instruction")
             if isinstance(action, ClickAction) and element.role in {"checkbox", "radio"}:
                 task = context.task.lower().replace("-", " ")
                 names = [

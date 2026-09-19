@@ -24,7 +24,7 @@ function makeSnapshot(element: HTMLElement, id = 'el_1'): PerceptionSnapshot {
         tag: element.tagName.toLowerCase(),
         text: element instanceof HTMLButtonElement ? element.textContent : null,
         label: null,
-        input_type: element instanceof HTMLInputElement ? element.type : null,
+        input_type: element instanceof HTMLInputElement ? element.type : element instanceof HTMLTextAreaElement ? 'text' : null,
         bbox: { x: 0, y: 0, width: 120, height: 32 },
         visible: true,
         enabled: true,
@@ -73,11 +73,43 @@ describe('DOM action broker', () => {
       origin: window.location.origin,
       fingerprint: 'fp_1',
       resolvedValue: 'private@example.com',
-      confirmedActionIds: new Set(),
+      confirmedActionIds: new Set(['act_1']),
     });
 
     expect(result.success).toBe(true);
     expect(input.value).toBe('private@example.com');
+  });
+
+  it('does not type a password handle into a public text field without approval', async () => {
+    const input = document.createElement('input'); document.body.append(input);
+    const snapshot = makeSnapshot(input);
+    const broker = new DomActionBroker(() => snapshot, () => snapshot, 0);
+    const verified = await broker.execute({ type: 'TYPE_HANDLE', action_id: 'act_bad', snapshot_id: 'snap_1', element_id: 'el_1', handle: 'LOCAL_PASSWORD_1', reason: 'Untrusted' }, {
+      snapshotId: 'snap_1', origin: window.location.origin, fingerprint: 'fp_1', resolvedValue: 'SYNTHETIC_SECRET', confirmedActionIds: new Set(),
+    });
+    expect(verified.error).toBe('CONFIRMATION_REQUIRED'); expect(input.value).toBe('');
+  });
+
+  it('supports confirmed textarea preflight and insertion', async () => {
+    const input = document.createElement('textarea'); document.body.append(input);
+    const snapshot = makeSnapshot(input);
+    const broker = new DomActionBroker(() => snapshot, () => snapshot, 0);
+    const action: AgentAction = { type: 'TYPE_HANDLE', action_id: 'act_area', snapshot_id: 'snap_1', element_id: 'el_1', handle: 'LOCAL_TEXT_1', reason: 'Requested' };
+    const context = { snapshotId: 'snap_1', origin: window.location.origin, fingerprint: 'fp_1', confirmedActionIds: new Set(['act_area']) };
+    expect((await broker.execute(action, { ...context, preflight: true })).success).toBe(true);
+    expect(input.value).toBe('');
+    expect((await broker.execute(action, { ...context, resolvedValue: 'Synthetic note' })).success).toBe(true);
+    expect(input.value).toBe('Synthetic note');
+  });
+
+  it('blocks a field type changed after observation', async () => {
+    const input = document.createElement('input'); input.type = 'password'; document.body.append(input);
+    const snapshot = makeSnapshot(input); input.type = 'text';
+    const broker = new DomActionBroker(() => snapshot, () => snapshot, 0);
+    const verified = await broker.execute({ type: 'TYPE_HANDLE', action_id: 'act_type', snapshot_id: 'snap_1', element_id: 'el_1', handle: 'LOCAL_PASSWORD_1', reason: 'Untrusted' }, {
+      snapshotId: 'snap_1', origin: window.location.origin, fingerprint: 'fp_1', resolvedValue: 'SYNTHETIC_SECRET', confirmedActionIds: new Set(['act_type']),
+    });
+    expect(verified.error).toBe('STALE_SNAPSHOT'); expect(input.value).toBe('');
   });
 
   it('rejects a stale fingerprint before touching the page', async () => {

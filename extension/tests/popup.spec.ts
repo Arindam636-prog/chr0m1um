@@ -197,6 +197,8 @@ test('runs the complete private local-handle agent loop in real Chrome MV3', asy
       return;
     }
 
+    await popup.getByRole('button', { name: 'Allow once' }).waitFor({ timeout: 150_000 });
+    await popup.getByRole('button', { name: 'Allow once' }).evaluate((button: HTMLButtonElement) => button.click());
     const outcome = await Promise.race([
       popup.locator('.success-result').getByText('Task complete', { exact: true }).waitFor({ timeout: 150_000 }).then(() => 'complete'),
       popup.locator('.phase-failed').waitFor({ timeout: 150_000 }).then(() => 'failed'),

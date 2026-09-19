@@ -22,14 +22,17 @@ export default defineContentScript({
     document.documentElement.dataset.contextshieldContentReady = protocolMarker;
 
     let latestSnapshot: PerceptionSnapshot | null = null;
+    // randomUUID is secure-context-only; isolated scripts also run on ordinary HTTP.
+    const documentId = `doc_${Array.from(crypto.getRandomValues(new Uint8Array(16)), (byte) => byte.toString(16).padStart(2, '0')).join('')}`;
     const broker = new DomActionBroker(
       () => latestSnapshot,
       () => extractObservation(),
     );
 
     browser.runtime.onMessage.addListener(
-      async (message: ExtensionRequest): Promise<ContentResponse | undefined> => {
+      async (message: ExtensionRequest, sender): Promise<ContentResponse | undefined> => {
         await Promise.resolve();
+        if (sender.id !== browser.runtime.id || sender.tab || typeof message.type !== 'string') return undefined;
         if (message.type === 'PING_CONTENT_V2') {
           return {
             ok: true,
@@ -42,6 +45,7 @@ export default defineContentScript({
           try {
             latestSnapshot = extractObservation();
             const local = {
+              documentId,
               observation: latestSnapshot.observation,
               privateValues: latestSnapshot.privateValues,
               visualHints: latestSnapshot.visualHints,
@@ -60,6 +64,7 @@ export default defineContentScript({
           }
         }
         if (message.type === 'EXECUTE_ACTION_V2') {
+          if (message.documentId !== documentId) return { ok: false, error: 'STALE_SNAPSHOT' };
           const confirmedActionIds = new Set<string>();
           if (message.confirmed) confirmedActionIds.add(message.action.action_id);
           const result = await broker.execute(message.action, {
@@ -68,6 +73,7 @@ export default defineContentScript({
               fingerprint: message.fingerprint,
               resolvedValue: message.resolvedValue,
               confirmedActionIds,
+              preflight: message.preflight,
             });
           return { ok: true, kind: 'VERIFICATION', result };
         }

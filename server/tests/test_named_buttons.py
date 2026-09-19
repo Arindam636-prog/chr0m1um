@@ -1,7 +1,8 @@
+import pytest
+
 from app.model.mock import MockPlanner
 from app.model.qwen import ModelInferenceError, QwenLlamaPlanner
 from app.schemas import SanitizedContext
-import pytest
 
 
 def test_exact_named_followup_and_negation(safe_context):

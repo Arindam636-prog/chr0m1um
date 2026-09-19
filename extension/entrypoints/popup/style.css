@@ -153,3 +153,14 @@ pre { max-height: 260px; overflow: auto; padding: 12px; border-radius: 9px; back
   .active-step .step-icon { animation: working 1.5s ease-in-out infinite; }
   @keyframes working { 50% { opacity: .55; } }
 }
+.railway-setup { border-block: 1px solid #335849; padding: 20px 0; margin: 20px 0; }
+.railway-setup summary { cursor: pointer; font-weight: 700; }
+.rehearsal-choice { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+.rehearsal-choice input { width: 18px; height: 18px; }
+.ledger-view { padding-top: 22px; }
+.ledger-view > p { line-height: 1.65; color: #a7bfb2; }
+.ledger-view .actions { flex-wrap: wrap; }
+.ledger-blocks { list-style: none; padding: 0; max-height: 390px; overflow-y: auto; }
+.ledger-blocks li { display: flex; flex-direction: column; gap: 7px; background: #1b3528; border-left: 3px solid #67c9a3; margin: 9px 0; padding: 14px; font-size: 12px; }
+.ledger-blocks code { color: #a2bbac; font-size: 11px; }
+.confirmation > p { white-space: pre-line; overflow-wrap: anywhere; }

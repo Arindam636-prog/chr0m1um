@@ -261,12 +261,21 @@ export class LocalPrivacyPipeline {
     // while making the matching handles available during element sanitization.
     let sanitizedTask = redactText(task, entitiesFor(null, 'TASK'), decisionsById) ?? '';
     sanitizedTask = localizeTaskFieldValues(sanitizedTask, this.vault);
+    const fieldWords: Record<string, RegExp> = {
+      EMAIL: /\bemail\b/i, PHONE: /\b(?:phone|mobile)\b/i, PERSON_NAME: /\b(?:full\s+)?name\b/i,
+      GIVEN_NAME: /\bfirst\s+name\b/i, SURNAME: /\blast\s+name\b/i, ADDRESS: /\baddress\b/i,
+      PASSWORD: /\bpassword\b/i, OTP: /\botp\b/i, UPI_ID: /\bupi\b/i, USERNAME: /\buser\s*name\b/i,
+      TEXT: /\b(?:text\s+input|search)\b/i,
+    };
     const sanitizedElements: SanitizedElement[] = local.observation.elements.map((element) => {
       const privateValue = privateValuesByElement.get(element.id);
       const desiredKind = inferHandleKind(element.input_type, element.label);
+      const taskHandle = desiredKind ? sanitizedTask.match(new RegExp(`\\bLOCAL_${desiredKind}_[1-9][0-9]*\\b`))?.[0] : undefined;
+      const requested = desiredKind && (taskHandle || (/\b(?:fill|enter|type|use|add|provide)\b/i.test(task) && fieldWords[desiredKind]?.test(task)));
+      const matchingFields = local.observation.elements.filter((candidate) => !candidate.value_present && inferHandleKind(candidate.input_type, candidate.label) === desiredKind);
       const handle =
-        !privateValue && !element.value_present && desiredKind
-          ? (this.vault.firstHandle(desiredKind) ?? null)
+        !privateValue && !element.value_present && desiredKind && requested && matchingFields.length === 1
+          ? (taskHandle ?? this.vault.firstHandle(desiredKind) ?? null)
           : null;
       const sanitizedOptions = element.options.map(
         (option, index) =>
