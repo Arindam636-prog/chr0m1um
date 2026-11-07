@@ -1,4 +1,5 @@
-import * as ort from 'onnxruntime-web';
+import { ort } from './visionRuntime';
+import { preferredExecutionProvider } from './executionProvider';
 
 interface InitializeRequest {
   id: string;
@@ -133,7 +134,7 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
       }
       try {
         session = await ort.InferenceSession.create(event.data.modelUrl, {
-          executionProviders: ['webgpu'],
+          executionProviders: [await preferredExecutionProvider()],
         });
       } catch {
         session = await ort.InferenceSession.create(event.data.modelUrl, {

@@ -30,6 +30,12 @@ jobs:
       - run: npm run build
       - run: npm run build:firefox
       - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-test-results
+          path: extension/test-results/
+          retention-days: 7
 
   server:
     runs-on: ubuntu-latest

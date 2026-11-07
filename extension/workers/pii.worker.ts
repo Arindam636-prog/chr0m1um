@@ -1,8 +1,9 @@
 import { env } from '@huggingface/transformers';
 import { createGuard, type ChatGuard } from '@nationaldesignstudio/rampart';
-import rampartWasmFactoryUrl from 'onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs?url';
-import rampartWasmUrl from 'onnxruntime-web/ort-wasm-simd-threaded.asyncify.wasm?url';
+import rampartWasmFactoryUrl from 'rampart-onnxruntime/ort-wasm-simd-threaded.asyncify.mjs?url&no-inline';
+import rampartWasmUrl from 'rampart-onnxruntime/ort-wasm-simd-threaded.asyncify.wasm?url&no-inline';
 import { protectSegments } from '../lib/privacy/protectSegments';
+import { preferredExecutionProvider } from './executionProvider';
 
 // MV3 extension workers cannot import the CDN fallback selected by
 // Transformers.js. Package both ORT files and load them from the extension.
@@ -31,7 +32,7 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
   try {
     if (type === 'INITIALIZE') {
       const model = event.data.model ?? 'rampart';
-      const preferredDevice = 'gpu' in navigator ? 'webgpu' : 'wasm';
+      const preferredDevice = await preferredExecutionProvider();
       try {
         guard = await createGuard({ model, device: preferredDevice, minScore: 0.35 });
       } catch {

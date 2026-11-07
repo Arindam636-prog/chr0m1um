@@ -1,7 +1,17 @@
 import { defineConfig } from 'wxt';
+import { createRequire } from 'node:module';
+import { dirname } from 'node:path';
+
+// Transformers pins its own ORT version. Its WASM files must come from that
+// same installation, rather than the separate runtime used for vision/OCR.
+const transformersRequire = createRequire(import.meta.resolve('@huggingface/transformers'));
+const rampartRuntimeDirectory = dirname(transformersRequire.resolve('onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs'));
 
 export default defineConfig({
   modules: ['@wxt-dev/module-react'],
+  vite: () => ({
+    resolve: { alias: { 'rampart-onnxruntime': rampartRuntimeDirectory } },
+  }),
   manifest: ({ browser }) => ({
     name: 'ContextShield',
     description: 'Privacy-preserving local-first browser agent',

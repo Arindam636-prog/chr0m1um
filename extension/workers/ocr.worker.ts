@@ -1,4 +1,5 @@
-import * as ort from 'onnxruntime-web';
+import { ort } from './visionRuntime';
+import { preferredExecutionProvider } from './executionProvider';
 
 interface InitializeRequest {
   id: string;
@@ -23,9 +24,9 @@ let detector: ort.InferenceSession | null = null;
 let recognizer: ort.InferenceSession | null = null;
 let dictionary: string[] = [];
 
-async function createSession(url: string): Promise<ort.InferenceSession> {
+async function createSession(url: string, provider: 'webgpu' | 'wasm'): Promise<ort.InferenceSession> {
   try {
-    return await ort.InferenceSession.create(url, { executionProviders: ['webgpu'] });
+    return await ort.InferenceSession.create(url, { executionProviders: [provider] });
   } catch {
     return ort.InferenceSession.create(url, { executionProviders: ['wasm'] });
   }
@@ -201,9 +202,10 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
   try {
     if (event.data.type === 'INITIALIZE') {
       if (event.data.dictionary.length < 2) throw new Error('INVALID_OCR_DICTIONARY');
+      const provider = await preferredExecutionProvider();
       [detector, recognizer] = await Promise.all([
-        createSession(event.data.detectorUrl),
-        createSession(event.data.recognizerUrl),
+        createSession(event.data.detectorUrl, provider),
+        createSession(event.data.recognizerUrl, provider),
       ]);
       dictionary = event.data.dictionary;
       self.postMessage({ id, ok: true, lines: [] });
