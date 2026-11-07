@@ -70,6 +70,9 @@ test(`full railway ${qwen ? "Qwen-assisted run" : "rehearsal"} uses actual MV3 g
         outbound.push(request.url());
     });
     await target.goto("http://127.0.0.1:4173/railway.html");
+    await expect(target.getByLabel('From', { exact: true })).toHaveValue('');
+    await expect(target.getByLabel('To', { exact: true })).toHaveValue('');
+    await expect(target.locator('.synthetic-portrait')).toHaveCount(0);
     await target.bringToFront();
     await popup.evaluate(
       ({ task, rehearsal }) =>
@@ -91,6 +94,7 @@ test(`full railway ${qwen ? "Qwen-assisted run" : "rehearsal"} uses actual MV3 g
       if (final.state.pendingConfirmation?.kind === "CONFIRMATION") {
         const pending = final.state.pendingConfirmation;
         expect(pending.prompt).toContain("127.0.0.1:4173");
+        expect(pending.prompt).not.toContain("Choose train");
         const reply: AgentCommandResponse = await popup.evaluate(
           (request) => browser.runtime.sendMessage(request),
           {
@@ -128,7 +132,8 @@ test(`full railway ${qwen ? "Qwen-assisted run" : "rehearsal"} uses actual MV3 g
       JSON.stringify(final?.state.timeline),
     ).toBeNull();
     expect(final?.state.phase).toBe("COMPLETE");
-    expect(approvals).toBeGreaterThanOrEqual(4);
+    // Exactly three private fills and simulated payment; choosing a train is not a purchase.
+    expect(approvals).toBe(4);
     await expect(
       target.getByRole("heading", { name: "Simulated booking complete" }),
     ).toBeVisible();
@@ -149,7 +154,7 @@ test(`full railway ${qwen ? "Qwen-assisted run" : "rehearsal"} uses actual MV3 g
       .click();
     await popup.getByRole("button", { name: "Verify current ledger" }).click();
     await expect(
-      popup.getByText("Verified: every block and the signed checkpoint match."),
+      popup.getByText("Verified · VERIFIED", { exact: true }),
     ).toBeVisible();
     await popup.getByRole("button", { name: "Tamper with a copy" }).click();
     await expect(popup.getByText(/Tampering detected/)).toBeVisible();

@@ -151,7 +151,10 @@ function localScreenSummary(context: SanitizedContext): string {
     .filter(Boolean)
     .slice(0, 6);
   const detail = names.length ? ` Visible controls include ${names.join(', ')}.` : '';
-  return `Local screen analysis found ${interactive.length} interactive elements and ${visual.length} pixel-derived records.${detail}`;
+  const readings = [...new Set(visual.map((element) => element.text?.trim()).filter(Boolean))]
+    .slice(0, 6).map((text) => text?.slice(0, 160));
+  const pixels = readings.length ? ` Sanitized visual text: ${readings.join('; ')}.` : '';
+  return `Local screen analysis found ${interactive.length} interactive elements and ${visual.length} pixel-derived records.${detail}${pixels}`;
 }
 
 function finish(context: SanitizedContext, summary: string): AgentAction {
@@ -170,7 +173,8 @@ function finish(context: SanitizedContext, summary: string): AgentAction {
  */
 export function planLocalAction(context: SanitizedContext): AgentAction | null {
   const task = normalized(context.task);
-  if (LOCAL_SUMMARY.test(task)) return finish(context, localScreenSummary(context));
+  // Comparisons and calculations need reasoning even when phrased as a summary.
+  if (LOCAL_SUMMARY.test(task) && !COMPLEX_REASONING.test(task)) return finish(context, localScreenSummary(context));
   if (COMPLEX_REASONING.test(task) || !SIMPLE_ACTION.test(task)) return null;
 
   for (const element of context.elements) {

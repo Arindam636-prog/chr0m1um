@@ -131,24 +131,45 @@ export async function verifyLedger(
   proof: LedgerProof,
   trusted: LedgerProof["checkpoint"] = proof.checkpoint,
 ): Promise<boolean> {
+  return (await inspectLedger(proof, trusted)).valid;
+}
+
+export interface LedgerInspection {
+  valid: boolean;
+  check: 'COUNT' | 'CHECKPOINT_HEAD' | 'INDEX' | 'PREVIOUS_HASH' | 'BLOCK_HASH' | 'CHAIN_HEAD' | 'SIGNATURE' | 'VERIFIED' | 'INVALID';
+  block?: number;
+  expected?: string;
+  actual?: string;
+}
+
+/** Recompute each block from its contents; report the first failing check. */
+export async function inspectLedger(
+  proof: LedgerProof,
+  trusted: LedgerProof['checkpoint'] = proof.checkpoint,
+): Promise<LedgerInspection> {
   try {
-    if (
-      proof.blocks.length !== trusted.count ||
-      proof.checkpoint.head !== trusted.head
-    )
-      return false;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- edited JSON is untrusted at runtime
+    if (proof.version !== 1) return { valid: false, check: 'INVALID' };
+    if (proof.blocks.length !== trusted.count) return { valid: false, check: 'COUNT', expected: String(trusted.count), actual: String(proof.blocks.length) };
+    if (proof.checkpoint.head !== trusted.head) return { valid: false, check: 'CHECKPOINT_HEAD', expected: trusted.head, actual: proof.checkpoint.head };
     let previous = ZERO;
     for (const [index, block] of proof.blocks.entries()) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- a JSON editor can supply null or non-block objects
+      if (!block || typeof block !== 'object' || typeof block.index !== 'number' ||
+        typeof block.at !== 'number' || !Number.isFinite(block.at) ||
+        typeof block.event !== 'string' || typeof block.action !== 'string' ||
+        typeof block.hash !== 'string' || typeof block.previous !== 'string' ||
+        (block.actionCommitment !== null && typeof block.actionCommitment !== 'string')) {
+        return { valid: false, check: 'INVALID', block: index };
+      }
       const { hash, ...body } = block;
-      if (
-        block.index !== index ||
-        block.previous !== previous ||
-        (await digest(body)) !== hash
-      )
-        return false;
+      if (block.index !== index) return { valid: false, check: 'INDEX', block: index, expected: String(index), actual: String(block.index) };
+      if (block.previous !== previous) return { valid: false, check: 'PREVIOUS_HASH', block: index, expected: previous, actual: block.previous };
+      const computed = await digest(body);
+      if (computed !== hash) return { valid: false, check: 'BLOCK_HASH', block: index, expected: hash, actual: computed };
       previous = hash;
     }
-    if (previous !== trusted.head) return false;
+    if (previous !== trusted.head) return { valid: false, check: 'CHAIN_HEAD', expected: trusted.head, actual: previous };
     const key = await crypto.subtle.importKey(
       "jwk",
       trusted.publicKey,
@@ -160,13 +181,28 @@ export async function verifyLedger(
       trusted.signature.match(/.{2}/g) ?? [],
       (pair) => parseInt(pair, 16),
     );
-    return await crypto.subtle.verify(
+    const valid = await crypto.subtle.verify(
       { name: "ECDSA", hash: "SHA-256" },
       key,
       signature,
       signedBytes(proof.session, trusted.count, trusted.head),
     );
+    return { valid, check: valid ? 'VERIFIED' : 'SIGNATURE' };
   } catch {
-    return false;
+    return { valid: false, check: 'INVALID' };
   }
+}
+
+/** Rehashing a copy cannot produce a new signature for the retained checkpoint. */
+export async function rehashLedgerCopy(proof: LedgerProof): Promise<LedgerProof> {
+  const copy = structuredClone(proof);
+  let previous = ZERO;
+  for (const block of copy.blocks) {
+    block.previous = previous;
+    const body = Object.fromEntries(Object.entries(block).filter(([key]) => key !== 'hash'));
+    block.hash = await digest(body);
+    previous = block.hash;
+  }
+  copy.checkpoint.head = previous;
+  return copy;
 }

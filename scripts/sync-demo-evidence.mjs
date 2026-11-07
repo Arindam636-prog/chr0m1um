@@ -14,6 +14,7 @@ async function recentResult(name) {
   } catch { return null; }
 }
 const audit = await recentResult('fresh-audit.json');
+const visualDecisions = await recentResult('visual-decision/report.json');
 const repeats = (await Promise.all([0, 1, 2].map((i) => recentResult(`judge-repeat-${i}.json`)))).filter(Boolean);
 const completedRepeats = repeats.filter((r) => r.completed && typeof r.metrics?.totalMs === 'number');
 const taskTimes = completedRepeats.map((r) => r.metrics.totalMs).sort((a, b) => a - b);
@@ -56,10 +57,10 @@ const evidence = {
   source: 'benchmarks/results/latest.json',
   metrics: {
     visual: {
-      value: typeof detected === 'number' && typeof expected === 'number'
+      value: visualDecisions ? `${visualDecisions.completed} / ${visualDecisions.attempted}` : typeof detected === 'number' && typeof expected === 'number'
         ? `${detected} / ${expected}`
         : percent(report.sih_scorecard?.visual_relevant_element_recall),
-      scope: `Expected interactables found across ${compatibility.dataset?.scenarios ?? 'unknown'} controlled browser screens. DOM/ARIA observation only, not OCR or pixel box accuracy.`,
+      scope: visualDecisions ? `Authored canvas tasks with real local OCR and Qwen. ${visualDecisions.completed} of ${visualDecisions.attempted} completed. Values absent from visible DOM. See the dated visual-decision report for failure reasons. Not an independent unseen-site benchmark.` : `Expected interactables found across ${compatibility.dataset?.scenarios ?? 'unknown'} controlled browser screens. DOM/ARIA observation only, not OCR or pixel box accuracy.`,
     },
     pii: {
       value: `${percent(audit?.typeLevelDetection.precision ?? pii.precision)} / ${percent(audit?.typeLevelDetection.recall ?? pii.recall)}`,

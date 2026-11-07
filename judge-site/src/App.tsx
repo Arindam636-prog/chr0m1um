@@ -105,6 +105,12 @@ const steps = [
 
 const demoRoutes: DemoRoute[] = [
   {
+    index: 'PIXELS', time: '45 sec', title: 'Make a choice from pixels',
+    description: 'Read a canvas comparison with local OCR, let Qwen choose, then execute through a real browser control. An authored visual test, without the railway adapter.',
+    prompt: 'Compare the durations shown on the visual board. Click the option with the shortest duration, then stop.',
+    href: 'visual-board.html?case=3', signal: 'CANVAS + OCR + GROUNDED ACTION',
+  },
+  {
     index: 'NEW', time: '3 min', title: 'A complete railway journey',
     description: 'Search, compare, authorize private fills, simulate payment and inspect the signed local action ledger. Not affiliated with IRCTC.',
     prompt: 'Open the extension’s Railway demo, load the synthetic profile and select local rehearsal or Qwen mode.',

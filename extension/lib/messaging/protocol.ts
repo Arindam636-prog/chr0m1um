@@ -62,6 +62,22 @@ export interface PublicAgentState {
   /** First sanitized snapshot is retained locally for a stable before/after explanation. */
   proofPreview?: string | null;
   proofEvidence?: PrivacyEvidence;
+  /** Exact sanitized context of the latest server-planned step, retained on device. */
+  plannerPreview?: string | null;
+  plannerEvidence?: PrivacyEvidence;
+  plannerDelivery?: PublicAgentState['contextDelivery'];
+  visualProofPreview?: string | null;
+  visualProofEvidence?: PrivacyEvidence;
+  visualProofDelivery?: PublicAgentState['contextDelivery'];
+  injectionEvidence?: {
+    snapshotId: string;
+    instruction: string;
+    targetId: string | null;
+    delivery: NonNullable<PublicAgentState['contextDelivery']>;
+    outcome: 'AWAITING_RESPONSE' | 'FARE_ACTION_RETURNED' | 'OUT_OF_SCOPE_BLOCKED';
+    returnedType?: string;
+    returnedTarget?: string | null;
+  };
   verifiedActions?: number;
   lastVerifiedAction?: string | null;
   blockedVisualRegions: number;

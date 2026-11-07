@@ -1,0 +1,58 @@
+{
+  "generatedAt": "2026-09-19T14:23:47.375Z",
+  "environment": {
+    "platform": "darwin",
+    "cpu": "Apple M4",
+    "logicalCpus": 10,
+    "hostMemoryBytes": 25769803776
+  },
+  "sourceHashes": {
+    "extension/entrypoints/background/index.ts": "073c2b08d658ce59ea5fe8b8475de8b590983d584ba85c1f0b984171a8c783cf",
+    "extension/lib/agent/planningReadiness.ts": "75186f9bd5ae795bf96e63173a9be6d5cf9681db8bf613b9b40a6ccc9d67c8c6",
+    "server/app/model/qwen.py": "18257b727341d08d2dbc579d636cccc5254b41a64dad21b0be18361810934fee",
+    "demo/visual-board.js": "3520c89c345b3f7420b4b2998ef116e9522313e20bcbedc66c7580f176720a9e",
+    "release/ContextShield-Chrome/background.js": "fb08109007df5f310bf705bcb6236c6413b8a40df42e7b818c465f3d2fc56521",
+    "release/ContextShield-Chrome/manifest.json": "ffd06196dd42dbdec67281cdfaa78a97386088b0d68a2b3aa181d950db84eac3"
+  },
+  "visual": {
+    "attempted": 6,
+    "completed": 3,
+    "correctChoices": 3,
+    "blocked": 3,
+    "initialCompleted": 1,
+    "initialAttempted": 6,
+    "scope": "Six authored canvas cases. Real OCR, privacy pipeline, Qwen and DOM-grounded execution. One cold client then warm client runs. Same running server. No independent population or held-out claim."
+  },
+  "pii": {
+    "tp": 13,
+    "fp": 6,
+    "fn": 0,
+    "precision": 0.6842105263157895,
+    "recall": 1,
+    "pages": 11,
+    "scope": "Case/type micro scores, not entity/span accuracy"
+  },
+  "redaction": {
+    "crops": 4,
+    "coveredCrops": 4,
+    "annotationPixelPrecision": 0.40528819250139897,
+    "scope": "Black-mask overlap with authored glyphs and approximate face rectangles; mixed annotations, not population precision"
+  },
+  "resources": {
+    "activePeak": 2794782720,
+    "baselinePeak": 949256192,
+    "peakDifference": 1845526528,
+    "scope": "Browser process tree. Baseline renders same pages; active includes extension popup and local inference. Difference of observed peaks is NOT isolated extension allocation. CPU is ps process-lifetime average; GPU process RSS is NOT VRAM."
+  },
+  "judge": {
+    "attempted": 3,
+    "completed": 3,
+    "medianMs": 52741.5,
+    "p95Ms": 60301.67999999933,
+    "minMs": 47889.5,
+    "maxMs": 61141.699999999255,
+    "requests": 9,
+    "canariesAbsent": true,
+    "scope": "Cold client models each run; already-running local Qwen. Success-only latency, all attempts in completion denominator. Three runs do not establish tail latency."
+  }
+}

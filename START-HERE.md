@@ -39,6 +39,12 @@ Normal `./START.sh` runs rebuild the React judge website but do not rebuild or
 modify the installed extension. Reload the extension only after intentionally
 creating a new release with `npm run release`.
 
+After pulling this November publication into an existing checkout, run
+`npm ci` and `npm run release` once, then reload ContextShield on the browser's
+Extensions page. Otherwise the installed `release/` folder can still contain
+the previous demo even though the repository source is current. Stop any active
+agent run before rebuilding. Then restart with `START.command` as usual.
+
 ### Public-site proof
 
 For the most complete public proof, open
@@ -101,6 +107,7 @@ Web Store), closed Shadow DOM, browser-owned PDF UI, and inaccessible
 cross-origin frames cannot be controlled by browser extensions.
 
 The current release evidence and its limitations are recorded in
+[docs/PUBLICATION-2026-11-07.md](docs/PUBLICATION-2026-11-07.md),
 [docs/RAILWAY-VALIDATION.md](docs/RAILWAY-VALIDATION.md) and
 [docs/SIH-RELEASE-v1.5.0.md](docs/SIH-RELEASE-v1.5.0.md).
 An older measured baseline is recorded in

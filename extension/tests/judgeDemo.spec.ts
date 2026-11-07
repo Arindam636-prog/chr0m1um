@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium, expect, test } from '@playwright/test';
+import { SanitizedContextSchema } from '@contextshield/shared';
 import type { AgentCommandResponse } from '../lib/messaging/protocol';
 
 test('three-minute story with actual local models and Qwen', async () => {
@@ -45,6 +46,14 @@ test('three-minute story with actual local models and Qwen', async () => {
       expect(payloads.join('\n')).not.toContain(raw);
     }
     expect(payloads.length).toBeGreaterThan(0);
+    const captureDir = resolve(`../benchmarks/results/judge-capture-${info.repeatEachIndex}`);
+    await mkdir(captureDir, { recursive: true });
+    await writeFile(resolve(captureDir, 'planner-requests.json'), JSON.stringify(payloads.map((body) => JSON.parse(body) as unknown), null, 2) + '\n');
+    await target.locator('.profile img').screenshot({ path: resolve(captureDir, 'original-portrait.png') });
+    const captured = JSON.parse(payloads[0] ?? '{}') as Record<string, unknown>;
+    const firstContext = SanitizedContextSchema.parse(captured.context ?? captured);
+    const firstCrop = firstContext.safe_visual_crops[0];
+    if (firstCrop) await writeFile(resolve(captureDir, 'outgoing-crop.png'), Buffer.from(firstCrop.data_base64, 'base64'));
     const judge = await context.newPage();
     await judge.goto(`chrome-extension://${new URL(worker.url()).hostname}/popup.html?view=privacy`);
     await expect(judge.locator('.redacted-image img')).toBeVisible();
@@ -73,6 +82,8 @@ test('three-minute story with actual local models and Qwen', async () => {
     measurement.contextRequests = final.state.contextDelivery?.requests;
     measurement.verifiedActions = final.state.verifiedActions;
     measurement.checkedRawTextLeakage = false;
+    measurement.knownCanariesAbsentFromCapturedPlannerRequests = true;
+    measurement.capturedPlannerRequests = payloads.length;
     measurement.faceCenterRgba = center;
   } catch (error) { measurement.failure = String(error); throw error; }
   finally {

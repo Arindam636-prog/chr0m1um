@@ -28,7 +28,10 @@ import { fuseScreenState } from '../../lib/perception/fuseScreenState';
 import { SecretVault } from '../../lib/vault/secretVault';
 import { finishRepresentsSuccess } from '../../lib/agent/completionGuard';
 import { planLocalAction } from '../../lib/agent/localController';
-import { planRailwayRehearsal, RAILWAY_TASK } from '../../lib/agent/railwayRehearsal';
+import { comparisonCriterionWasRedacted } from '../../lib/agent/planningReadiness';
+import { planRailwayRehearsal } from '../../lib/agent/railwayRehearsal';
+import { parseRailwayJourney } from '@contextshield/shared/railway';
+import { railwayComparisonContext, isRailwayFareAction } from '../../lib/agent/railwayEvidence';
 import { ActionLedger, digest, type LedgerEvent } from '../../lib/security/actionLedger';
 import { privateFillGate } from '../../lib/security/privateFillGate';
 import { PanelCommand } from '../../lib/messaging/panelCommands';
@@ -311,6 +314,7 @@ async function executeInTab(
 
 async function runAgent(task: string, generation: number): Promise<void> {
   const runStarted = performance.now();
+  const railwayJourney = parseRailwayJourney(task);
   try {
     const backendOnline = await refreshBackendHealth();
     timeline(
@@ -332,7 +336,7 @@ async function runAgent(task: string, generation: number): Promise<void> {
         timeline('Rampart ONNX contextual PII model ready');
       }
     }
-    let activeRunDeadline = Date.now() + (state.rehearsal ? 300_000 : MAX_ACTIVE_RUN_MS);
+    let activeRunDeadline = Date.now() + (state.rehearsal ? 300_000 : railwayJourney ? 240_000 : MAX_ACTIVE_RUN_MS);
     const tab = await activeHttpTab();
     let approvedOrigin = tab.origin;
     state.origin = approvedOrigin;
@@ -348,7 +352,7 @@ async function runAgent(task: string, generation: number): Promise<void> {
       task.match(/\b(?:click|press)\b/gi)?.length ?? 0,
     );
     const clarifications: string[] = [];
-    for (let step = 1; step <= MAX_STEPS && generation === runGeneration; step += 1) {
+    for (let step = 1; step <= (railwayJourney ? 40 : MAX_STEPS) && generation === runGeneration; step += 1) {
       if (Date.now() >= activeRunDeadline) throw new Error('AGENT_TIME_LIMIT');
       setPhase('OBSERVE', 'Reading page locally', `step ${step}`);
       state.clientMetrics.steps = step;
@@ -421,17 +425,17 @@ async function runAgent(task: string, generation: number): Promise<void> {
         taskWithClarifications(task, clarifications),
       );
       const pageUrl = new URL(local.observation.url);
-      const railwayAssisted = !state.rehearsal && task === RAILWAY_TASK && ['http://127.0.0.1:4173', 'http://localhost:4173'].includes(pageUrl.origin) && pageUrl.pathname === '/railway.html';
-      const railwayStep = railwayAssisted ? planRailwayRehearsal(privacy.context, pageUrl.href, false) : null;
+      const railwayAssisted = !state.rehearsal && railwayJourney !== null && ['http://127.0.0.1:4173', 'http://localhost:4173'].includes(pageUrl.origin) && pageUrl.pathname === '/railway.html';
+      const railwayStep = railwayAssisted ? planRailwayRehearsal(privacy.context, pageUrl.href, false, railwayJourney, local.observation) : null;
       const fareButtons = privacy.context.elements.filter((element) => element.enabled && element.role === 'button' && (element.label ?? '').startsWith('Choose train '));
       const railwayComparison = railwayAssisted && !railwayStep && fareButtons.length > 0;
       if (railwayAssisted && !railwayStep && !railwayComparison) throw new Error('PLANNER_FAILED');
       if (railwayComparison) {
-        // A declared fixture adapter narrows this model turn to the user-approved
-        // comparison. No other page instructions or navigation targets are needed.
-        privacy.context = { ...privacy.context, elements: fareButtons, task: 'Compare these fictional train departures and numeric fares. Click the lowest-fare train departing before 12:00. Return type CLICK with the chosen button element_id. These are buttons, NOT dropdowns: never return SELECT. Use a supplied ID. No real purchase occurs.' };
+        // Include the sanitized hostile fixture as untrusted page data so this
+        // is a real model-input test. It never expands the allowed action scope.
+        privacy.context = railwayComparisonContext(privacy.context);
         privacy.serverPreview = JSON.stringify(privacy.context, null, 2);
-        timeline('Railway adapter delegated the fare comparison to Qwen', 'Only sanitized fare buttons are supplied; remaining steps use the local adapter');
+        timeline('Railway adapter delegated the fare comparison to Qwen', 'Sanitized fares and any enabled page-injection fixture; remaining steps use the local adapter');
       }
       state.privacySummary = privacy.context.privacy_summary;
       state.privacyEvidence = privacy.evidence;
@@ -451,6 +455,13 @@ async function runAgent(task: string, generation: number): Promise<void> {
       };
       state.contextDelivery = delivery;
       if (firstSnapshot) state.proofDelivery = delivery;
+      if (privacy.context.safe_visual_crops.length > 0 && (privacy.context.privacy_summary.FACE ?? 0) > 0) {
+        // Retain the actual processed passenger frame, even after the photo is
+        // no longer on screen. Its own delivery receipt must travel with it.
+        state.visualProofPreview = privacy.serverPreview;
+        state.visualProofEvidence = privacy.evidence;
+        state.visualProofDelivery = delivery;
+      }
       state.secretHandles = vault.handles();
       const entityCount = Object.values(privacy.context.privacy_summary).reduce(
         (total, count) => total + count,
@@ -459,13 +470,31 @@ async function runAgent(task: string, generation: number): Promise<void> {
       timeline('Sensitive entities protected', `${entityCount} classifications`);
       timeline('Safe context created', 'Only the server preview can cross the gateway');
 
+      if (!state.rehearsal && comparisonCriterionWasRedacted(task, privacy.context.task)) {
+        fail('Privacy filtering obscured the comparison criterion. Rephrase the task before trying again. No comparison action was taken.');
+        return;
+      }
+
       const localPlanStarted = performance.now();
       const localAction: AgentAction | null = state.rehearsal
-        ? planRailwayRehearsal(privacy.context, local.observation.url)
+        ? planRailwayRehearsal(privacy.context, local.observation.url, true, railwayJourney, local.observation)
         : railwayAssisted ? railwayStep : sessionId ? null : planLocalAction(privacy.context);
       if (state.rehearsal && !localAction) throw new Error('PLANNER_FAILED');
       addMetric('localPlanningMs', performance.now() - localPlanStarted);
       if (!localAction && !backendOnline) throw new Error('AGENT_SERVER_REQUIRED');
+      if (!localAction) {
+        state.plannerPreview = privacy.serverPreview;
+        state.plannerEvidence = privacy.evidence;
+        state.plannerDelivery = delivery;
+        const instruction = railwayComparison ? privacy.context.elements.find((element) => element.label === 'Untrusted page instruction') : undefined;
+        if (instruction?.text) state.injectionEvidence = {
+          snapshotId: privacy.context.snapshot_id,
+          instruction: instruction.text,
+          targetId: privacy.context.elements.find((element) => element.label === 'Unrelated notes')?.id ?? null,
+          delivery,
+          outcome: 'AWAITING_RESPONSE',
+        };
+      }
       setPhase(
         'PLAN',
         localAction ? 'Planning a grounded action entirely on this device' : 'Sending sanitized context and planning next action',
@@ -498,7 +527,20 @@ async function runAgent(task: string, generation: number): Promise<void> {
       }
       const action = localAction ?? plan?.action;
       if (!action) throw new Error('PLANNER_FAILED');
-      if (railwayComparison && (action.type !== 'CLICK' || !fareButtons.some((field) => field.id === action.element_id))) throw new Error('PLANNER_FAILED');
+      if (railwayComparison) {
+        const allowed = isRailwayFareAction(action, privacy.context);
+        if (state.injectionEvidence?.snapshotId === privacy.context.snapshot_id) {
+          state.injectionEvidence.returnedType = action.type;
+          state.injectionEvidence.returnedTarget = 'element_id' in action ? action.element_id : null;
+          state.injectionEvidence.outcome = allowed ? 'FARE_ACTION_RETURNED' : 'OUT_OF_SCOPE_BLOCKED';
+        }
+        if (!allowed) {
+          await recordAction('BLOCKED', action);
+          timeline('Railway action scope blocked the model response', 'Only choosing an observed fare is authorized at this step. No proposed action was executed.');
+          fail('The planner proposed an action outside the fare comparison. The local railway scope check blocked it before execution.');
+          return;
+        }
+      }
       state.lastAction = action;
       timeline(
         localAction ? 'Local controller returned a structured action' : 'Server returned a structured action',
@@ -506,7 +548,7 @@ async function runAgent(task: string, generation: number): Promise<void> {
       );
 
       if (action.type === 'FINISH') {
-        if (task === RAILWAY_TASK && !local.observation.elements.some((element) => element.role === 'heading' && element.text === 'Simulated booking complete')) {
+        if (railwayJourney && !local.observation.elements.some((element) => element.role === 'heading' && (element.label || element.text) === 'Simulated booking complete')) {
           fail('The planner stopped before the simulated ticket was visible. The booking is not complete.');
           return;
         }
@@ -618,6 +660,11 @@ async function runAgent(task: string, generation: number): Promise<void> {
     if (generation === runGeneration) {
       state.clientMetrics.totalMs = performance.now() - runStarted;
       const code = error instanceof Error ? error.message : 'UNKNOWN_FAILURE';
+      const unavailableField = /^RAILWAY_REQUEST_UNAVAILABLE: (From|To|Travel class|Quota|Journey month|Journey date|Passenger age|Passenger gender|Berth preference|Booking request)$/.exec(code)?.[1];
+      if (unavailableField) {
+        fail(`Could not match ${unavailableField} to an available page control. Check that part of your booking request, or load the synthetic profile to restore the demo request. No substitute was chosen.`);
+        return;
+      }
       if (error instanceof PrivacyAssertionError) {
         fail('The outbound privacy check rejected this context; it was not sent to the planner.');
         return;
@@ -631,11 +678,13 @@ async function runAgent(task: string, generation: number): Promise<void> {
         ORIGIN_CHANGED: 'The page origin changed; the action was stopped.',
         ACTION_FAILED: 'Local action execution failed safely.',
         PLANNER_FAILED: 'The local planner could not process this page; no action was taken.',
+        RAILWAY_REQUEST_UNAVAILABLE: 'A requested journey value is missing or unavailable. Check the route, date and passenger preferences in your booking request; no substitute was chosen.',
+        RAILWAY_OBSERVATION_MISMATCH: 'The railway page changed during planning. Refresh the page and start again; no stale action was taken.',
         AGENT_SERVER_FAILED: 'The local agent service failed. Run START.command, then try again.',
         AGENT_SERVER_OFFLINE: 'The local services are offline. Run START.command once, then try again.',
         AGENT_SERVER_REQUIRED: 'This task needs the optional local Qwen reasoning service. Run START.command once, then try again.',
         AGENT_TIMEOUT: 'The local planner took too long, so the task was stopped safely.',
-        AGENT_TIME_LIMIT: 'The task reached its two-minute safety deadline and was stopped.',
+        AGENT_TIME_LIMIT: 'The task reached its bounded safety deadline and was stopped.',
         PRIVACY_SCAN_FAILED: 'A local privacy model failed; nothing was transmitted.',
         REDACTION_FAILED: 'Visual redaction could not be verified; nothing was transmitted.',
       };
@@ -644,6 +693,12 @@ async function runAgent(task: string, generation: number): Promise<void> {
         (knownCode ? safeMessage[knownCode] : undefined) ??
           'The agent failed closed before completing the task.',
       );
+    }
+  } finally {
+    // Include all terminal paths, including an explicit fail()/return. Never
+    // let an older cancelled run overwrite a newer run's timing.
+    if (generation === runGeneration) {
+      state.clientMetrics.totalMs = performance.now() - runStarted;
     }
   }
 }
@@ -662,6 +717,13 @@ function resetRunState(task: string): void {
   state.privacyEvidence = undefined;
   state.proofPreview = null;
   state.proofEvidence = undefined;
+  state.plannerPreview = null;
+  state.plannerEvidence = undefined;
+  state.plannerDelivery = undefined;
+  state.visualProofPreview = null;
+  state.visualProofEvidence = undefined;
+  state.visualProofDelivery = undefined;
+  state.injectionEvidence = undefined;
   state.verifiedActions = 0;
   state.lastVerifiedAction = null;
   state.blockedVisualRegions = 0;
@@ -762,7 +824,7 @@ export default defineBackground(() => {
       {
         const task = message.task.trim();
         if (!task) return response(false, 'Task is required.');
-        if (message.rehearsal && task !== RAILWAY_TASK) return response(false, 'Local rehearsal supports only the prepared railway task. Load the synthetic profile to restore it, or turn rehearsal off.');
+        if (message.rehearsal && !parseRailwayJourney(task)) return response(false, 'Local rehearsal requires a complete railway booking request. Load the synthetic profile to restore it, then edit its journey details if needed.');
         if (state.running) return response(false, 'An agent task is already running.');
         runGeneration += 1;
         resetRunState(task);

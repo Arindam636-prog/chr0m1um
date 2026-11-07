@@ -1,6 +1,12 @@
 import json
 
-from app.model.qwen import SYSTEM_PROMPT, QwenLlamaPlanner, _compact_element, _selection_note
+from app.model.qwen import (
+    SYSTEM_PROMPT,
+    QwenLlamaPlanner,
+    _compact_element,
+    _select_planning_elements,
+    _selection_note,
+)
 from app.schemas import SanitizedContext
 
 
@@ -13,6 +19,26 @@ def test_compaction_preserves_false_states_and_omits_only_absent_metadata(safe_c
     assert compact['dom_index'] == 0
     assert 'value_handle' not in compact
     assert 'options' not in compact
+
+
+def test_crowded_page_keeps_bounded_pixel_evidence_without_enabling_it(safe_context):
+    base = safe_context['elements'][0]
+    safe_context['elements'] = [
+        {**base, 'id': f'el_button_{i}', 'text': f'Toolbar action {i}'}
+        for i in range(100)
+    ] + [
+        {**base, 'id': f'el_visual_{i}', 'role': 'visual_text',
+         'text': f'Visible duration {i} minutes', 'sources': ['OCR'], 'enabled': False}
+        for i in range(20)
+    ]
+    chosen = _select_planning_elements(SanitizedContext.model_validate(safe_context))
+    pixels = [element for _, element, _ in chosen if element.role == 'visual_text']
+    assert len(chosen) <= 80
+    assert len(pixels) == 12
+    assert all(not element.enabled for element in pixels)
+    assert len({element.id for _, element, _ in chosen}) == len(chosen)
+    chars = sum(len(json.dumps(compact, separators=(',', ':'))) for _, _, compact in chosen)
+    assert chars <= 20_000
 
 
 def test_selection_note_exposes_satisfied_price_without_claiming_other_goals(safe_context):
@@ -67,6 +93,11 @@ def test_qwen_adapter_requests_schema_output_and_accepts_grounded_action(
     assert body["temperature"] == 0
     assert body["max_tokens"] == 512
     assert "maxLength" not in json.dumps(body["response_format"]["json_schema"]["schema"])
+    definitions = body["response_format"]["json_schema"]["schema"]["$defs"]
+    snapshots = [value['properties']['snapshot_id'] for value in definitions.values()
+                 if 'snapshot_id' in value.get('properties', {})]
+    assert snapshots
+    assert all(value['const'] == safe_context['snapshot_id'] for value in snapshots)
     assert "Authoritative form-state notes" in body["messages"][1]["content"][0]["text"]
 
 

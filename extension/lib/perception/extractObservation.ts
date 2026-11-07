@@ -67,6 +67,14 @@ function finiteRect(element: HTMLElement): DOMRect | null {
 }
 
 function isVisible(element: HTMLElement, rect: DOMRect): boolean {
+  // Closed <details> can retain cached child rectangles during layout. Only
+  // their summary is rendered; including hidden children makes snapshots drift.
+  for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+    if (ancestor instanceof HTMLDetailsElement && !ancestor.open) {
+      const summary = Array.from(ancestor.children).find((child) => child.tagName === 'SUMMARY');
+      if (!summary?.contains(element)) return false;
+    }
+  }
   const style = getComputedStyle(element);
   return (
     rect.width > 0 &&

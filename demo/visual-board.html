@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Visual decision test | ContextShield</title><link rel="stylesheet" href="judge-run.css"><style>.board{max-width:860px;background:white;padding:24px;border:1px solid #c8dcd5;border-radius:16px}canvas{display:block;width:100%;height:auto}#choices{display:flex;gap:16px;margin-top:20px}#choices button{flex:1}#outcome{min-height:32px;font-weight:700}input{max-width:360px}.intro{margin-bottom:20px}.intro h1{font-size:48px}</style></head>
+<body><main>
+<header><a href="index.html">ContextShield</a><span>Controlled visual test / synthetic data</span></header>
+<div class="intro"><p class="kicker">Beyond the railway adapter</p><h1>A decision from pixels</h1><p>The values below exist only in the canvas. The browser exposes the choice buttons, but their labels contain no prices or durations.</p></div>
+<section class="board"><canvas id="board" width="800" height="300" aria-label="Visual comparison board"></canvas><div id="choices"><button>Choose A</button><button>Choose B</button><button>Choose C</button></div><p id="outcome" role="status">No option selected</p></section>
+<p><label>Private contact <input type="email" value="visual.canary@example.invalid" readonly></label></p>
+<aside><strong>Task for the extension</strong><p id="task"></p><p>Use normal mode, with local visual models and the Qwen server running. This test makes no purchase. Inspect the privacy view after the task.</p></aside>
+</main><script src="visual-board.js"></script></body></html>

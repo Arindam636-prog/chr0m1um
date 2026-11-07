@@ -163,4 +163,15 @@ pre { max-height: 260px; overflow: auto; padding: 12px; border-radius: 9px; back
 .ledger-blocks { list-style: none; padding: 0; max-height: 390px; overflow-y: auto; }
 .ledger-blocks li { display: flex; flex-direction: column; gap: 7px; background: #1b3528; border-left: 3px solid #67c9a3; margin: 9px 0; padding: 14px; font-size: 12px; }
 .ledger-blocks code { color: #a2bbac; font-size: 11px; }
+.proof-snapshot select { display: block; margin-top: 7px; }
+.injection-evidence, .tamper-lab { padding: 14px; margin: 16px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.injection-evidence blockquote { margin: 12px 0; padding: 10px 12px; border-left: 3px solid var(--warning); background: var(--tint); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.injection-evidence > strong { font-size: 11px; }
+.tamper-lab h3 { font-size: 15px; }
+.tamper-lab p { font-size: 11px; line-height: 1.6; color: var(--muted); margin: 10px 0; }
+.tamper-lab label { margin-top: 12px; }
+.tamper-lab .actions { flex-wrap: wrap; }
+.tamper-lab button { white-space: normal; }
+.ledger-view pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 11px/1.6 ui-monospace, monospace; padding: 12px; background: var(--tint); border-radius: 8px; }
+.ledger-view .evidence-editor { min-height: 230px; font: 11px/1.6 ui-monospace, monospace; }
 .confirmation > p { white-space: pre-line; overflow-wrap: anywhere; }

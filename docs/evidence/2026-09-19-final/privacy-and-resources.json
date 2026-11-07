@@ -1,0 +1,561 @@
+{
+  "generatedAt": "2026-09-19T14:21:37.332Z",
+  "schemaVersion": 1,
+  "scope": "11 authored synthetic pages, real browser DOM/YOLOX/OCR/Rampart, local summary controller; type-level scoring, not entity/span precision; not held-out after fixes",
+  "environment": {
+    "platform": "darwin",
+    "cpu": "Apple M4",
+    "logicalCpus": 10,
+    "hostMemoryBytes": 25769803776
+  },
+  "attempted": 11,
+  "completed": 11,
+  "typeLevelDetection": {
+    "tp": 13,
+    "fp": 6,
+    "fn": 0,
+    "precision": 0.6842105263157895,
+    "recall": 1
+  },
+  "resources": {
+    "baseline": {
+      "samples": 11,
+      "peakRssBytes": 949256192,
+      "averageProcessLifetimeCpuPercent": 74.53636363636365,
+      "peakGpuProcessRssBytes": 154976256
+    },
+    "active": {
+      "samples": 29,
+      "peakRssBytes": 2794782720,
+      "averageProcessLifetimeCpuPercent": 152.6620689655172,
+      "peakGpuProcessRssBytes": 315080704
+    },
+    "differenceOfObservedPeaksBytes": 1845526528,
+    "scope": "Browser process tree. Baseline renders same pages; active includes extension popup and local inference. Difference of observed peaks is NOT isolated extension allocation. CPU is ps process-lifetime average; GPU process RSS is NOT VRAM."
+  },
+  "rows": [
+    {
+      "id": "labelled-profile",
+      "coldClientModels": true,
+      "expectedTypes": [
+        "PERSON_NAME",
+        "EMAIL",
+        "PHONE",
+        "PASSWORD"
+      ],
+      "expectedSecretCount": 4,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 4,
+        "modelInitializationMs": 842.1999999955297,
+        "observationMs": 2.1999999955296516,
+        "screenshotCaptureMs": 12.5,
+        "visualInferenceAndRedactionMs": 291,
+        "privacyClassificationMs": 49.69999999552965,
+        "localPlanningMs": 0.10000000149011612,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 1220.8999999985099
+      },
+      "predictedTypes": [
+        "PERSON_NAME",
+        "EMAIL",
+        "PHONE",
+        "PASSWORD",
+        "UPI_ID"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "PERSON_NAME": 1,
+          "EMAIL": 1,
+          "PHONE": 1,
+          "PASSWORD": 1,
+          "UPI_ID": 1
+        },
+        "detectorHits": {
+          "PERSON_NAME": 2,
+          "EMAIL": 1,
+          "PHONE": 1,
+          "PASSWORD": 1,
+          "UPI_ID": 1
+        },
+        "reviewItems": {
+          "UPI_ID": 1
+        }
+      },
+      "contextRequests": 0,
+      "pixelRecords": 4,
+      "wallMs": 1663
+    },
+    {
+      "id": "narrative-name",
+      "coldClientModels": false,
+      "expectedTypes": [
+        "PERSON_NAME"
+      ],
+      "expectedSecretCount": 1,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 1,
+        "modelInitializationMs": 0,
+        "observationMs": 0.7999999970197678,
+        "screenshotCaptureMs": 24.5,
+        "visualInferenceAndRedactionMs": 78.70000000298023,
+        "privacyClassificationMs": 13.200000002980232,
+        "localPlanningMs": 0,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 124.70000000298023
+      },
+      "predictedTypes": [
+        "PERSON_NAME"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "PERSON_NAME": 1
+        },
+        "detectorHits": {
+          "PERSON_NAME": 2
+        },
+        "reviewItems": {
+          "PERSON_NAME": 1
+        }
+      },
+      "contextRequests": 0,
+      "pixelRecords": 1,
+      "wallMs": 353
+    },
+    {
+      "id": "two-emails",
+      "coldClientModels": false,
+      "expectedTypes": [
+        "EMAIL"
+      ],
+      "expectedSecretCount": 2,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 2,
+        "modelInitializationMs": 0,
+        "observationMs": 0.6000000014901161,
+        "screenshotCaptureMs": 259.79999999701977,
+        "visualInferenceAndRedactionMs": 83.80000000447035,
+        "privacyClassificationMs": 10.899999998509884,
+        "localPlanningMs": 0,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 362
+      },
+      "predictedTypes": [
+        "EMAIL"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "EMAIL": 4
+        },
+        "detectorHits": {
+          "EMAIL": 4
+        },
+        "reviewItems": {
+          "EMAIL": 2
+        }
+      },
+      "contextRequests": 0,
+      "pixelRecords": 2,
+      "wallMs": 869
+    },
+    {
+      "id": "payment-reference",
+      "coldClientModels": false,
+      "expectedTypes": [
+        "UPI_ID",
+        "PAN"
+      ],
+      "expectedSecretCount": 2,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 2,
+        "modelInitializationMs": 0,
+        "observationMs": 0.7999999970197678,
+        "screenshotCaptureMs": 7.799999997019768,
+        "visualInferenceAndRedactionMs": 90.09999999403954,
+        "privacyClassificationMs": 15.299999997019768,
+        "localPlanningMs": 0,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 120.29999999701977
+      },
+      "predictedTypes": [
+        "UPI_ID",
+        "PAN"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "UPI_ID": 2,
+          "PAN": 1
+        },
+        "detectorHits": {
+          "UPI_ID": 2,
+          "PAN": 1
+        },
+        "reviewItems": {
+          "UPI_ID": 1
+        }
+      },
+      "contextRequests": 0,
+      "pixelRecords": 2,
+      "wallMs": 349
+    },
+    {
+      "id": "public-controls",
+      "coldClientModels": false,
+      "expectedTypes": [],
+      "expectedSecretCount": 0,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 1,
+        "modelInitializationMs": 0,
+        "observationMs": 0.9000000059604645,
+        "screenshotCaptureMs": 259.19999999552965,
+        "visualInferenceAndRedactionMs": 84.59999999403954,
+        "privacyClassificationMs": 34,
+        "localPlanningMs": 0.10000000149011612,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 386.30000000447035
+      },
+      "predictedTypes": [
+        "ADDRESS",
+        "PERSON_NAME"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "ADDRESS": 1,
+          "PERSON_NAME": 1
+        },
+        "detectorHits": {
+          "ADDRESS": 1,
+          "PERSON_NAME": 1
+        },
+        "reviewItems": {
+          "ADDRESS": 1,
+          "PERSON_NAME": 1
+        }
+      },
+      "contextRequests": 0,
+      "pixelRecords": 1,
+      "wallMs": 872
+    },
+    {
+      "id": "public-prices",
+      "coldClientModels": false,
+      "expectedTypes": [],
+      "expectedSecretCount": 0,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 2,
+        "modelInitializationMs": 0,
+        "observationMs": 0.6000000014901161,
+        "screenshotCaptureMs": 25.30000000447035,
+        "visualInferenceAndRedactionMs": 84.5,
+        "privacyClassificationMs": 15.799999997019768,
+        "localPlanningMs": 0.10000000149011612,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 132.89999999850988
+      },
+      "predictedTypes": [
+        "ADDRESS"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "ADDRESS": 1
+        },
+        "detectorHits": {
+          "ADDRESS": 2
+        },
+        "reviewItems": {
+          "ADDRESS": 1
+        }
+      },
+      "contextRequests": 0,
+      "pixelRecords": 2,
+      "wallMs": 338
+    },
+    {
+      "id": "canvas-email",
+      "coldClientModels": false,
+      "expectedTypes": [
+        "EMAIL"
+      ],
+      "expectedSecretCount": 1,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 1,
+        "modelInitializationMs": 0,
+        "observationMs": 0.7000000029802322,
+        "screenshotCaptureMs": 260,
+        "visualInferenceAndRedactionMs": 78.70000000298023,
+        "privacyClassificationMs": 8.400000005960464,
+        "localPlanningMs": 0,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 354.79999999701977
+      },
+      "predictedTypes": [
+        "EMAIL",
+        "PRIVATE_DOCUMENT"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "EMAIL": 1,
+          "PRIVATE_DOCUMENT": 1
+        },
+        "detectorHits": {
+          "EMAIL": 2,
+          "PRIVATE_DOCUMENT": 1
+        },
+        "reviewItems": {
+          "EMAIL": 1,
+          "PRIVATE_DOCUMENT": 1
+        }
+      },
+      "contextRequests": 0,
+      "pixelRecords": 1,
+      "cropCount": 1,
+      "pixels": {
+        "expectedPixels": 2210,
+        "coveredPixels": 2210,
+        "coverage": 1,
+        "maskedPixels": 12060,
+        "unrelatedMaskedPixels": 9850,
+        "maskedImageFraction": 0.15703125,
+        "annotation": "known secret glyph pixels bounded by Canvas measureText; public prefix/suffix excluded"
+      },
+      "wallMs": 920
+    },
+    {
+      "id": "canvas-narrative",
+      "coldClientModels": false,
+      "expectedTypes": [
+        "PERSON_NAME"
+      ],
+      "expectedSecretCount": 1,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 1,
+        "modelInitializationMs": 0,
+        "observationMs": 0.5,
+        "screenshotCaptureMs": 23.69999999552965,
+        "visualInferenceAndRedactionMs": 87.5,
+        "privacyClassificationMs": 7.399999998509884,
+        "localPlanningMs": 0,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 124.80000000447035
+      },
+      "predictedTypes": [
+        "PRIVATE_DOCUMENT",
+        "PERSON_NAME"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "PRIVATE_DOCUMENT": 1,
+          "PERSON_NAME": 1
+        },
+        "detectorHits": {
+          "PRIVATE_DOCUMENT": 1,
+          "PERSON_NAME": 2
+        },
+        "reviewItems": {
+          "PRIVATE_DOCUMENT": 1,
+          "PERSON_NAME": 1
+        }
+      },
+      "contextRequests": 0,
+      "pixelRecords": 1,
+      "cropCount": 1,
+      "pixels": {
+        "expectedPixels": 1014,
+        "coveredPixels": 1014,
+        "coverage": 1,
+        "maskedPixels": 11397,
+        "unrelatedMaskedPixels": 10383,
+        "maskedImageFraction": 0.1483984375,
+        "annotation": "known secret glyph pixels bounded by Canvas measureText; public prefix/suffix excluded"
+      },
+      "wallMs": 319
+    },
+    {
+      "id": "portrait-large",
+      "coldClientModels": false,
+      "expectedTypes": [
+        "FACE"
+      ],
+      "expectedSecretCount": 0,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 2,
+        "modelInitializationMs": 0,
+        "observationMs": 0.6000000014901161,
+        "screenshotCaptureMs": 280.8999999985099,
+        "visualInferenceAndRedactionMs": 99.79999999701977,
+        "privacyClassificationMs": 6.600000001490116,
+        "localPlanningMs": 0,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 394.69999999552965
+      },
+      "predictedTypes": [
+        "FACE"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "FACE": 1
+        },
+        "detectorHits": {
+          "FACE": 2
+        },
+        "reviewItems": {}
+      },
+      "contextRequests": 0,
+      "pixelRecords": 2,
+      "cropCount": 1,
+      "pixels": {
+        "expectedPixels": 18250,
+        "coveredPixels": 18250,
+        "coverage": 1,
+        "maskedPixels": 31914,
+        "unrelatedMaskedPixels": 13664,
+        "maskedImageFraction": 0.3403796928327645,
+        "annotation": "approximate face box on one synthetic portrait"
+      },
+      "wallMs": 936
+    },
+    {
+      "id": "portrait-small",
+      "coldClientModels": false,
+      "expectedTypes": [
+        "FACE"
+      ],
+      "expectedSecretCount": 0,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 2,
+        "modelInitializationMs": 0,
+        "observationMs": 0.5999999940395355,
+        "screenshotCaptureMs": 25.5,
+        "visualInferenceAndRedactionMs": 84,
+        "privacyClassificationMs": 6.200000002980232,
+        "localPlanningMs": 0,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 123.5
+      },
+      "predictedTypes": [
+        "FACE"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "FACE": 1
+        },
+        "detectorHits": {
+          "FACE": 2
+        },
+        "reviewItems": {}
+      },
+      "contextRequests": 0,
+      "pixelRecords": 2,
+      "cropCount": 1,
+      "pixels": {
+        "expectedPixels": 4599,
+        "coveredPixels": 4599,
+        "coverage": 1,
+        "maskedPixels": 8961,
+        "unrelatedMaskedPixels": 4362,
+        "maskedImageFraction": 0.3809948979591837,
+        "annotation": "approximate face box on one synthetic portrait"
+      },
+      "wallMs": 358
+    },
+    {
+      "id": "filled-name-input",
+      "coldClientModels": false,
+      "expectedTypes": [
+        "PERSON_NAME"
+      ],
+      "expectedSecretCount": 2,
+      "phase": "COMPLETE",
+      "error": null,
+      "metrics": {
+        "steps": 1,
+        "pixelRecords": 2,
+        "modelInitializationMs": 0,
+        "observationMs": 0.6999999955296516,
+        "screenshotCaptureMs": 284.70000000298023,
+        "visualInferenceAndRedactionMs": 91.09999999403954,
+        "privacyClassificationMs": 15.299999997019768,
+        "localPlanningMs": 0.10000000149011612,
+        "serverPlanningMs": 0,
+        "actionExecutionMs": 0,
+        "verificationMs": 0,
+        "totalMs": 397.70000000298023
+      },
+      "predictedTypes": [
+        "PERSON_NAME"
+      ],
+      "leakedSecrets": [],
+      "evidence": {
+        "uniqueItems": {
+          "PERSON_NAME": 2
+        },
+        "detectorHits": {
+          "PERSON_NAME": 2
+        },
+        "reviewItems": {}
+      },
+      "contextRequests": 0,
+      "pixelRecords": 2,
+      "wallMs": 905
+    }
+  ]
+}

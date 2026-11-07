@@ -1,0 +1,95 @@
+[
+  {
+    "generatedAt": "2026-09-19T14:15:31.564Z",
+    "repeatIndex": 0,
+    "completed": true,
+    "scope": "Cold client models, already-running Qwen server. Task timer excludes browser setup and screenshots. Synthetic judge workflow; no user-confirmation wait.",
+    "metrics": {
+      "steps": 3,
+      "pixelRecords": 57,
+      "modelInitializationMs": 852.3000000007451,
+      "observationMs": 5.5,
+      "screenshotCaptureMs": 95.80000000074506,
+      "visualInferenceAndRedactionMs": 1191.300000000745,
+      "privacyClassificationMs": 686.7999999970198,
+      "localPlanningMs": 0.10000000149011612,
+      "serverPlanningMs": 58259.39999999851,
+      "actionExecutionMs": 8.599999997764826,
+      "verificationMs": 10.299999997019768,
+      "totalMs": 61141.699999999255
+    },
+    "contextRequests": 3,
+    "verifiedActions": 2,
+    "checkedRawTextLeakage": false,
+    "knownCanariesAbsentFromCapturedPlannerRequests": true,
+    "capturedPlannerRequests": 3,
+    "faceCenterRgba": [
+      0,
+      0,
+      0,
+      255
+    ]
+  },
+  {
+    "generatedAt": "2026-09-19T14:16:36.478Z",
+    "repeatIndex": 1,
+    "completed": true,
+    "scope": "Cold client models, already-running Qwen server. Task timer excludes browser setup and screenshots. Synthetic judge workflow; no user-confirmation wait.",
+    "metrics": {
+      "steps": 3,
+      "pixelRecords": 57,
+      "modelInitializationMs": 1371.9000000022352,
+      "observationMs": 8.599999997764826,
+      "screenshotCaptureMs": 183.30000000447035,
+      "visualInferenceAndRedactionMs": 1520.2999999970198,
+      "privacyClassificationMs": 690.5,
+      "localPlanningMs": 0.19999999925494194,
+      "serverPlanningMs": 48900.80000000447,
+      "actionExecutionMs": 10.899999998509884,
+      "verificationMs": 11.800000000745058,
+      "totalMs": 52741.5
+    },
+    "contextRequests": 3,
+    "verifiedActions": 2,
+    "checkedRawTextLeakage": false,
+    "knownCanariesAbsentFromCapturedPlannerRequests": true,
+    "capturedPlannerRequests": 3,
+    "faceCenterRgba": [
+      0,
+      0,
+      0,
+      255
+    ]
+  },
+  {
+    "generatedAt": "2026-09-19T14:17:32.458Z",
+    "repeatIndex": 2,
+    "completed": true,
+    "scope": "Cold client models, already-running Qwen server. Task timer excludes browser setup and screenshots. Synthetic judge workflow; no user-confirmation wait.",
+    "metrics": {
+      "steps": 3,
+      "pixelRecords": 57,
+      "modelInitializationMs": 1189,
+      "observationMs": 6.899999991059303,
+      "screenshotCaptureMs": 249.5,
+      "visualInferenceAndRedactionMs": 1301.2999999895692,
+      "privacyClassificationMs": 596.8999999985099,
+      "localPlanningMs": 0.19999999552965164,
+      "serverPlanningMs": 44484.09999999404,
+      "actionExecutionMs": 9.400000005960464,
+      "verificationMs": 11.099999994039536,
+      "totalMs": 47889.5
+    },
+    "contextRequests": 3,
+    "verifiedActions": 2,
+    "checkedRawTextLeakage": false,
+    "knownCanariesAbsentFromCapturedPlannerRequests": true,
+    "capturedPlannerRequests": 3,
+    "faceCenterRgba": [
+      0,
+      0,
+      0,
+      255
+    ]
+  }
+]

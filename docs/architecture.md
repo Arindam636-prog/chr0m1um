@@ -2,12 +2,13 @@
 
 ## System boundary
 
-ContextShield divides the system into a trusted local browser boundary and an
-untrusted remote planning boundary.
+ContextShield trusts its local extension code. Webpage content and planner
+responses are untrusted, even when the page and planner both run locally.
 
 ```text
-TRUSTED CLIENT
-  Browser page
+UNTRUSTED WEBPAGE
+  DOM and pixels
+    -> TRUSTED EXTENSION
     -> semantic perception
     -> deterministic/contextual/visual privacy detection
     -> policy decisions
@@ -30,7 +31,7 @@ TRUSTED CLIENT
     -> local verification
 ```
 
-The remote planner is treated as curious, compromised, prompt-injected, or
+The planner, including a locally hosted model, is treated as curious, compromised, prompt-injected, or
 wrong. It cannot access the secret vault, browser credentials, raw DOM, or raw
 screenshots. It cannot return source code or selectors.
 

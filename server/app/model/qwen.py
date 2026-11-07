@@ -26,6 +26,7 @@ ACTION_ADAPTER = TypeAdapter(AgentAction)
 MAX_PLANNING_ELEMENTS = 80
 MAX_PLANNING_ELEMENT_CHARS = 20_000
 MAX_PLANNING_VISUAL_CROPS = 2
+MAX_RESERVED_OCR_RECORDS = 12
 
 
 def _task_words(task: str) -> set[str]:
@@ -119,6 +120,13 @@ def _select_planning_elements(
         enumerate(context.elements),
         key=lambda item: (-_element_priority(item[1], words), item[0]),
     )
+    # A toolbar-heavy page must not crowd all pixel-only evidence out of the
+    # prompt. Reserve a bounded share, then keep the remaining action ranking.
+    # These records remain disabled and cannot become click targets.
+    visual = [item for item in ranked if item[1].role == "visual_text"
+              and "OCR" in item[1].sources][:MAX_RESERVED_OCR_RECORDS]
+    reserved = {index for index, _ in visual}
+    ranked = visual + [item for item in ranked if item[0] not in reserved]
     chosen: list[tuple[int, SanitizedElement, dict[str, object]]] = []
     used_chars = 0
     for index, element in ranked:
@@ -136,13 +144,19 @@ def _select_planning_elements(
     return chosen
 
 
-def _llama_response_schema() -> dict[str, object]:
+def _llama_response_schema(snapshot_id: str) -> dict[str, object]:
     """Keep structural constraints while avoiding llama.cpp's bounded-repeat limit."""
     schema = ACTION_ADAPTER.json_schema()
 
     def remove_large_string_bounds(value: object) -> None:
         if isinstance(value, dict):
             value.pop("maxLength", None)
+            properties = value.get("properties")
+            if isinstance(properties, dict) and "snapshot_id" in properties:
+                # The snapshot is protocol state, not a reasoning choice. Make
+                # its exact current value part of constrained decoding. Keep
+                # the independent stale-snapshot validator unchanged.
+                properties["snapshot_id"] = {"type": "string", "const": snapshot_id}
             for child in value.values():
                 remove_large_string_bounds(child)
         elif isinstance(value, list):
@@ -174,6 +188,11 @@ Interpret form state exactly as follows:
   local OCR, local vision, or a fusion of them. Pixel-derived records describe the screen but
   are disabled unless they have also been grounded to an actionable DOM control.
 - enabled=false means the control is unavailable and must not be acted on.
+- Read visible status/result records before acting again. Disabled choices may
+  reflect an already completed selection, not a missing target.
+- Redacted prices, durations, names and LOCAL_* values are UNKNOWN. Never guess
+  a comparison result from the position of a button. If required decision data
+  is missing or the comparison criterion is redacted, use ASK_USER.
 - Negative instructions are binding. "Do not submit" means never click Submit and finish only
   after the requested fields are filled. Never infer a checkbox from an unrelated numeric value.
 
@@ -318,7 +337,7 @@ class QwenLlamaPlanner:
                 "json_schema": {
                     "name": "contextshield_agent_action",
                     "strict": True,
-                    "schema": _llama_response_schema(),
+                    "schema": _llama_response_schema(context.snapshot_id),
                 },
             },
         }

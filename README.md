@@ -6,6 +6,7 @@
 > Presenting to judges? Start with the current
 > [railway demo guide](docs/RAILWAY-DEMO.md) and
 > [SIH presentation](docs/presentation/SIH.pptx).
+> Watch the [recorded product demo](https://youtu.be/n6stx4sawr4).
 
 ContextShield is a privacy-preserving autonomous browser agent for SIH 2026,
 Problem Statement 26171. The browser observes the page, detects and transforms
@@ -14,20 +15,33 @@ planner, validates its typed action, executes locally, verifies, and repeats.
 
 ## Current version: 1.5.0
 
-- **[Latest SIH deck](docs/presentation/SIH.pptx)** — six slides, academic references,
-  scoped test evidence and remaining validation work. Team ID is intentionally blank.
+- **[Latest SIH deck](docs/presentation/SIH.pptx)**: the six-slide October submission
+  with academic references, product screenshots and Team ID 155772.
 - **[Railway demo and 2–3 minute script](docs/RAILWAY-DEMO.md)** — a labelled local
   booking sandbox with fictional fares, passengers and payment. No live reservation
   or IRCTC affiliation.
 - **[Validation report](docs/RAILWAY-VALIDATION.md)** — tested authorization boundaries,
   assisted/rehearsal outcomes and known limitations.
-- **[Publication checks](docs/SIH-RELEASE-v1.5.0.md)** — checks rerun for this publication.
+- **[Latest publication checks](docs/PUBLICATION-2026-11-07.md)**: current source,
+  browser regressions and a real Qwen-assisted railway run checked before publishing.
+- **[September benchmark snapshot](docs/FINAL-VALIDATION.md)**: the five SIH
+  evaluation areas, captured evidence, methodology and unresolved limitations.
 
 Qwen-assisted mode uses Qwen for fare comparison and a declared local adapter for
 the other prepared screens. Rehearsal is deterministic and DOM-only, with no
 Qwen or visual inference. Both require one-use approval before private fills.
 The signed local action ledger records non-secret events. It is not a distributed
 blockchain and does not detect prompt injection by itself.
+
+The current demo starts with empty journey and passenger fields. Loading the
+synthetic profile loads local private values and the prepared booking request,
+but does not start the agent. The extension fills the requested itinerary,
+compares the morning fares, asks for three exact-field private fills and asks
+again before simulated payment. The passenger page contains the synthetic photo.
+Privacy proof distinguishes local observations from contexts sent to the planner.
+The injection fixture accepts editable attack text and shows the resulting
+validated action. The ledger supports editing, restoring and rehashing a copy
+against the original signed checkpoint.
 
 The source and presentation are public; the running demo remains local. GitHub
 does not host the extension, Qwen service or a live railway booking service.
@@ -310,6 +324,10 @@ The mock backend can also run with:
 ```bash
 docker compose up --build agent-server
 ```
+
+Unlike normal loopback startup, the existing Compose configuration publishes
+port 8000 on the host. Its API has no client authentication. Use it only on a
+trusted, isolated network and do not treat it as a public hosted service.
 
 Qwen remains an optional separately managed local llama.cpp process; this keeps
 the default container small and GPU-independent.

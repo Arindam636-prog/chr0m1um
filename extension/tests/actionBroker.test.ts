@@ -216,6 +216,53 @@ describe('DOM action broker', () => {
     expect(blocked.error).toBe('CONFIRMATION_REQUIRED');
   });
 
+  it('allows non-committing train selection without a confirmation', async () => {
+    const button = document.createElement('button');
+    button.textContent = 'Select train';
+    button.setAttribute('aria-label', 'Choose train DEMO 12303, departure 08:00, fare 1307');
+    document.body.append(button);
+    const snapshot = makeSnapshot(button);
+    let current = snapshot;
+    button.addEventListener('click', () => {
+      current = { ...snapshot, fingerprint: 'fp_traveller_screen' };
+    });
+    const broker = new DomActionBroker(() => snapshot, () => current, 0);
+    const verified = await broker.execute({
+      type: 'CLICK', action_id: 'act_select_train', snapshot_id: 'snap_1',
+      element_id: 'el_1', reason: 'Choose the cheapest morning departure',
+    }, {
+      snapshotId: 'snap_1', origin: window.location.origin,
+      fingerprint: 'fp_1', confirmedActionIds: new Set(),
+    });
+    expect(verified.success).toBe(true);
+    expect(verified.page_changed).toBe(true);
+    expect(verified.error).toBeNull();
+  });
+
+  it.each([
+    ['Book now', 'Choose train DEMO 12303, departure 08:00, fare 1307'],
+    ['Pay 1342 · SIMULATED', 'Pay simulated fare'],
+    ['Continue', 'Pay simulated fare'],
+  ])('still requires approval for %s even with a different accessible label', async (text, label) => {
+    const button = document.createElement('button');
+    button.textContent = text;
+    button.setAttribute('aria-label', label);
+    document.body.append(button);
+    const snapshot = makeSnapshot(button);
+    let clicked = false;
+    button.addEventListener('click', () => { clicked = true; });
+    const broker = new DomActionBroker(() => snapshot, () => snapshot, 0);
+    const verified = await broker.execute({
+      type: 'CLICK', action_id: 'act_sensitive', snapshot_id: 'snap_1',
+      element_id: 'el_1', reason: 'Proposed action',
+    }, {
+      snapshotId: 'snap_1', origin: window.location.origin,
+      fingerprint: 'fp_1', confirmedActionIds: new Set(),
+    });
+    expect(verified.error).toBe('CONFIRMATION_REQUIRED');
+    expect(clicked).toBe(false);
+  });
+
   it('clicks the visible label for a visually hidden radio control', async () => {
     const input = document.createElement('input');
     input.type = 'radio';

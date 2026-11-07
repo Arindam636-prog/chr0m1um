@@ -826,6 +826,35 @@ h3 {
   color: #894a34;
   font-size: 12px;
 }
+.synthetic-portrait { display: flex; align-items: center; gap: 16px; margin: 0 0 20px; padding: 14px; border: 1px solid #c6d5db; border-radius: 10px; background: #fff; color: #183246; }
+.synthetic-portrait img { width: 112px; height: 103px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+.synthetic-portrait figcaption { text-align: left; font-size: 12px; line-height: 1.5; }
+.synthetic-portrait figcaption strong, .synthetic-portrait figcaption span { display: block; }
+.synthetic-portrait figcaption strong { font-size: 15px; margin-bottom: 4px; }
+.passenger-heading { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin-bottom: 25px; }
+.passenger-heading .synthetic-portrait { padding: 0; border: 0; margin: 0; flex-direction: column; gap: 7px; }
+.passenger-heading .synthetic-portrait figcaption strong { font-size: 11px; font-weight: 500; color: #536875; }
+.demo-label { display: inline-block; border: 1px solid #b8c5d8; border-radius: 4px; padding: 1px 5px; margin-left: 5px; font-size: 9px; }
+.journey-date-field { position: relative; }
+.journey-date-field > label { color: #263778; margin-bottom: 8px; }
+.date-trigger { width: 100%; min-height: 45px; display: flex; justify-content: space-between; align-items: center; padding: 11px 13px; border: 1px solid #9eabc7; border-radius: 2px; background: white; color: #263778; font: inherit; font-size: 12px; }
+.journey-calendar { position: absolute; z-index: 5; top: 72px; right: 0; width: 292px; padding: 16px; background: #fff; border: 1px solid #b8c5d8; border-radius: 7px; box-shadow: 0 10px 24px #152b5026; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 12px; }
+.calendar-grid > span { text-align: center; font-size: 11px; color: #627082; padding: 5px 0; }
+.calendar-grid > button { min-width: 0; padding: 7px 0; border: 0; border-radius: 4px; color: #263778; background: #f0f4fa; font-size: 12px; }
+.calendar-grid > button:hover { color: white; background: #263778; }
+.search-fields { margin-bottom: 23px; }
+.rail-panel .contact-fields { margin-bottom: 22px; }
+.synthetic-portrait figcaption span { color: #536875; margin-top: 4px; }
+.filters .synthetic-portrait, .checkout-sidebar .synthetic-portrait { flex-wrap: wrap; }
+.checkout-sidebar { min-width: 0; }
+.hostile-fixture small { display: block; line-height: 1.5; margin-top: 9px; }
+.rail-main > .hostile-fixture { margin: 0 0 22px; padding: 18px 22px; }
+.rail-main > .hostile-fixture textarea { min-height: 54px; height: 54px; }
+.director-grid textarea { width: 100%; min-height: 112px; padding: 12px; font: inherit; line-height: 1.5; margin: 8px 0; border: 1px solid #abbcc8; border-radius: 5px; }
+.attack-feedback { margin: 12px 0; padding: 12px 14px; min-height: 63px; border-left: 3px solid #148265; background: #edf6f2; color: #204c40; font-size: 12px; line-height: 1.6; }
+.director-grid .view-applied-attack { margin-left: 14px; padding: 6px 0; border: 0; color: #146c56; background: transparent; text-decoration: underline; }
+.hostile-fixture:focus { outline: 2px solid #894a34; outline-offset: 3px; }
 .hostile-fixture p {
   line-height: 1.7;
   margin-top: 12px;

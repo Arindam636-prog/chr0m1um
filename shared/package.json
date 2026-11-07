@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./schemas/index.ts"
+    ".": "./schemas/index.ts",
+    "./railway": "./schemas/railwayTask.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

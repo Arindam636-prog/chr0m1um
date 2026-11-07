@@ -78,6 +78,7 @@ describe('local controller', () => {
 
   it('routes reasoning-heavy tasks to the server', () => {
     expect(planLocalAction(context('Compare these products and choose the best one.', []))).toBeNull();
+    expect(planLocalAction(context('Summarize this page and compare the prices.', []))).toBeNull();
   });
 
   it('creates a safe screen summary entirely locally', () => {
@@ -86,6 +87,9 @@ describe('local controller', () => {
       element({ id: 'el_visual', role: 'visual_text', text: 'Public heading', sources: ['OCR'], bbox: { x: 1, y: 2, width: 30, height: 10 } }),
     ]));
     expect(action).toMatchObject({ type: 'FINISH' });
-    if (action?.type === 'FINISH') expect(action.summary).toContain('pixel-derived');
+    if (action?.type === 'FINISH') {
+      expect(action.summary).toContain('pixel-derived');
+      expect(action.summary).toContain('Public heading');
+    }
   });
 });
